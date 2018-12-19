@@ -2,6 +2,14 @@
 
 ## Install
 
+Install swagger-codegen-cli in the Python folder:
+
+For Mac:
+```
+wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.3.1/swagger-codegen-cli-2.3.1.jar -O swagger-codegen-cli.jar
+```
+(The homebrew version is insufficient for this.)
+
 Use `make` to generate and install the sample HFCus client package and scripts locally. 
 `hfcus-import` and `hfcus-extract` scripts are installed in 
 `api/bin`
