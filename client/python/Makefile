@@ -8,7 +8,7 @@ install:
 
 generate: ## remove build artifacts
 	
-	swagger-codegen generate --lang python -DpackageName=pyhfcus --input-spec ../../curation-swagger-spec.yaml --output api
+	java -jar swagger-codegen-cli.jar generate -i ../../curation-swagger-spec.yaml -l python -DpackageName=pyhfcus -o api
 	cp setup.py api
 	mkdir api/bin
 	cp hfcus-* api/bin
