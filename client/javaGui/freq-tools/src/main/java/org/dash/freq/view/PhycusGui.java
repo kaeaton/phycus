@@ -19,9 +19,16 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 import java.util.prefs.Preferences;
+import javax.swing.Action;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JPopupMenu;
+import javax.swing.text.DefaultEditorKit;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.text.*;
 
 import org.dash.freq.controller.BatchUploader;
 import org.dash.freq.controller.IonCheck;
@@ -30,6 +37,7 @@ import org.dash.freq.controller.UploadTextObservable;
 import org.dash.freq.model.DoiService;
 import org.dash.freq.model.Population;
 import org.dash.freq.model.PostPopulationFrequencies;
+
 
 /**
  *
@@ -101,6 +109,7 @@ public class PhycusGui extends javax.swing.JFrame {
         databaseUrlLabel = new javax.swing.JLabel();
         databaseDefaultButton = new javax.swing.JButton();
         databaseSetUrlButton = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         uploadFilesPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -134,9 +143,17 @@ public class PhycusGui extends javax.swing.JFrame {
         popNotificationsTextPane = new javax.swing.JTextPane();
         doiPanel = new javax.swing.JPanel();
         doiConversionPanel = new javax.swing.JPanel();
+        doiOuputScrollPane = new javax.swing.JScrollPane();
+        doiOutputTextPane = new javax.swing.JTextPane();
+        doiInputTextField = new javax.swing.JTextField();
+        doiInputLabel1 = new javax.swing.JLabel();
+        doiInputLabel2 = new javax.swing.JLabel();
         doiBottomButtonsPanel = new javax.swing.JPanel();
         doiConvertButton = new javax.swing.JButton();
         doiCancelButton = new javax.swing.JButton();
+        doiOutputLabel1 = new javax.swing.JLabel();
+        doiNotificationsScrollPane = new javax.swing.JScrollPane();
+        doiNotificationsTextPane = new javax.swing.JTextPane();
         settingsPanel = new javax.swing.JPanel();
         haplotypeEntityLabel = new javax.swing.JLabel();
         haplotypeEntityButton = new javax.swing.JButton();
@@ -300,6 +317,8 @@ public class PhycusGui extends javax.swing.JFrame {
 
         // ionPopupFrame.setVisible(false);
 
+        jTextField1.setText("jTextField1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phycus Upload Interface");
         setLocationByPlatform(true);
@@ -434,13 +453,15 @@ public class PhycusGui extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(ionLabelCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(uploadFilesPanelLayout.createSequentialGroup()
-                                        .addComponent(licenseLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(licenseHelpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
-                                        .addComponent(ionLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ionLabelFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                                                .addComponent(licenseLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(licenseHelpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                                                .addComponent(ionLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(ionLabelFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(uploadFilesPanelLayout.createSequentialGroup()
                         .addGap(192, 192, 192)
@@ -484,7 +505,7 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ionLabel2)
                     .addComponent(ionLabelFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addComponent(warningLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -567,7 +588,7 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(popResultsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(popNotificationsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                .addComponent(popNotificationsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(populationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(popCancelButton)
@@ -577,15 +598,38 @@ public class PhycusGui extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Populations", populationPanel);
 
+        doiOuputScrollPane.setViewportView(doiOutputTextPane);
+
+        doiInputLabel1.setText("Please enter PMIDs, PMCIDs, or manuscript IDs (do not combine them)");
+
+        doiInputLabel2.setText("in the field above, each separated by a comma (no spaces).");
+
         javax.swing.GroupLayout doiConversionPanelLayout = new javax.swing.GroupLayout(doiConversionPanel);
         doiConversionPanel.setLayout(doiConversionPanelLayout);
         doiConversionPanelLayout.setHorizontalGroup(
             doiConversionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(doiConversionPanelLayout.createSequentialGroup()
+                .addGroup(doiConversionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(doiInputTextField)
+                    .addGroup(doiConversionPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(doiConversionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(doiInputLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                            .addComponent(doiInputLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(doiOuputScrollPane))
+                .addContainerGap())
         );
         doiConversionPanelLayout.setVerticalGroup(
             doiConversionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 607, Short.MAX_VALUE)
+            .addGroup(doiConversionPanelLayout.createSequentialGroup()
+                .addComponent(doiInputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(doiInputLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(doiInputLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(doiOuputScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         doiConvertButton.setText("Convert");
@@ -611,7 +655,7 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addComponent(doiConvertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(doiCancelButton)
-                .addContainerGap(178, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         doiBottomButtonsPanelLayout.setVerticalGroup(
             doiBottomButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,6 +666,10 @@ public class PhycusGui extends javax.swing.JFrame {
                     .addComponent(doiConvertButton)))
         );
 
+        doiOutputLabel1.setText("Paste the DOI into the header line of your Phycus file.");
+
+        doiNotificationsScrollPane.setViewportView(doiNotificationsTextPane);
+
         javax.swing.GroupLayout doiPanelLayout = new javax.swing.GroupLayout(doiPanel);
         doiPanel.setLayout(doiPanelLayout);
         doiPanelLayout.setHorizontalGroup(
@@ -630,15 +678,22 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(doiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(doiConversionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(doiPanelLayout.createSequentialGroup()
-                        .addComponent(doiBottomButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, doiPanelLayout.createSequentialGroup()
+                        .addGroup(doiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(doiNotificationsScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(doiBottomButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addComponent(doiOutputLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         doiPanelLayout.setVerticalGroup(
             doiPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(doiPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(doiConversionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(doiOutputLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(doiNotificationsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(doiBottomButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -792,7 +847,7 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addComponent(optionsSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(advancedOptionsButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 376, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 383, Short.MAX_VALUE)
                 .addComponent(optionsCancelButton)
                 .addContainerGap())
         );
@@ -822,7 +877,7 @@ public class PhycusGui extends javax.swing.JFrame {
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(helpPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Help", helpPanel);
@@ -839,7 +894,7 @@ public class PhycusGui extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGap(0, 707, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING))
         );
@@ -1296,7 +1351,8 @@ public class PhycusGui extends javax.swing.JFrame {
     }//GEN-LAST:event_popSearchTextFieldKeyReleased
 
     private void doiConvertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doiConvertButtonActionPerformed
-        DoiService doi = new DoiService();
+        doiOutputTextPane.setText(""); 
+		DoiService doi = new DoiService();
 		try {
 			doi.makeCall();
 		} catch (Exception ex) {
@@ -1319,6 +1375,7 @@ public class PhycusGui extends javax.swing.JFrame {
 			}
 		}
 	}
+	
 	
 	/**
 	 * @param args the command line arguments
@@ -1373,6 +1430,14 @@ public class PhycusGui extends javax.swing.JFrame {
     private javax.swing.JButton doiCancelButton;
     private javax.swing.JPanel doiConversionPanel;
     private javax.swing.JButton doiConvertButton;
+    private javax.swing.JLabel doiInputLabel1;
+    private javax.swing.JLabel doiInputLabel2;
+    public static javax.swing.JTextField doiInputTextField;
+    private javax.swing.JScrollPane doiNotificationsScrollPane;
+    public static javax.swing.JTextPane doiNotificationsTextPane;
+    private javax.swing.JScrollPane doiOuputScrollPane;
+    private javax.swing.JLabel doiOutputLabel1;
+    public static javax.swing.JTextPane doiOutputTextPane;
     private javax.swing.JPanel doiPanel;
     private javax.swing.JFileChooser fileChooserUpload;
     private javax.swing.JTextArea fileLocationTextArea;
@@ -1397,6 +1462,7 @@ public class PhycusGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     public static javax.swing.JComboBox<String> licenseComboBox;
     private javax.swing.JLabel licenseHelpIcon;
     private javax.swing.JLabel licenseLabel;

@@ -160,6 +160,9 @@ public class HeaderProcessor {
 			printHeader("ion", (prefs.get("PHY_ION", "") + " - " + prefs.get("PHY_ION_FACILITY", "")), true);
 		}
 		
+		// check for doi if present
+		
+		
 		// check header for haplotyping institution, print if present
 		if (headerContent.containsKey("haplotype")) 
 			printHeader("haplotype", headerContent.get("haplotype"), true);
