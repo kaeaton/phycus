@@ -13,8 +13,8 @@ public class ResetIonButton {
 	
 	private JButton resetIonButton = new JButton("Reset Ion");
 
-	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
-	private IonPanel uploadTabIonPanel = uploadTabClassInstantiations.getIonPanelInstance();
+	// private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	// private IonPanel uploadTabIonPanel = uploadTabClassInstantiations.getIonPanelInstance();
 
 
 	public ResetIonButton() { }
@@ -32,7 +32,7 @@ public class ResetIonButton {
 			Prefs.resetIon();
 
 			// refresh main page with new or no ION
-			uploadTabIonPanel.updateIonPanel();
+			// uploadTabIonPanel.updateIonPanel();
 		}
 	};
 }

@@ -21,11 +21,16 @@ import org.dash.freq.gui.optionsTab.updateIon.*;
 
 public class OptionsTab extends JPanel {
 
+
 	// components
+	private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
+	private JPanel optionsIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
+	private JPanel advancedPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
+
 	private JPanel receiptPanel = new ReceiptPathPanel().getReceiptPathPanel();
 	private JPanel reportingOptionsPanel = new ReportingOptionsPanel().getReportingOptionsPanel();
-	private JPanel optionsIonPanel = new OptionsIonPanel().getOptionsIonPanel();
-	private JPanel advancedPanel = new AdvancedPanel().getAdvancedPanel();
+	// private JPanel optionsIonPanel = new OptionsIonPanel().getOptionsIonPanel();
+	// private JPanel advancedPanel = new AdvancedPanel().getAdvancedPanel();
 
 	public OptionsTab() {
 

@@ -1,14 +1,19 @@
 package org.dash.freq.gui.optionsTab;
 
+import java.awt.Frame;
+import java.awt.Window;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import org.dash.freq.gui.optionsTab.advanced.databaseLocationPopup.*;
 import org.dash.freq.gui.optionsTab.customReceiptPath.*;
-import org.dash.freq.gui.optionsTab.updateIon.updateIonPopup.*;
+import org.dash.freq.gui.optionsTab.updateIon.*;
+// import org.dash.freq.gui.optionsTab.updateIon.updateIonPopup.*;
 
 // import org.dash.freq.gui.ExitButton;
 
@@ -29,18 +34,14 @@ public class OptionsTabClassInstantiations {
 	// instantiate components
 	private JTextArea receiptPathTextArea = new ReceiptPathTextArea().getReceiptPathTextArea();
 	private JFileChooser receiptPathChooser = new ReceiptPathChooser().getReceiptPathChooser();
-	private DatabaseLocationPopup databaseLocationPopup = new DatabaseLocationPopup();
-	private SubmitNewIonButton submitNewIonButton = new SubmitNewIonButton();
 
-	// passing on the listener from the submit button so pressing enter will submit
-	private UpdateIonTextField updateIonTextFieldClass = new UpdateIonTextField(submitNewIonButton.submitNewIonListener);
+	private JPanel optionsIonPanel = new OptionsIonPanel().getOptionsIonPanel();
+	// private Frame ionParentFrame = findParentFrame(optionsIonPanel);
+	// private UpdateIonPopup updateIonPopup = new UpdateIonPopup(ionParentFrame, "updateIonPanel", optionsIonPanel);
 
-	// this textfield is not accessed directly, but passed on to the Update Ion panel
-	private JTextField updateIonTextField = updateIonTextFieldClass.getUpdateIonTextField();
-
-	// this panel is not accessed directly, but passed on to the Update Ion popup
-	private JPanel updateIonPanel = new UpdateIonPanel(updateIonTextField).getUpdateIonPanel();
-	private UpdateIonPopup updateIonPopup = new UpdateIonPopup(updateIonPanel);
+	// private JPanel advancedPanel = new AdvancedPanel().getAdvancedPanel();
+	// private Frame advancedParentFrame = findParentFrame(advancedPanel);
+	// private DatabaseLocationPopup databaseLocationPopup = new DatabaseLocationPopup(advancedParentFrame, "database location", advancedPanel);
 
 	private OptionsTabClassInstantiations() { }
 
@@ -56,19 +57,31 @@ public class OptionsTabClassInstantiations {
 		return receiptPathTextArea;
 	}
 
-	public UpdateIonTextField getUpdateIonTextFieldClassInstance() {
-		return updateIonTextFieldClass;
-	}
-
 	public JFileChooser getReceiptPathChooserInstance() {
 		return receiptPathChooser;
 	}
 
-	public DatabaseLocationPopup getDatabaseLocationPopupInstance() {
-		return databaseLocationPopup;
+	// public DatabaseLocationPopup getDatabaseLocationPopupInstance() {
+	// 	return databaseLocationPopup;
+	// }
+
+	// public UpdateIonPopup getUpdateIonPopupInstance() {
+	// 	return updateIonPopup;
+	// }
+
+	public JPanel getOptionsIonPanelInstance() {
+		return optionsIonPanel;
 	}
 
-	public UpdateIonPopup getUpdateIonPopupInstance() {
-		return updateIonPopup;
-	}
+	// private Frame findParentFrame(JPanel childPanel) {
+	// 	Window parentWindow = SwingUtilities.windowForComponent(childPanel); 
+
+	// 	// or pass 'this' if you are inside the panel
+	// 	Frame parentFrame = null;
+	// 	if (parentWindow instanceof Frame) {
+	// 	    parentFrame = (Frame)parentWindow;
+	// 	}
+
+	// 	return parentFrame;
+	// }
 }

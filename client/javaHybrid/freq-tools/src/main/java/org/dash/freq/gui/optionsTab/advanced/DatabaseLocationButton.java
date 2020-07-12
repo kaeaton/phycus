@@ -13,8 +13,8 @@ public class DatabaseLocationButton {
 	
 	private JButton databaseLocationButton = new JButton("Database Location");
 
-	private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
-	private DatabaseLocationPopup databaseLocationPopupFrame = optionsTabClassInstantiations.getDatabaseLocationPopupInstance();
+	// private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
+	// private DatabaseLocationPopup databaseLocationPopupFrame = optionsTabClassInstantiations.getDatabaseLocationPopupInstance();
 
 	public DatabaseLocationButton() { }
 
@@ -28,7 +28,7 @@ public class DatabaseLocationButton {
 	private ActionListener databaseLocationListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
-            databaseLocationPopupFrame.setVisible(true);
+            // databaseLocationPopupFrame.setVisible(true);
 		}
 	};
 }

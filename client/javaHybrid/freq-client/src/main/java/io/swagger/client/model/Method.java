@@ -27,7 +27,7 @@ import java.io.IOException;
  * Method Record
  */
 @ApiModel(description = "Method Record")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-06T12:21:43.393-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-12T14:15:34.209-07:00")
 public class Method {
   /**
    * Type of method label
