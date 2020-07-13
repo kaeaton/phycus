@@ -31,7 +31,7 @@ import java.io.IOException;
 /**
  * HFCurationRequest
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T05:00:01.021-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T11:57:47.476-07:00")
 public class HFCurationRequest {
   @SerializedName("PopulationID")
   private Long populationID = null;

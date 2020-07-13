@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * ScopeData
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T05:00:01.021-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T11:57:47.476-07:00")
 public class ScopeData {
   @SerializedName("ScopeElement")
   private List<ScopeElement> scopeElement = new ArrayList<ScopeElement>();
