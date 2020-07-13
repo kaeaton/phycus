@@ -40,6 +40,8 @@ public class UpdateIonPopup extends JDialog
 	public UpdateIonPopup(Frame aFrame, String aWord, JPanel parent) {
 		super(aFrame, true);
 		optionsIonPanel = parent;
+		parent.setPreferredSize(new Dimension(360, 300));
+
 
 		magicWord = aWord.toUpperCase();
 		setTitle("Quiz");
@@ -56,6 +58,7 @@ public class UpdateIonPopup extends JDialog
 		//and their text.
 		Object[] options = {btnString1, btnString2};
 
+
 		//Create the JOptionPane.
 		optionPane = new JOptionPane(array,
 									JOptionPane.QUESTION_MESSAGE,
@@ -67,18 +70,23 @@ public class UpdateIonPopup extends JDialog
 		//Make this dialog display it.
 		setContentPane(optionPane);
 
+		// this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		this.setSize(new Dimension(360, 300));
+		this.setLocationRelativeTo(null);
+
+
 		//Handle window closing correctly.
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-			// 	public void windowClosing(WindowEvent we) {
+			public void windowClosing(WindowEvent we) {
 				
 			// 	 * Instead of directly closing the window,
 			// 	 * we're going to change the JOptionPane's
 			// 	 * value property.
 				 
-			// 		optionPane.setValue(new Integer(
-			// 							JOptionPane.CLOSED_OPTION));
-			// }
+				optionPane.setValue(new Integer(
+									JOptionPane.CLOSED_OPTION));
+			}
 		});
 
 		//Ensure the text field always gets the first focus.
@@ -142,13 +150,13 @@ public class UpdateIonPopup extends JDialog
 					typedText = null;
 					textField.requestFocusInWindow();
 				}
-			} // } else { //user closed dialog or clicked cancel
+			} else { //user closed dialog or clicked cancel
 			//     optionsIonPanel.setLabel("It's OK.  "
 			//              + "We won't force you to type "
 			//              + magicWord + ".");
-			//     typedText = null;
-			//     clearAndHide();
-			// }
+			    typedText = null;
+			    clearAndHide();
+			}
 		}
 	}
 
