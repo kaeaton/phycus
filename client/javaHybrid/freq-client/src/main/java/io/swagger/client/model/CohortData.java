@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * CohortData
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T11:57:47.476-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-15T05:30:03.020-07:00")
 public class CohortData {
   @SerializedName("GenotypeList")
   private GenotypeList genotypeList = null;

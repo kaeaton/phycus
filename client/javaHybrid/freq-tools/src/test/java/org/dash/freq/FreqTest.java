@@ -1,4 +1,4 @@
-package org.dash.freq.app;
+package org.dash.freq;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  */
 public class FreqTest 
 	extends TestCase
-{
+	{
 	/**
 	 * Create the test case
 	 *

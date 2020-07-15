@@ -30,7 +30,7 @@ import java.util.List;
  * Contains all submissions for a population
  */
 @ApiModel(description = "Contains all submissions for a population")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T11:57:47.476-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-15T05:30:03.020-07:00")
 public class PopulationSubmissionData {
   @SerializedName("population")
   private PopulationData population = null;

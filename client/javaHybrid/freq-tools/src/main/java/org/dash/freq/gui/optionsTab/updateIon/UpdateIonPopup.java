@@ -8,6 +8,9 @@ import java.beans.*; //property change stuff
 import java.awt.*;
 import java.awt.event.*;
 
+import org.dash.freq.validations.IonCheck;
+
+
 // import org.dash.freq.gui.optionsTab.OptionsTabClassInstantiations;
 
 
@@ -25,8 +28,11 @@ public class UpdateIonPopup extends JDialog
 	private String magicWord;
 	private JOptionPane optionPane;
 
-	private String btnString1 = "Enter";
+	private String btnString1 = "Submit";
 	private String btnString2 = "Cancel";
+
+	private IonCheck ionCheck = new IonCheck();
+
 
 	/**
 	 * Returns null if the typed string was invalid;
@@ -42,6 +48,9 @@ public class UpdateIonPopup extends JDialog
 		optionsIonPanel = parent;
 		parent.setPreferredSize(new Dimension(360, 300));
 
+		// ionCheck = new IonCheck();
+
+
 
 		magicWord = aWord.toUpperCase();
 		setTitle("Quiz");
@@ -49,10 +58,10 @@ public class UpdateIonPopup extends JDialog
 		textField = new JTextField(10);
 
 		//Create an array of the text and components to be displayed.
-		String msgString1 = "What was Dr. SEUSS's real last name?";
-		String msgString2 = "(The answer is \"" + magicWord
-							  + "\".)";
-		Object[] array = {msgString1, msgString2, textField};
+		String msgString1 = "Please enter the ION or other facility identification";
+		String msgString2 = "of the group performing the genotyping:";
+		String msgString3 = "(This can be changed in the options tab)";
+		Object[] popupInstructions = {msgString1, msgString2, msgString3, textField};
 
 		//Create an array specifying the number of dialog buttons
 		//and their text.
@@ -60,7 +69,7 @@ public class UpdateIonPopup extends JDialog
 
 
 		//Create the JOptionPane.
-		optionPane = new JOptionPane(array,
+		optionPane = new JOptionPane(popupInstructions,
 									JOptionPane.QUESTION_MESSAGE,
 									JOptionPane.YES_NO_OPTION,
 									null,
@@ -131,11 +140,18 @@ public class UpdateIonPopup extends JDialog
 					JOptionPane.UNINITIALIZED_VALUE);
 
 			if (btnString1.equals(value)) {
-					typedText = textField.getText();
-				String ucText = typedText.toUpperCase();
-				if (magicWord.equals(ucText)) {
-					//we're done; clear and dismiss the dialog
+				typedText = textField.getText();
+
+				if(ionCheck.checkIon(typedText) != null) {
 					clearAndHide();
+				// }
+
+
+
+				// String ucText = typedText.toUpperCase();
+				// if (magicWord.equals(ucText)) {
+				// 	//we're done; clear and dismiss the dialog
+				// 	clearAndHide();
 				} else {
 					//text was invalid
 					textField.selectAll();

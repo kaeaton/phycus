@@ -27,7 +27,7 @@ import java.io.IOException;
  * GenotypeMethod Record
  */
 @ApiModel(description = "GenotypeMethod Record")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T11:57:47.476-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-15T05:30:03.020-07:00")
 public class GenotypeMethod {
   /**
    * Type of method label

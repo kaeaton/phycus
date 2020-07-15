@@ -1,70 +1,73 @@
+
 package org.dash.freq.validations;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.AsyncCompletionHandler;
-import org.asynchttpclient.Dsl;
-import org.asynchttpclient.HttpResponseBodyPart;
-import org.asynchttpclient.Response;
-
-import org.dash.freq.utilities.Urls;
-
-
 /**
- * Important how tos:
- * https://www.baeldung.com/java-download-file
- * https://www.baeldung.com/async-http-client
+ * Important how to:
  * https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
  */
 
 public class IonCheck {
 	
 	private final String fileLocation = "https://www.iccbba.org/docs/tech-library/database/grid-issuing-organizations-data-file.xml";
-	// private final URL FILE_URL = Urls.finalUrl(fileLocation);
-
-	private File ionFile = new File("ion.xml");
-	private FileOutputStream stream = newFileOutputStream(ionFile);
-
-	private AsyncHttpClient client = Dsl.asyncHttpClient();
-
 
 	public IonCheck() {
-
-		client.prepareGet(fileLocation).execute(new AsyncCompletionHandler<FileOutputStream>() {
-	 
-		    @Override
-		    public State onBodyPartReceived(HttpResponseBodyPart bodyPart) 
-		      throws Exception {
-		        stream.getChannel().write(bodyPart.getBodyByteBuffer());
-		        return State.CONTINUE;
-		    }
-		 
-		    @Override
-		    public FileOutputStream onCompleted(Response response) 
-		      throws Exception {
-		        return stream;
-		    }
-		});
+		
 	}
-
-	public FileOutputStream newFileOutputStream(File file) {
+	
+	public String[] checkIon(String enteredIon) {
+		String[] results = {"", ""};
+		BufferedInputStream input;
 		try {
-			return new FileOutputStream(file);
-		} catch(Exception ex) {
-			System.out.println("Error creating new FileOutputStream (IonCheck): " + ex);
-			throw new Error(ex);
-		}
+			// open the file
+			input = new BufferedInputStream(new URL(fileLocation).openStream());
+
+			// build and parse the xml document
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(input);
+			
+			// collect all the Issuing_Organization nodes
+			NodeList nList = doc.getElementsByTagName("Issuing_Organization");
+			
+			// cycle through the nodes
+			for (int i = 0; i < nList.getLength(); i++) {
+
+				Node nNode = nList.item(i);
+				
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+					// get elements at that node
+					Element eElement = (Element) nNode;
+
+					System.out.println("ION: " + eElement.getElementsByTagName("ION").item(0).getTextContent());
+					System.out.println("ION name: " + eElement.getElementsByTagName("Issuing_Organization_Name").item(0).getTextContent());
+				
+					// if the ION entered matches the ION in a node, assign to results, break the loop
+					if(enteredIon.equals(eElement.getElementsByTagName("ION").item(0).getTextContent())) {
+						results[0] = eElement.getElementsByTagName("ION").item(0).getTextContent();
+						results[1] = eElement.getElementsByTagName("Issuing_Organization_Name").item(0).getTextContent();
+						break;
+					}
+				}
+			}
+			
+			// close the buffer
+			input.close();
+			
+			// return results
+			return results;
+			
+		} catch (Exception ex) { System.out.println("creating the URL for ION check failed: " + ex); }
+		return results;
 	}
 }

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * HFCurationListResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-13T11:57:47.476-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-07-15T05:30:03.020-07:00")
 public class HFCurationListResponse {
   @SerializedName("HFCurationResponses")
   private List<HFCurationResponse> hfCurationResponses = null;

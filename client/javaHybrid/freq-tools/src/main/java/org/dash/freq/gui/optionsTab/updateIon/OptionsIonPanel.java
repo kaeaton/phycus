@@ -52,7 +52,6 @@ public class OptionsIonPanel extends JPanel {
 		public void actionPerformed(ActionEvent evt) {
 			// UIManager.put("OptionPane.minimumSize",new Dimension(500,500)); 
 			updateIonPopup = new UpdateIonPopup(ionParentFrame, "test", ionPanel);
-
 			// updateIonPopupFrame.setVisible(true);
 			updateIonPopup.setVisible(true);
 
