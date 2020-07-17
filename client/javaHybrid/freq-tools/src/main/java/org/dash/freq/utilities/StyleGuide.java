@@ -17,6 +17,7 @@ public class StyleGuide {
 	public static final Border TITLED_BORDER_OUTLINE = BorderFactory.createLineBorder(Color.GRAY);
 	public static final Border EMPTY_BORDER_MARGIN_VERTICAL = new EmptyBorder(10,0,10,0);
 	public static final Border EMPTY_BORDER_MARGIN_HORIZONTAL = new EmptyBorder(0,30,0,30);
+	public static final Border EMPTY_BORDER_ZERO = new EmptyBorder(0,0,0,0);
 
 
 

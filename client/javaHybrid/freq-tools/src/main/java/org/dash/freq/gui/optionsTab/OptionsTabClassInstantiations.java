@@ -35,7 +35,7 @@ public class OptionsTabClassInstantiations {
 	private JTextArea receiptPathTextArea = new ReceiptPathTextArea().getReceiptPathTextArea();
 	private JFileChooser receiptPathChooser = new ReceiptPathChooser().getReceiptPathChooser();
 
-	private JPanel optionsIonPanel = new OptionsIonPanel().getOptionsIonPanel();
+	private OptionsIonPanel optionsIonPanel = new OptionsIonPanel();
 	// private Frame ionParentFrame = findParentFrame(optionsIonPanel);
 	// private UpdateIonPopup updateIonPopup = new UpdateIonPopup(ionParentFrame, "updateIonPanel", optionsIonPanel);
 
@@ -69,7 +69,7 @@ public class OptionsTabClassInstantiations {
 	// 	return updateIonPopup;
 	// }
 
-	public JPanel getOptionsIonPanelInstance() {
+	public OptionsIonPanel getOptionsIonPanelInstance() {
 		return optionsIonPanel;
 	}
 

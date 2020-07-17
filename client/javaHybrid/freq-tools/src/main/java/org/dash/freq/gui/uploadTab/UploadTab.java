@@ -37,7 +37,7 @@ public class UploadTab extends JPanel {
 		// holding panel for optional ion
 		JPanel ionPanel = ionPanelInstance.getIonPanel();
 		ionHousingPanel.add(ionPanel);
-		if(!Prefs.getIonNumber().equals("")) ionPanel.setVisible(false);
+		if(Prefs.getIonNumber().equals("")) ionPanel.setVisible(false);
 
 		// restults textPane
 		JPanel resultsPanel = new JPanel();

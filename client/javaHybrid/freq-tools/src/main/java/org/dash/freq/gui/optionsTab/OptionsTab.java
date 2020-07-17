@@ -24,7 +24,7 @@ public class OptionsTab extends JPanel {
 
 	// components
 	private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
-	private JPanel optionsIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
+	private JPanel optionsIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance().getOptionsIonPanel();
 	private JPanel advancedPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
 
 	private JPanel receiptPanel = new ReceiptPathPanel().getReceiptPathPanel();

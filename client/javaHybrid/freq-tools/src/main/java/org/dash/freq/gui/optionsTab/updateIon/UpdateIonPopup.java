@@ -4,64 +4,55 @@ import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import java.beans.*; //property change stuff
 import java.awt.*;
 import java.awt.event.*;
 
+import org.dash.freq.gui.optionsTab.OptionsTabClassInstantiations;
+import org.dash.freq.gui.uploadTab.IonPanel;
+import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
+import org.dash.freq.utilities.Prefs;
 import org.dash.freq.validations.IonCheck;
 
-
-// import org.dash.freq.gui.optionsTab.OptionsTabClassInstantiations;
-
-
-/* 1.4 example used by DialogDemo.java. */
 public class UpdateIonPopup extends JDialog
 				   implements ActionListener,
 							  PropertyChangeListener {
 	private String typedText = null;
 	private JTextField textField;
 
-	// private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
-	// private JPanel optionsIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
-	JPanel optionsIonPanel;
+	private JPanel optionsIonPanel;
+	private OptionsIonPanel optionsIonPanelClass;
 
-	private String magicWord;
 	private JOptionPane optionPane;
 
 	private String btnString1 = "Submit";
 	private String btnString2 = "Cancel";
 
 	private IonCheck ionCheck = new IonCheck();
-
-
-	/**
-	 * Returns null if the typed string was invalid;
-	 * otherwise, returns the string as the user entered it.
-	 */
-	public String getValidatedText() {
-		return typedText;
-	}
+	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	private IonPanel uploadTabIonPanel = uploadTabClassInstantiations.getIonPanelInstance();
+	private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
+	private OptionsIonPanel optionsTabIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
 
 	/** Creates the reusable dialog. */
-	public UpdateIonPopup(Frame aFrame, String aWord, JPanel parent) {
+	public UpdateIonPopup(Frame aFrame, JPanel parent) {
 		super(aFrame, true);
 		optionsIonPanel = parent;
-		parent.setPreferredSize(new Dimension(360, 300));
+		// optionsIonPanelClass = optionsIonPC;
+		// parent.setPreferredSize(new Dimension(500, 300));
+		// UIManager.put("optionPane.minimumSize",new Dimension(300,500));
 
-		// ionCheck = new IonCheck();
+		setTitle("Enter ION");
 
-
-
-		magicWord = aWord.toUpperCase();
-		setTitle("Quiz");
-
-		textField = new JTextField(10);
+		textField = new JTextField();
+		textField.setColumns(10);
 
 		//Create an array of the text and components to be displayed.
-		String msgString1 = "Please enter the ION or other facility identification";
+		String msgString1 = "Please enter the Issuing Organization Number (ION)";
 		String msgString2 = "of the group performing the genotyping:";
-		String msgString3 = "(This can be changed in the options tab)";
-		Object[] popupInstructions = {msgString1, msgString2, msgString3, textField};
+		// String msgString3 = "(This can be changed in the options tab)";
+		Object[] popupInstructions = {msgString1, msgString2, textField};
 
 		//Create an array specifying the number of dialog buttons
 		//and their text.
@@ -80,7 +71,7 @@ public class UpdateIonPopup extends JDialog
 		setContentPane(optionPane);
 
 		// this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		this.setSize(new Dimension(360, 300));
+		this.setSize(new Dimension(450, 150));
 		this.setLocationRelativeTo(null);
 
 
@@ -142,34 +133,34 @@ public class UpdateIonPopup extends JDialog
 			if (btnString1.equals(value)) {
 				typedText = textField.getText();
 
-				if(ionCheck.checkIon(typedText) != null) {
+				// ion check results
+				String[] downloadIon = ionCheck.checkIon(typedText);
+
+				// if the ion value has a value, save results to prefs 
+				// update the labels, and we're done
+				if(!downloadIon[0].equals("")) {
+
+					Prefs.setIonNumber(downloadIon[0]);
+					Prefs.setIonFacility(downloadIon[1]);
+					uploadTabIonPanel.updateIonPanel();
+					optionsTabIonPanel.updateOptionsTabIonPanel();
+
 					clearAndHide();
-				// }
-
-
-
-				// String ucText = typedText.toUpperCase();
-				// if (magicWord.equals(ucText)) {
-				// 	//we're done; clear and dismiss the dialog
-				// 	clearAndHide();
+				
 				} else {
 					//text was invalid
 					textField.selectAll();
 					JOptionPane.showMessageDialog(
 									UpdateIonPopup.this,
-									"Sorry, \"" + typedText + "\" "
-									+ "isn't a valid response.\n"
-									+ "Please enter "
-									+ magicWord + ".",
+									"Sorry, " + typedText + " "
+									+ "isn't a valid ION.\n"
+									+ "Please enter a valid ION.",
 									"Try again",
 									JOptionPane.ERROR_MESSAGE);
 					typedText = null;
 					textField.requestFocusInWindow();
 				}
-			} else { //user closed dialog or clicked cancel
-			//     optionsIonPanel.setLabel("It's OK.  "
-			//              + "We won't force you to type "
-			//              + magicWord + ".");
+			} else { 
 			    typedText = null;
 			    clearAndHide();
 			}
