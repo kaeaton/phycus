@@ -16,35 +16,28 @@ import org.w3c.dom.Element;
  * https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
  */
 
-public class IonCheck {
+public class IonCheckOld {
 	
 	private final String fileLocation = "https://www.iccbba.org/docs/tech-library/database/grid-issuing-organizations-data-file.xml";
-	private BufferedInputStream input;
-	private Document doc;
-	private NodeList nList;
 
-	public IonCheck() {
-		try {
-			// open the file
-			this.input = new BufferedInputStream(new URL(fileLocation).openStream());
-
-			// build and parse the xml document
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			doc = dBuilder.parse(input);
+	public IonCheckOld() {
 		
-			// collect all the Issuing_Organization nodes
-			this.nList = doc.getElementsByTagName("Issuing_Organization");
-
-		} catch (Exception ex) { System.out.println("Problem downloading/parsing the ION XML document: " + ex); }
 	}
 	
 	public String[] checkIon(String enteredIon) {
 		String[] results = {"", ""};
-		// try {
+		BufferedInputStream input;
+		try {
+			// open the file
+			input = new BufferedInputStream(new URL(fileLocation).openStream());
+
+			// build and parse the xml document
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(input);
 			
 			// collect all the Issuing_Organization nodes
-			// NodeList nList = doc.getElementsByTagName("Issuing_Organization");
+			NodeList nList = doc.getElementsByTagName("Issuing_Organization");
 			
 			// cycle through the nodes
 			for (int i = 0; i < nList.getLength(); i++) {
@@ -68,27 +61,13 @@ public class IonCheck {
 				}
 			}
 			
-			
+			// close the buffer
+			input.close();
 			
 			// return results
 			return results;
 			
-		// } catch (Exception ex) { System.out.println("creating the URL for ION check failed: " + ex); }
-		// return results;
-	}
-
-	public void close() {
-		try {
-
-			// close the buffer
-			input.close();
-
-			// nullify and garbage collect the parsed XML document out of memory
-			if(doc != null){
-	            doc = null;
-	            System.runFinalization();
-	            System.gc();
-	        }
-		} catch (Exception ex) { System.out.println("Problem closing the ION XML buffer: " + ex); }
+		} catch (Exception ex) { System.out.println("creating the URL for ION check failed: " + ex); }
+		return results;
 	}
 }

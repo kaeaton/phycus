@@ -169,6 +169,7 @@ public class UpdateIonPopup extends JDialog
 
 	/** This method clears the dialog and hides it. */
 	public void clearAndHide() {
+		ionCheck.close();
 		textField.setText(null);
 		setVisible(false);
 	}
