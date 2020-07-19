@@ -6,22 +6,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import org.dash.freq.gui.optionsTab.OptionsTabClassInstantiations;
 import org.dash.freq.gui.uploadTab.*;
 import org.dash.freq.utilities.Prefs;
 
 public class ResetIonButton {
 	
 	private JButton resetIonButton = new JButton("Reset Ion");
-	private JLabel optionsIonLabel;
+	private OptionsIonPanel optionsIonPanel;
 
 	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
 	private IonPanel uploadTabIonPanel = uploadTabClassInstantiations.getIonPanelInstance();
 	// private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
 	// private OptionsIonPanel optionsTabIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
 
-	public ResetIonButton(JLabel ionLabel) {
-		this.optionsIonLabel = ionLabel;
+	public ResetIonButton(OptionsIonPanel optionsIP) {
+		this.optionsIonPanel = optionsIP;
 	}
 
 	public JButton getResetIonButton() {
@@ -40,7 +39,7 @@ public class ResetIonButton {
 			uploadTabIonPanel.updateIonPanel();
 
 			// refresh options page with new or no ION
-			optionsIonLabel.setText("No ION set");
+			optionsIonPanel.updateOptionsTabIonPanel();
 		}
 	};
 }

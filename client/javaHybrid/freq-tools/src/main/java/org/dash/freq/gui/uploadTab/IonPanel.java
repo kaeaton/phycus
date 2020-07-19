@@ -53,6 +53,6 @@ public class IonPanel {
 		ionHousingPanel.add(ionPanel).revalidate();
 		ionHousingPanel.repaint();
 
-		if(!Prefs.getIonNumber().equals("")) ionPanel.setVisible(false);
+		if(Prefs.getIonNumber().equals("")) ionPanel.setVisible(false);
 	}
 }

@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -25,8 +26,15 @@ import org.dash.freq.utilities.StyleGuide;
 
 public class OptionsIonPanel extends JPanel {
 
-	private JLabel ionLabel = new JLabel("test");
-	private JButton resetIonButton = new ResetIonButton(ionLabel).getResetIonButton();
+	// private String ionNumber = Prefs.getIonNumber();
+	// private String ionFacility = Prefs.getIonFacility();
+	// private JLabel ionLabel = new JLabel("<html><body>Issuing Organization Number (ION): "
+	// 							+ ionNumber + "<br>"
+	// 							+ "ION Facility: " + ionFacility + "</body></html>"
+	// 							, SwingConstants.LEFT);
+	// private JLabel noIonLabel = new JLabel("No Issuing Organization Number (ION) set");
+	private JButton resetIonButton = new ResetIonButton(this).getResetIonButton();
+	// private JButton resetIonButton = new ResetIonButton().getResetIonButton();
 	private JButton updateIonButton = new JButton("Update Ion");
 	private TitledBorder ionBorder = BorderFactory.createTitledBorder(StyleGuide.TITLED_BORDER_OUTLINE, "Reset Issuing Organization Number (ION)");
 	private Border paddingBorder = StyleGuide.EMPTY_BORDER_MARGIN_VERTICAL;
@@ -44,19 +52,15 @@ public class OptionsIonPanel extends JPanel {
 
 		updateIonButton.addActionListener(updateIonListener);
 
-		ionLabelPanel.setPreferredSize(new Dimension(500, 30));
-		ionLabelPanel.add(ionLabel);
+		ionLabelPanel.setPreferredSize(new Dimension(500, 50));
+
+		ionLabelPanel.add(whichLabel());
 		ionLabelPanel.setBorder(StyleGuide.EMPTY_BORDER_ZERO);
 
-		ionButtonPanel.setPreferredSize(new Dimension(500, 30));
+		ionButtonPanel.setPreferredSize(new Dimension(500, 40));
 		ionButtonPanel.add(resetIonButton);
 		ionButtonPanel.add(updateIonButton);
 		ionButtonPanel.setBorder(StyleGuide.EMPTY_BORDER_ZERO);
-
-
-		// this.setPreferredSize(new Dimension(500, 160));
-		// this.add(ionLabelPanel);
-		// this.add(ionButtonPanel);
 
 		// layout
 		this.setLayout(new GridBagLayout());
@@ -101,14 +105,47 @@ public class OptionsIonPanel extends JPanel {
 		return parentFrame;
 	}
 
+	private JLabel whichLabel() {
+		String ionNumber = Prefs.getIonNumber();
+		String ionFacility = Prefs.getIonFacility();
+
+		JLabel ionLabel = new JLabel("<html><body>Issuing Organization Number (ION): "
+							+ ionNumber + "<br>"
+							+ "ION Facility: " + ionFacility + "</body></html>"
+							, SwingConstants.LEFT);
+		JLabel noIonLabel = new JLabel("No Issuing Organization Number (ION) set");
+
+		// which label should be displayed?
+		if(Prefs.getIonNumber().equals("")) {
+			return noIonLabel;
+		}
+		
+		return ionLabel;
+	}
+
 	public void updateOptionsTabIonPanel() {
 		Component[] components = ionLabelPanel.getComponents();
 		ionLabelPanel.remove(components[0]);
 
-		ionLabel.setText("Test again");
-		ionLabelPanel.add(ionLabel).revalidate();
+		// ionNumber = Prefs.getIonNumber();
+		// ionFacility = Prefs.getIonFacility();
+
+		// which label should be displayed?
+		// if(ionNumber.equals("")) {
+		// 	ionLabelPanel.add(noIonLabel).revalidate();
+		// } else {
+		// 	ionLabelPanel.add(ionLabel).revalidate();
+		// }
+
+		// JLabel line1 = new JLabel("<html><body>Issuing Organization Number (ION): "
+		// 						+ ionNumber + "<br>"
+		// 						+ "ION Facility: " + ionFacility + "</body></html>"
+		// 						, SwingConstants.LEFT);
+
+		// ionLabel.setText(line1);
+		ionLabelPanel.add(whichLabel()).revalidate();
 		ionLabelPanel.repaint();
 
-		if(Prefs.getIonNumber().equals("")) ionLabel.setText("No ION set");
+		// if(Prefs.getIonNumber().equals("")) ionLabel.setText("No ION set");
 	}
 }
