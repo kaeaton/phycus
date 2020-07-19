@@ -1,6 +1,4 @@
-package org.dash.freq.validations;
-
-// import java.lang.reflect.InvocationTargetException;
+package org.dash.freq.gui;
 
 import javax.swing.*;
 
@@ -10,16 +8,39 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.dash.freq.validations.IonCheck;
- 
-class IonTest{
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+// import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
-	private final IonCheck ionCheck = new IonCheck();
+import org.dash.freq.utilities.Prefs;
+ 
+class IonGuiTest{
+
+	@Test
+    public void shouldReturnGivenValueUsingBDDSemantics() {
+
+		//given
+		Prefs prefsMock = mock(Prefs.class);
+		given(prefsMock.getIonNumber()).willReturn("");
+		given(prefsMock.getIonFacility()).willReturn("");
+		// given(prefsMock.getIonNumber().willReturn("3553"));
+		// given(prefsMock.getIonNumber().willReturn("3553"));
+
+		//when
+		String emptyIonResponse = "";
+
+		//then
+		assertEquals(emptyIonResponse, prefsMock.getIonNumber());
+		assertEquals(emptyIonResponse, prefsMock.getIonFacility());
+	}
+
+	// private final IonCheck ionCheck = new IonCheck();
 	private final String[] ionPositiveTestArray = {"3553", "NMDP-National Marrow Donor Program/Be The Match"};
 	private final String[] ionNegativeTestArray = {"", ""};
 	
 	@Test
-	@DisplayName("IonCheck positive test")
+	@DisplayName("IonCheck.java positive test - requires internet to test")
 	void objectReturnsArrayOnMatch() {
  		// assertEquals(2, ionCheck.checkIon("3553").length, "NMDP ION match array length");
  		// assertArrayEquals(ionPositiveTestArray, ionCheck.checkIon("3553"), "Found NMDP ION match array");
@@ -28,7 +49,7 @@ class IonTest{
 	}
 
 	@Test
-	@DisplayName("IonCheck negative test")
+	@DisplayName("IonCheck.java negative test -  require internet to test")
 	void objectReturnsNullOnMatch() {
  		// assertArrayEquals(ionNegativeTestArray, ionCheck.checkIon("0000"), "Found NMDP Ion Match Array");
  		// assertEquals("", ionCheck.checkIon("0000")[0], "Returned empty ION on bad data");

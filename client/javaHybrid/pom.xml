@@ -56,6 +56,8 @@
     <jodatime-version>2.9.9</jodatime-version>
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <junit-version>4.12</junit-version>
+    
+    <manifold.version>2020.1.20</manifold.version>
   </properties>
   <build>
     <pluginManagement>
@@ -92,6 +94,10 @@
           <configuration>
             <source>${maven.compile.source}</source>
             <target>${maven.compile.target}</target>
+                <compilerArgs>
+                    <!-- Configure manifold plugin-->
+                    <arg>-Xplugin:Manifold</arg>
+                </compilerArgs>
           </configuration>
         </plugin>
         <plugin>
@@ -229,6 +235,19 @@
   			<artifactId>joda-time</artifactId>
   			<version>${jodatime-version}</version>
   		</dependency>
+
+      <dependency>
+            <groupId>systems.manifold</groupId>
+            <artifactId>manifold</artifactId>
+            <version>${manifold.version}</version>
+            <scope>provided</scope>
+      </dependency>
+      <dependency>
+            <groupId>systems.manifold</groupId>
+            <artifactId>manifold-rt</artifactId>
+            <version>${manifold.version}</version>
+      </dependency>
+
   	</dependencies>
   </dependencyManagement>
 
