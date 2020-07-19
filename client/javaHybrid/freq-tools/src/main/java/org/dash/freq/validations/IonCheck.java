@@ -41,40 +41,31 @@ public class IonCheck {
 	
 	public String[] checkIon(String enteredIon) {
 		String[] results = {"", ""};
-		// try {
+		
+		// cycle through the nodes
+		for (int i = 0; i < nList.getLength(); i++) {
+
+			Node nNode = nList.item(i);
 			
-			// collect all the Issuing_Organization nodes
-			// NodeList nList = doc.getElementsByTagName("Issuing_Organization");
+			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+				// get elements at that node
+				Element eElement = (Element) nNode;
+
+				System.out.println("ION: " + eElement.getElementsByTagName("ION").item(0).getTextContent());
+				System.out.println("ION name: " + eElement.getElementsByTagName("Issuing_Organization_Name").item(0).getTextContent());
 			
-			// cycle through the nodes
-			for (int i = 0; i < nList.getLength(); i++) {
-
-				Node nNode = nList.item(i);
-				
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-					// get elements at that node
-					Element eElement = (Element) nNode;
-
-					System.out.println("ION: " + eElement.getElementsByTagName("ION").item(0).getTextContent());
-					System.out.println("ION name: " + eElement.getElementsByTagName("Issuing_Organization_Name").item(0).getTextContent());
-				
-					// if the ION entered matches the ION in a node, assign to results, break the loop
-					if(enteredIon.equals(eElement.getElementsByTagName("ION").item(0).getTextContent())) {
-						results[0] = eElement.getElementsByTagName("ION").item(0).getTextContent();
-						results[1] = eElement.getElementsByTagName("Issuing_Organization_Name").item(0).getTextContent();
-						break;
-					}
+				// if the ION entered matches the ION in a node, assign to results, break the loop
+				if(enteredIon.equals(eElement.getElementsByTagName("ION").item(0).getTextContent())) {
+					results[0] = eElement.getElementsByTagName("ION").item(0).getTextContent();
+					results[1] = eElement.getElementsByTagName("Issuing_Organization_Name").item(0).getTextContent();
+					break;
 				}
 			}
-			
-			
-			
-			// return results
-			return results;
-			
-		// } catch (Exception ex) { System.out.println("creating the URL for ION check failed: " + ex); }
-		// return results;
+		}
+
+		// return results
+		return results;
 	}
 
 	public void close() {
@@ -84,7 +75,7 @@ public class IonCheck {
 			input.close();
 
 			// nullify and garbage collect the parsed XML document out of memory
-			if(doc != null){
+			if (doc != null){
 	            doc = null;
 	            System.runFinalization();
 	            System.gc();

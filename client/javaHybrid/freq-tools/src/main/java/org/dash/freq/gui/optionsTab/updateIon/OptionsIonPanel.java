@@ -54,6 +54,7 @@ public class OptionsIonPanel extends JPanel {
 
 		ionLabelPanel.setPreferredSize(new Dimension(500, 50));
 
+		// which label to set determined by method below
 		ionLabelPanel.add(whichLabel());
 		ionLabelPanel.setBorder(StyleGuide.EMPTY_BORDER_ZERO);
 
@@ -127,25 +128,7 @@ public class OptionsIonPanel extends JPanel {
 		Component[] components = ionLabelPanel.getComponents();
 		ionLabelPanel.remove(components[0]);
 
-		// ionNumber = Prefs.getIonNumber();
-		// ionFacility = Prefs.getIonFacility();
-
-		// which label should be displayed?
-		// if(ionNumber.equals("")) {
-		// 	ionLabelPanel.add(noIonLabel).revalidate();
-		// } else {
-		// 	ionLabelPanel.add(ionLabel).revalidate();
-		// }
-
-		// JLabel line1 = new JLabel("<html><body>Issuing Organization Number (ION): "
-		// 						+ ionNumber + "<br>"
-		// 						+ "ION Facility: " + ionFacility + "</body></html>"
-		// 						, SwingConstants.LEFT);
-
-		// ionLabel.setText(line1);
 		ionLabelPanel.add(whichLabel()).revalidate();
 		ionLabelPanel.repaint();
-
-		// if(Prefs.getIonNumber().equals("")) ionLabel.setText("No ION set");
 	}
 }

@@ -30,17 +30,13 @@ public class IonPanel {
 
 		ionPanel = new JPanel();
 
-		String ionNumber = Prefs.getIonNumber();
-		String ionFacility = Prefs.getIonFacility();
-
-		JLabel line1 = new JLabel("<html><body>Issuing Organization Number (ION): "
-								+ ionNumber + "<br>"
-								+ "ION Facility: " + ionFacility + "</body></html>"
-								, SwingConstants.LEFT);
-		line1.setFont(StyleGuide.LABEL_FONT);
 		gapPanel.setPreferredSize(new Dimension(20, 60));
 		ionPanel.add(gapPanel);
-		ionPanel.add(line1);
+
+		JLabel label = whichLabel();
+		label.setFont(StyleGuide.LABEL_FONT);
+
+		ionPanel.add(label);
 
 		return ionPanel;
 	}
@@ -53,6 +49,26 @@ public class IonPanel {
 		ionHousingPanel.add(ionPanel).revalidate();
 		ionHousingPanel.repaint();
 
-		if(Prefs.getIonNumber().equals("")) ionPanel.setVisible(false);
+		// if(Prefs.getIonNumber().equals("")) ionPanel.setVisible(false);
+	}
+
+	private JLabel whichLabel() {
+		String ionNumber = Prefs.getIonNumber();
+		String ionFacility = Prefs.getIonFacility();
+
+		JLabel ionLabel = new JLabel("<html><body>Issuing Organization Number (ION): "
+							+ ionNumber + "<br>"
+							+ "ION Facility: " + ionFacility + "</body></html>"
+							, SwingConstants.LEFT);
+		JLabel noIonLabel = new JLabel("<html><body>Issuing Organization Number (ION) not set.<br>"
+								+ "If you have one, it may be set in options.</body></html>"
+								, SwingConstants.LEFT);
+		
+		// which label should be displayed?
+		if(Prefs.getIonNumber().equals("")) {
+			return noIonLabel;
+		}
+		
+		return ionLabel;
 	}
 }
