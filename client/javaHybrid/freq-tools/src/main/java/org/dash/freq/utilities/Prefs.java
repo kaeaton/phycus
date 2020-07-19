@@ -106,14 +106,6 @@ public class Prefs {
 		preferences.put("PHY_ION_NAME", ionName);
 	}
 
-	// sanity check so program knows if there's an ION to display
-	public static Boolean isThereAnIon() {
-		Boolean ionStatus = preferences.getBoolean("PHY_ION", false);
-
-		System.out.println("Is there an ION? " + ionStatus);
-		return ionStatus;
-	}
-
 	public static void resetIon() {
 		try {
 			preferences.remove("PHY_ION_NUMBER");
