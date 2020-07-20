@@ -26,15 +26,7 @@ import org.dash.freq.utilities.StyleGuide;
 
 public class OptionsIonPanel extends JPanel {
 
-	// private String ionNumber = Prefs.getIonNumber();
-	// private String ionFacility = Prefs.getIonFacility();
-	// private JLabel ionLabel = new JLabel("<html><body>Issuing Organization Number (ION): "
-	// 							+ ionNumber + "<br>"
-	// 							+ "ION Facility: " + ionFacility + "</body></html>"
-	// 							, SwingConstants.LEFT);
-	// private JLabel noIonLabel = new JLabel("No Issuing Organization Number (ION) set");
 	private JButton resetIonButton = new ResetIonButton(this).getResetIonButton();
-	// private JButton resetIonButton = new ResetIonButton().getResetIonButton();
 	private JButton updateIonButton = new JButton("Update Ion");
 	private TitledBorder ionBorder = BorderFactory.createTitledBorder(StyleGuide.TITLED_BORDER_OUTLINE, "Reset Issuing Organization Number (ION)");
 	private Border paddingBorder = StyleGuide.EMPTY_BORDER_MARGIN_VERTICAL;
@@ -44,7 +36,6 @@ public class OptionsIonPanel extends JPanel {
 
 	private Frame ionParentFrame = findParentFrame(this);
 	private UpdateIonPopup updateIonPopup;
-	// private UpdateIonPopup updateIonPopup = new UpdateIonPopup(ionParentFrame, "test", ionPanel);
 
 	public OptionsIonPanel() { }
 
@@ -89,8 +80,6 @@ public class OptionsIonPanel extends JPanel {
 		public void actionPerformed(ActionEvent evt) {
 			updateIonPopup = new UpdateIonPopup(ionParentFrame, ionPanel);
 			updateIonPopup.setVisible(true);
-
-			// load ION xml in background
 		}
 	};
 
