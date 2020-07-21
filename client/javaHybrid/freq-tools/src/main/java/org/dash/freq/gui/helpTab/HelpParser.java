@@ -1,10 +1,13 @@
 
 package org.dash.freq.gui.helpTab;
 
-import java.net.URL;
-import java.nio.file.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.*;
 
 import org.commonmark.Extension;
 import org.commonmark.node.*;
@@ -13,7 +16,6 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
 
-    
 /**
  *
  * @author kaeaton
@@ -22,20 +24,22 @@ public class HelpParser {
 	
 	public HelpParser(){ }
 	
-	public static String getHelpText() throws Exception
+	public String getHelpText() throws Exception
 	{
 		String helpText = "";
 		String parsedText = "";
 
 		try
 		{
-			// find help.txt from resources in the jar
-			URL fileLocation = ClassLoader.getSystemClassLoader().getResource("help.txt");
-			Path filePath= Paths.get(fileLocation.toURI());
-			
-			// convert that file into a string
-			helpText = new String(Files.readAllBytes(filePath));
-			
+			// find helpMarkdown.txt from resources in the jar. This has to be done as a stream because
+			// we're compiling down to a single jar file. (There is no longer a URL to the file.)
+			InputStream fileStream = this.getClass().getClassLoader().getResourceAsStream("helpMarkdown.txt");
+
+			// convert that stream into a string
+			helpText = new BufferedReader(new InputStreamReader(fileStream, StandardCharsets.UTF_8))
+										.lines()
+										.collect(Collectors.joining("\n"));
+
 			// add heading anchor extension to the parser
 			List<Extension> extensions = Arrays.asList(HeadingAnchorExtension.create());
 			
@@ -53,7 +57,7 @@ public class HelpParser {
 		} 
 		catch (Exception ex) 
 		{
-			System.out.println(ex);
+			System.out.println("HelpParser: " + ex);
 		}
 		
 		return parsedText;

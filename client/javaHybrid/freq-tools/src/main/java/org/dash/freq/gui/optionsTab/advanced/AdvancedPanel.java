@@ -10,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.dash.freq.gui.optionsTab.advanced.databaseLocationPopup.*;
 import org.dash.freq.utilities.StyleGuide;
 
 public class AdvancedPanel {

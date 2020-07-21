@@ -134,7 +134,7 @@ The genotyping group ID is an optional header tag. It identifies the facility th
 
 > ion=9576
 
-The Issuing Organization Number (ION) is an optional header tag that overrides the default set in the program (if one is set in the program. This ID can be changed in the [options tab](#ionID)\).
+The Issuing Organization Number (ION) is an optional header tag that overrides the default set in the program. (The ION defaults to the ID initially entered when starting the program for the first time. This ID can be changed in the [options tab](#ionID)\).
 
 [back](#top)
 

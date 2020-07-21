@@ -14,7 +14,7 @@ public class UploadFileChooser {
 
 	public UploadFileChooser() { }
 
-	public JFileChooser getUploadFileChooser() {
+	public JFileChooser getUploadFileChooser() {		
 		uploadFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 		return uploadFileChooser;

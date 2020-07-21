@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import org.dash.freq.gui.optionsTab.advanced.databaseLocationPopup.*;
 import org.dash.freq.gui.optionsTab.OptionsTabClassInstantiations;
 import org.dash.freq.utilities.Prefs;
 

@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import org.dash.freq.gui.optionsTab.advanced.databaseLocationPopup.*;
+import org.dash.freq.gui.optionsTab.advanced.*;
 import org.dash.freq.gui.optionsTab.customReceiptPath.*;
 import org.dash.freq.gui.optionsTab.updateIon.*;
 // import org.dash.freq.gui.optionsTab.updateIon.updateIonPopup.*;

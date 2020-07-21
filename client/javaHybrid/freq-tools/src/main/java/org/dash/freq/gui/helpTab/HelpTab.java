@@ -2,23 +2,27 @@ package org.dash.freq.gui.helpTab;
 
 import java.awt.Dimension;
 
-import java.util.prefs.Preferences;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.dash.freq.gui.ExitButton;
 
 
 public class HelpTab extends JPanel {
-	// private Preferences prefs = Preferences.userNodeForPackage(Gui.class);
+
+	private JScrollPane helpEditorPaneScrollPane = new JScrollPane();
+	private JEditorPane helpEditorPane = new HelpEditorPane().getHelpEditorPane();
 
 	public HelpTab() {
-		JLabel selectAllLabelGfe = new JLabel("Check all");
-		this.add(selectAllLabelGfe);
+
+		helpEditorPaneScrollPane.setViewportView(helpEditorPane);
+		helpEditorPaneScrollPane.setPreferredSize(new Dimension(530, 700));
+		this.add(helpEditorPaneScrollPane);
 
 		JPanel bottomButtons = new JPanel();
+		bottomButtons.setPreferredSize(new Dimension(500, 60));
 		JButton exitButton = new ExitButton().getExitButton();
 		bottomButtons.add(exitButton);
 

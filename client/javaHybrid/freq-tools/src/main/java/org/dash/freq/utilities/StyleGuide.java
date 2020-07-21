@@ -12,7 +12,7 @@ public class StyleGuide {
 
 	public static final Font LABEL_FONT = new Font("Sans_serif", Font.PLAIN, 14);
 	public static final Font TEXT_AREA_FONT = new Font("Sans_serif", Font.PLAIN, 13);
-	public static final Font MONOSPACE_FONT = new Font("Courier New", 0, 13);
+	public static final Font MONOSPACE_FONT = new Font("Courier New", Font.PLAIN, 13);
 
 	public static final Border TITLED_BORDER_OUTLINE = BorderFactory.createLineBorder(Color.GRAY);
 	public static final Border EMPTY_BORDER_MARGIN_VERTICAL = new EmptyBorder(10,0,10,0);

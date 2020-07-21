@@ -1,35 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.dash.freq.view;
-
+package org.dash.freq.gui.popTab;
 
 import io.swagger.client.model.PopulationData;
 import java.awt.Color;
 import java.util.List;
+
+import javax.swing.JTextPane;
+
+import org.dash.freq.utilities.AppendText;
 
 /**
  *
  * @author katrinaeaton
  */
 public class PopulationList {
-	public PopulationList ()
-	{
-		
-	}
+
+	private PopTabClassInstantiations popTabClassInstantiations = PopTabClassInstantiations.getPopTabClassInstantiationsInstance();
+	private JTextPane popResultsTextPane = popTabClassInstantiations.getPopResultsTextPaneInstance();
+
+	public PopulationList() { }
 	
 	public void updatePopulation (String searchTerms, List<PopulationData> pops)
 	{
 		// clear text pane
-		PhycusGui.popResultsTextPane.setText("");
+		popResultsTextPane.setText("");
 		
 		// list the populations
 		for (PopulationData pop : pops) {
-			AppendText.appendToPane(PhycusGui.popResultsTextPane, (String.format("%-25s", pop.getName())), Color.BLACK);
-			AppendText.appendToPane(PhycusGui.popResultsTextPane, pop.getDescription(), Color.BLACK);
-			AppendText.appendToPane(PhycusGui.popResultsTextPane, System.lineSeparator(), Color.BLACK);
+			AppendText.appendToPane(popResultsTextPane, (String.format("%-25s", pop.getName())), Color.BLACK);
+			AppendText.appendToPane(popResultsTextPane, pop.getDescription(), Color.BLACK);
+			AppendText.appendToPane(popResultsTextPane, System.lineSeparator(), Color.BLACK);
 		}
 	}
 }

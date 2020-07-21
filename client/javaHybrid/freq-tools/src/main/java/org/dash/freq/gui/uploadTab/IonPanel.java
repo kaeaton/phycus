@@ -61,7 +61,7 @@ public class IonPanel {
 							+ "ION Facility: " + ionFacility + "</body></html>"
 							, SwingConstants.LEFT);
 		JLabel noIonLabel = new JLabel("<html><body>Issuing Organization Number (ION) not set.<br>"
-								+ "If you have one, it may be set in options.</body></html>"
+								+ "If you have one, it can be set in options.</body></html>"
 								, SwingConstants.LEFT);
 		
 		// which label should be displayed?
