@@ -1,5 +1,6 @@
 package org.dash.freq.gui.popTab;
 
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -21,6 +22,7 @@ public class PopTabClassInstantiations {
 	private JTextField popSearchTextField = new PopSearchTextField().getPopSearchTextField();
 	private JTextPane popResultsTextPane =  new PopResultsTextPane().getPopResultsTextPane();
 	private JTextPane popNotificationsTextPane =  new PopNotificationsTextPane().getPopNotificationsTextPane();
+	// private JButton popCreateButton =  new PopCreateButton().getPopCreateButton();
 
 	private PopTabClassInstantiations() { }
 
@@ -44,4 +46,8 @@ public class PopTabClassInstantiations {
 	public JTextPane getPopNotificationsTextPaneInstance() {
 		return popNotificationsTextPane;
 	}
+
+	// public JButton getPopCreateButtonInstance() {
+	// 	return popCreateButton;
+	// }
 }

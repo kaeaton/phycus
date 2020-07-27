@@ -1,6 +1,9 @@
 package org.dash.freq.gui.popTab;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,15 +21,51 @@ public class PopTab extends JPanel {
 
 	private JTextField popSearchTextField = popTabClassInstantiations.getPopSearchTextFieldInstance();
 	private JTextPane popResultsTextPane = popTabClassInstantiations.getPopResultsTextPaneInstance();
+	private JTextPane popNotificationsTextPane = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
+
+	private JButton popCreateButton =  new PopCreateButton().getPopCreateButton();
+
+	private JLabel popLabel = new JLabel("Population name:");
 
 	public PopTab() {
-		JLabel selectAllLabelGfe = new JLabel("Check all");
-		this.add(popSearchTextField);
+
+		JPanel popSearchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		popSearchPanel.add(popLabel);
+		popSearchPanel.add(popSearchTextField);
+
+		JScrollPane popResultsScrollPane = new JScrollPane(popResultsTextPane);
+		popResultsScrollPane.setPreferredSize(new Dimension(500, 450));
+
+		JScrollPane popNotificationsScrollPane = new JScrollPane(popNotificationsTextPane);
+		popNotificationsScrollPane.setPreferredSize(new Dimension(500, 200));
 
 		JPanel bottomButtons = new JPanel();
 		JButton exitButton = new ExitButton().getExitButton();
+		bottomButtons.add(popCreateButton);
 		bottomButtons.add(exitButton);
 
-		this.add(bottomButtons);
+		// layout
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.NORTH;
+		c.weightx = 0.5;
+		
+		// line 0
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(popSearchPanel, c);
+		
+		// line 1
+		c.gridy = 1;
+		this.add(popResultsScrollPane, c);
+
+		// line 2
+		c.gridy = 2;
+		this.add(popNotificationsScrollPane, c);
+
+		// line 3
+		c.gridy = 3;
+		c.fill = GridBagConstraints.BOTH;
+		this.add(bottomButtons, c);
 	}
 }
