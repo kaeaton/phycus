@@ -11,7 +11,7 @@ import org.dash.freq.gui.helpTab.HelpParser;
 
 class HelpTabTest{
 
-	private final String beginningOfText = "<p><a name=\"top\">"; // 17 characters
+	private final String expectedBeginningOfText = "<p><a name=\"top\">"; // First 17 characters
 	private String processedHelpText = getProcessedText();
 
 	private String getProcessedText() {
@@ -29,6 +29,6 @@ class HelpTabTest{
 	@Test
 	@DisplayName("Processing the helpMarkdown text file via HelpParser")
 	void processingTheHelpMarkdownTextFile() {
- 		assertEquals(beginningOfText, processedHelpText, "Get the helpMarkdown text file from resources and process");
+ 		assertEquals(expectedBeginningOfText, processedHelpText, "Get the helpMarkdown text file from resources and process");
 	}
 }

@@ -172,7 +172,7 @@ Verbose reporting also determines what is reported in the receipt file.
 <a name="ionID"></a>
 ### 3.3 Issuing Organization Number (ION)
 
-This variable is initially set when the program is started for the first time. It can be changed in options, and can also be overwritten by adding an optional [header tag](#ion) to the file. If your facility does not have one, leave the field blank.
+This variable can be changed in options, and can also be overwritten by adding an optional [header tag](#ion) to the file. If your facility does not have one, leave the field blank.
 
 [back](#top)
 
