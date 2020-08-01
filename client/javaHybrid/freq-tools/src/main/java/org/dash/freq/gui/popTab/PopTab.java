@@ -22,6 +22,7 @@ public class PopTab extends JPanel {
 	private JTextField popSearchTextField = popTabClassInstantiations.getPopSearchTextFieldInstance();
 	private JTextPane popResultsTextPane = popTabClassInstantiations.getPopResultsTextPaneInstance();
 	private JTextPane popNotificationsTextPane = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
+	private UpdatePopulationList updatePopulationList = popTabClassInstantiations.getUpdatePopulationListInstance();
 
 	private JButton popCreateButton =  new PopCreateButton().getPopCreateButton();
 
@@ -67,5 +68,9 @@ public class PopTab extends JPanel {
 		c.gridy = 3;
 		c.fill = GridBagConstraints.BOTH;
 		this.add(bottomButtons, c);
+	}
+
+	public void startDownloadOnTabSelection() {
+		updatePopulationList.downloadAllPopulations();
 	}
 }

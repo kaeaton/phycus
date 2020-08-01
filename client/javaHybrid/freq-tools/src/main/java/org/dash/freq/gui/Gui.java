@@ -2,6 +2,8 @@ package org.dash.freq.gui;
 
 import java.awt.Dimension;
 
+import java.util.List;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JFrame;
@@ -13,11 +15,21 @@ import org.dash.freq.gui.labelTab.*;
 import org.dash.freq.gui.optionsTab.*;
 import org.dash.freq.gui.popTab.*;
 import org.dash.freq.gui.uploadTab.*;
+import org.dash.freq.uploadData.*;
 import org.dash.freq.utilities.Prefs;
+
+import io.swagger.client.model.PopulationData;
 
 public class Gui extends JFrame {
 
 	public static JTabbedPane parentTabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+
+	private UploadTab uploadTab = new UploadTab();
+	private PopTab popTab = new PopTab();
+	private LabelTab labelTab = new LabelTab();
+	private DoiTab doiTab = new DoiTab();
+	private OptionsTab optionsTab = new OptionsTab();
+	private HelpTab helpTab = new HelpTab();
 
 	public Gui() {
 		// jFrame settings
@@ -28,30 +40,22 @@ public class Gui extends JFrame {
 		parentTabbedPane.addChangeListener(whichTabListener);
 
 		// upload tab
-		UploadTab uploadTab = new UploadTab();
 		parentTabbedPane.addTab("Upload Files", null, uploadTab, "Upload filed to the database");
 		
 		// population tab
-		PopTab popTab = new PopTab();
 		parentTabbedPane.addTab("Populations", null, popTab, "Search available populations");
 		
 		// label tab
-		LabelTab labelTab = new LabelTab();
 		parentTabbedPane.addTab("Labels", null, labelTab, "Search available labels");
 		
 		// DOI converter tab
-		DoiTab doiTab = new DoiTab();
 		parentTabbedPane.addTab("DOI converter", null, doiTab, "Convert publication IDs");
 		
 		// options tab
-		OptionsTab optionsTab = new OptionsTab();
 		parentTabbedPane.addTab("Options", null, optionsTab, "Program options");
 		
 		// help tab
-		HelpTab helpTab = new HelpTab();
 		parentTabbedPane.addTab("Help", null, helpTab, "Help");
-		
-
 
 		this.pack();
 		this.setLocationRelativeTo(null);
@@ -64,35 +68,18 @@ public class Gui extends JFrame {
 		@Override
 		public void stateChanged(ChangeEvent evt) {
 			int selectedIndex = parentTabbedPane.getSelectedIndex();
-			Prefs.setCurrentTab(selectedIndex);
+
+			int popTabIndex = 1;
+			int labelTabIndex = 2;
+
+			if (selectedIndex == popTabIndex) {
+				popTab.startDownloadOnTabSelection();
+			}
+
+			if (selectedIndex == labelTabIndex) {
+				// labelTab.startDownloadOnTabSelection();
+			}
+			// Prefs.setCurrentTab(selectedIndex);
 		}
 	};
-
-	private void startPopTab(int selectedIndex) {
-		int popTabIndex = 1;
-
-		if (selectedIndex == popTabIndex) {
-			// clear pop textpane
-			// popResultsTextPane.setText("");
-			// AppendText.appendToPane(PhycusGui.popResultsTextPane, "Please wait", Color.BLACK);
-			// AppendText.appendToPane(PhycusGui.popResultsTextPane, System.lineSeparator(), Color.BLACK);
-
-			// populate text pane
-			// new Thread(getPops).start();
-		}
-	}
-
-	private void startLabelTab(int selectedIndex) {
-		int labelTabIndex = 2;
-
-		if (selectedIndex == labelTabIndex) {
-			// clear pop textpane
-			// popResultsTextPane.setText("");
-			// AppendText.appendToPane(PhycusGui.popResultsTextPane, "Please wait", Color.BLACK);
-			// AppendText.appendToPane(PhycusGui.popResultsTextPane, System.lineSeparator(), Color.BLACK);
-
-			// populate text pane
-			// new Thread(getPops).start();
-		}
-	}
 }

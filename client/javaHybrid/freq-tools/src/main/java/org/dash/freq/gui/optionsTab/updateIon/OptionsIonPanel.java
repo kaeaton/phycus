@@ -8,7 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Window;
+// import java.awt.Window;
 
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -18,9 +18,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+// import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.dash.freq.utilities.FindParentFrame;
 import org.dash.freq.utilities.Prefs;
 import org.dash.freq.utilities.StyleGuide;
 
@@ -34,7 +35,8 @@ public class OptionsIonPanel extends JPanel {
 	private JPanel ionButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	private JPanel ionLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-	private Frame ionParentFrame = findParentFrame(this);
+	// private Frame ionParentFrame = findParentFrame(this);
+	private Frame ionParentFrame = FindParentFrame.getParentFrame(this);
 	private UpdateIonPopup updateIonPopup;
 
 	public OptionsIonPanel() { }
@@ -83,17 +85,17 @@ public class OptionsIonPanel extends JPanel {
 		}
 	};
 
-	private Frame findParentFrame(JPanel childPanel) {
-		Window parentWindow = SwingUtilities.windowForComponent(childPanel); 
+	// private Frame findParentFrame(JPanel childPanel) {
+	// 	Window parentWindow = SwingUtilities.windowForComponent(childPanel); 
 
-		// or pass 'this' if you are inside the panel
-		Frame parentFrame = null;
-		if (parentWindow instanceof Frame) {
-		    parentFrame = (Frame)parentWindow;
-		}
+	// 	// or pass 'this' if you are inside the panel
+	// 	Frame parentFrame = null;
+	// 	if (parentWindow instanceof Frame) {
+	// 	    parentFrame = (Frame)parentWindow;
+	// 	}
 
-		return parentFrame;
-	}
+	// 	return parentFrame;
+	// }
 
 	private JLabel whichLabel() {
 		String ionNumber = Prefs.getIonNumber();

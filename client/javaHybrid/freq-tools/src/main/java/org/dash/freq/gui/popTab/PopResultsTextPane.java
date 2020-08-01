@@ -4,6 +4,8 @@ import java.awt.Font;
 
 import javax.swing.JTextPane;
 
+import org.dash.freq.utilities.StyleGuide;
+
 public class PopResultsTextPane {
 
 	private JTextPane popResultsTextPane = new JTextPane();
@@ -12,7 +14,7 @@ public class PopResultsTextPane {
 
 	public JTextPane getPopResultsTextPane() {
 		popResultsTextPane.setFocusable(true);
-		popResultsTextPane.setFont(new Font("Courier New", 0, 13));
+		popResultsTextPane.setFont(StyleGuide.MONOSPACE_FONT);
 
 		return popResultsTextPane;
 

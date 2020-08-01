@@ -8,8 +8,11 @@ import javax.swing.JTextField;
 public class PopSearchTextField implements KeyListener {
 
 	private JTextField popSearchTextField = new JTextField();
+	private UpdatePopulationList updatePopulationList; // = new UpdatePopulationList();
 
-	public PopSearchTextField() { }
+	public PopSearchTextField(UpdatePopulationList updatePopList) {
+		this.updatePopulationList = updatePopList;
+	}
 
 	public JTextField getPopSearchTextField() {
 		popSearchTextField.setFocusable(true);
@@ -23,15 +26,11 @@ public class PopSearchTextField implements KeyListener {
 
 	public void keyReleased(KeyEvent evt) {											   
 		String popSearchName = popSearchTextField.getText();
-		// popList.updatePopulation(popSearchName, populations);
+		updatePopulationList.updatePopulationsDisplayed(popSearchName);
 		System.out.println("Key released: " + popSearchName);
 	}
 
 	public void keyPressed(KeyEvent evt) { }  
   
 	public void keyTyped(KeyEvent evt) { }
-
-	public String getThePopSearchTerm() {
-		return popSearchTextField.getText();
-	}
 }

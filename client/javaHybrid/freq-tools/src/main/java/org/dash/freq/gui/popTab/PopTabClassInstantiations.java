@@ -19,10 +19,12 @@ public class PopTabClassInstantiations {
 	// static variable single_instance of type Singleton 
 	private static PopTabClassInstantiations single_instance = null;
 
-	private JTextField popSearchTextField = new PopSearchTextField().getPopSearchTextField();
 	private JTextPane popResultsTextPane =  new PopResultsTextPane().getPopResultsTextPane();
 	private JTextPane popNotificationsTextPane =  new PopNotificationsTextPane().getPopNotificationsTextPane();
-	// private JButton popCreateButton =  new PopCreateButton().getPopCreateButton();
+
+	private UpdatePopulationList updatePopulationList = new UpdatePopulationList(popResultsTextPane);
+	private JTextField popSearchTextField = new PopSearchTextField(updatePopulationList).getPopSearchTextField();
+	
 
 	private PopTabClassInstantiations() { }
 
@@ -33,7 +35,6 @@ public class PopTabClassInstantiations {
 
 		return single_instance; 
 	}
-
 
 	public JTextField getPopSearchTextFieldInstance() {
 		return popSearchTextField;
@@ -47,7 +48,7 @@ public class PopTabClassInstantiations {
 		return popNotificationsTextPane;
 	}
 
-	// public JButton getPopCreateButtonInstance() {
-	// 	return popCreateButton;
-	// }
+	public UpdatePopulationList getUpdatePopulationListInstance() {
+		return updatePopulationList;
+	}
 }
