@@ -8,7 +8,7 @@ import org.dash.freq.utilities.StyleGuide;
 
 public class PopResultsTextPane {
 
-	private JTextPane popResultsTextPane = new JTextPane();
+	private static JTextPane popResultsTextPane = new JTextPane();
 
 	public PopResultsTextPane() { }
 

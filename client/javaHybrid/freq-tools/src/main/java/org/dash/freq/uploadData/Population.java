@@ -27,23 +27,27 @@ import javax.swing.JTextPane;
 
 import org.dash.freq.exceptions.*;
 import org.dash.freq.gui.Gui;
-import org.dash.freq.gui.uploadTab.*;
+// import org.dash.freq.gui.popTab.*;
+// import org.dash.freq.gui.uploadTab.*;
 import org.dash.freq.utilities.AppendText;
 
 /**
  *
  * @author katrinaeaton
  */
-public class Population 
-{
+public class Population {
 	
 	private final String url = new String("http://localhost:8080");
-	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
-	private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
-	private List<PopulationData> populations;
+	// private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	// private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
+	// private List<PopulationData> populations;
+
+	// private PopTabClassInstantiations popTabClassInstantiations = PopTabClassInstantiations.getPopTabClassInstantiationsInstance();
+	// private JTextPane popResultsTextPane = popTabClassInstantiations.getPopResultsTextPaneInstance();
+	// private JTextPane popNotificationsTextPane = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
 
 //	public List<PopulationData> popList = new ArrayList<>();
-//	ApiClient apiClient = new ApiClient();
+	ApiClient apiClient;
 //	private DefaultApi api;
 //	private PopulationApi popApi;
 	
@@ -52,7 +56,7 @@ public class Population
 	public List<PopulationData> getPopulationsFromDB() throws DBConnectionException {
 
 		// open connection to the db
-		ApiClient apiClient = new ApiClient();
+		apiClient = new ApiClient();
 		apiClient.setConnectTimeout(60000);
 		apiClient.setReadTimeout(60000);
 		apiClient.setWriteTimeout(60000);
@@ -76,14 +80,14 @@ public class Population
 			System.out.println("popList: " + popList);
 			
 			
-			if (popList == null || popList.isEmpty())
-			{
-				AppendText.appendToPane(uploadResultsTextPane, "No populations retrieved from the database", Color.RED);
-				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
-				AppendText.appendToPane(uploadResultsTextPane, "Check Populations tab to confirm populations exist", Color.RED);
-				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
-				throw new NullPointerException("No populations retrieved from the database"); 
-			}
+			// if (popList == null || popList.isEmpty())
+			// {
+			// 	AppendText.appendToPane(popResultsTextPane, "No populations retrieved from the database", Color.RED);
+			// 	AppendText.appendToPane(popResultsTextPane, System.lineSeparator(), Color.BLACK);
+			// 	// AppendText.appendToPane(uploadResultsTextPane, "Check Populations tab to confirm populations exist", Color.RED);
+			// 	// AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+			// 	// throw new NullPointerException("No populations retrieved from the database"); 
+			// }
 		}
 		catch (ApiException ex) 
 		{ 
@@ -149,16 +153,8 @@ public class Population
 
 		// try to upload the new population
 		try { popApi.createPopulation(populationRequest); }
-		catch (Exception ex) { ex.printStackTrace(); }
+		catch (Exception ex) { 
+			System.out.println("Population.java: Error creating the new population: " + ex);
+			ex.printStackTrace(); }
 	}
-
-	public Runnable getPopulations = new Runnable() 
-	{
-		public void run() {
-			
-			try {populations = getPopulationsFromDB();}
-			catch (Exception ex){ ex.printStackTrace(); }
-			// popList.updatePopulation("", populations);
-		}
-	};
 }

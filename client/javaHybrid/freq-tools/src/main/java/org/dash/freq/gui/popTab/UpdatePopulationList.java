@@ -1,6 +1,7 @@
 package org.dash.freq.gui.popTab;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextPane;
@@ -20,7 +21,7 @@ public class UpdatePopulationList {
 	private Population populationClass = new Population();
 
 	private List<PopulationData> populationsData;
-	private List<PopulationData> filteredPopulationsData;
+	private List<PopulationData> filteredPopulationsData = new ArrayList();
 	private JTextPane popResultsTextPane;
 
 	public UpdatePopulationList(JTextPane popResultsTP) {
@@ -31,7 +32,7 @@ public class UpdatePopulationList {
 		// clear text pane
 		popResultsTextPane.setText("");
 		
-		filteredPopulationsData = filterPopulationData(searchTerm, populationsData);
+		// filteredPopulationsData = filterPopulationData(searchTerm, populationsData);
 
 		if(filteredPopulationsData.isEmpty() || filteredPopulationsData == null) {
 

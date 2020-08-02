@@ -43,7 +43,7 @@ public class UploadTab extends JPanel {
 		JPanel resultsPanel = new JPanel();
 		resultsPanel.setPreferredSize(new Dimension(500, 240));
 		JScrollPane uploadResultsScrollPane = new JScrollPane(uploadResultsTextPane);
-		uploadResultsScrollPane.setPreferredSize(new Dimension(500, 240));
+		uploadResultsScrollPane.setPreferredSize(new Dimension(500, 220));
 		resultsPanel.add(uploadResultsScrollPane);
 
 		JButton uploadButton = uploadTabClassInstantiations.getUploadButtonInstance();

@@ -27,7 +27,7 @@ public class UploadTabClassInstantiations {
 	private IonPanel ionPanelInstance = new IonPanel();
 	
 	private JTextPane uploadResultsTextPane = new UploadResultsTextPane().getUploadResultsTextPane();
-	private JButton uploadButton = new UploadButton(selectFileButtonInstance).getUploadButton();
+	private JButton uploadButton = new UploadButton(selectFileButtonInstance, uploadResultsTextPane).getUploadButton();
 
 	private UploadTabClassInstantiations() { }
 
