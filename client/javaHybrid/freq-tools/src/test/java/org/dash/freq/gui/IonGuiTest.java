@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 // import static org.mockito.Mockito.mock;
 // import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
-import static org.mockito.BDDMockito.*;
+// import static org.mockito.BDDMockito.*;
 
 import org.dash.freq.gui.uploadTab.*;
 import org.dash.freq.utilities.Prefs;
@@ -24,24 +24,32 @@ class IonGuiTest{
 	String noIonUploadLabel = ("<html><body>Issuing Organization Number (ION) not set.<br>"
 								+ "If you have one, it may be set in options.</body></html>");
 
+	String yesIonUploadLabel = ("<html><body>Issuing Organization Number (ION): 3553<br>" 
+								+ "ION Facility: NMDP-National Marrow Donor Program/Be The Match</body></html>");
+
+
 	@Disabled
 	@Test
     public void shouldReturnGivenValueUsingBDDSemantics() {
 
-		@Jailbreak IonPanel uploadIonPanel = new IonPanel();
-
-		//given
+		@Jailbreak IonPanel mockedUploadIonPanel = mock(IonPanel.class);
 		Prefs prefsMock = mock(Prefs.class);
-		given(prefsMock.getIonNumber()).willReturn("");
-		given(prefsMock.getIonFacility()).willReturn("");
+
+		// when(mockedUploadIonPanel.get(prefsMock.getIonNumber())).thenReturn("");
+		// when(mockedUploadIonPanel.get(prefsMock.getIonFacility())).thenReturn("");
+
+		// when(mockedUploadIonPanel.contains(argThat(Prefs.getIonNumber()))).thenReturn("");
+		// when(mockedUploadIonPanel.contains(argThat(Prefs.getIonFacility()))).thenReturn("");
+
+		// Prefs prefsMock = mock(Prefs.class);
+		// given(prefsMock.getIonNumber()).willReturn("");
+		// given(prefsMock.getIonFacility()).willReturn("");
 		// given(prefsMock.getIonNumber().willReturn("3553"));
 		// given(prefsMock.getIonNumber().willReturn("3553"));
 
-		//when
-		String emptyIonResponse = uploadIonPanel.whichLabel().getText();
+		String emptyIonResponse = mockedUploadIonPanel.whichLabel().getText();
 
-		//then
-		assertEquals(emptyIonResponse, noIonUploadLabel);
+		assertEquals(emptyIonResponse, noIonUploadLabel, "testing no ION label");
 		// assertEquals(emptyIonResponse, prefsMock.getIonFacility());
 	}
 
