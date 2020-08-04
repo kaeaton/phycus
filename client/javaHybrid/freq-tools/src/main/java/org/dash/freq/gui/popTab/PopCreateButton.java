@@ -33,7 +33,7 @@ public class PopCreateButton {
 	private JTextPane popNotificationsTextPane = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
 	private UpdatePopulationList updatePopulationList = popTabClassInstantiations.getUpdatePopulationListInstance();
 
-	private Population populationClass = new Population();
+	private Population populationClass = popTabClassInstantiations.getPopulationClassInstance();
 	private List<PopulationData> populationsData;
 	private List<PopulationData> filteredPopulationsData;
 

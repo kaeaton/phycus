@@ -40,9 +40,6 @@ public class ReceiptObserver implements Observer{
 	DateTimeFormatter headerDtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 	String headerTimeStamp = LocalTime.now().format(headerDtf);
 	
-	// access to prefs
-	// public Preferences prefs = Preferences.userNodeForPackage(PhycusGui.class);
-	
 	public ReceiptObserver(UploadFilesObservable sub, File file)
 	{
 		// name the text file without path

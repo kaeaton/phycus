@@ -18,14 +18,15 @@ import io.swagger.client.model.PopulationData;
  */
 public class UpdatePopulationList {
 
-	private Population populationClass = new Population();
+	private Population populationClass;
 
 	private List<PopulationData> populationsData;
 	private List<PopulationData> filteredPopulationsData = new ArrayList();
 	private JTextPane popResultsTextPane;
 
-	public UpdatePopulationList(JTextPane popResultsTP) {
+	public UpdatePopulationList(JTextPane popResultsTP, Population popClass) {
 		this.popResultsTextPane = popResultsTP;
+		this.populationClass = popClass;
 	}
 	
 	public void updatePopulationsDisplayed (String searchTerm) {

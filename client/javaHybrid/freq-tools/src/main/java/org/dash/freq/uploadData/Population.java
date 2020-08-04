@@ -27,9 +27,10 @@ import javax.swing.JTextPane;
 
 import org.dash.freq.exceptions.*;
 import org.dash.freq.gui.Gui;
-// import org.dash.freq.gui.popTab.*;
-// import org.dash.freq.gui.uploadTab.*;
 import org.dash.freq.utilities.AppendText;
+
+import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
+import org.dash.freq.gui.popTab.PopTabClassInstantiations;
 
 /**
  *
@@ -38,20 +39,23 @@ import org.dash.freq.utilities.AppendText;
 public class Population {
 	
 	private final String url = new String("http://localhost:8080");
-	// private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
-	// private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
-	// private List<PopulationData> populations;
+	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
+	private List<PopulationData> populations;
 
 	// private PopTabClassInstantiations popTabClassInstantiations = PopTabClassInstantiations.getPopTabClassInstantiationsInstance();
-	// private JTextPane popResultsTextPane = popTabClassInstantiations.getPopResultsTextPaneInstance();
-	// private JTextPane popNotificationsTextPane = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
+	private JTextPane popResultsTextPane; // = popTabClassInstantiations.getPopResultsTextPaneInstance();
+	private JTextPane popNotificationsTextPane; // = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
 
 //	public List<PopulationData> popList = new ArrayList<>();
 	ApiClient apiClient;
 //	private DefaultApi api;
 //	private PopulationApi popApi;
 	
-	public Population(){ }
+	public Population(JTextPane popResultsTP, JTextPane popNotificationsTP) {
+		this.popResultsTextPane = popResultsTP;
+		this.popNotificationsTextPane = popNotificationsTP;
+	}
 	
 	public List<PopulationData> getPopulationsFromDB() throws DBConnectionException {
 

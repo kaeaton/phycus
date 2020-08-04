@@ -4,6 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import org.dash.freq.uploadData.Population;
+
+
 // import org.dash.freq.gui.ExitButton;
 
 /**
@@ -22,7 +25,8 @@ public class PopTabClassInstantiations {
 	private JTextPane popResultsTextPane =  new PopResultsTextPane().getPopResultsTextPane();
 	private JTextPane popNotificationsTextPane =  new PopNotificationsTextPane().getPopNotificationsTextPane();
 
-	private UpdatePopulationList updatePopulationList = new UpdatePopulationList(popResultsTextPane);
+	private Population populationClass = new Population(popResultsTextPane, popNotificationsTextPane);
+	private UpdatePopulationList updatePopulationList = new UpdatePopulationList(popResultsTextPane, populationClass);
 	private JTextField popSearchTextField = new PopSearchTextField(updatePopulationList).getPopSearchTextField();
 	
 
@@ -50,5 +54,9 @@ public class PopTabClassInstantiations {
 
 	public UpdatePopulationList getUpdatePopulationListInstance() {
 		return updatePopulationList;
+	}
+
+	public Population getPopulationClassInstance() {
+		return populationClass;
 	}
 }

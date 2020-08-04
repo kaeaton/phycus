@@ -11,7 +11,7 @@ import org.dash.freq.gui.optionsTab.customReceiptPath.*;
 
 class OptionsPanelTest{
 
-	private final ReceiptPathPanel receiptPathPanel = new ReceiptPathPanel();
+	// private final ReceiptPathPanel receiptPathPanel = new ReceiptPathPanel();
 
 	private final JPanel testPanel = new JPanel();
 	private final JTextArea testTextArea = new JTextArea();

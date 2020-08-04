@@ -11,16 +11,31 @@ import javax.swing.JButton;
 import javax.swing.JTextPane;
 
 import org.dash.freq.gui.uploadTab.selectFile.*;
-import org.dash.freq.utilities.AppendText;
+import org.dash.freq.publisher.*;
+import org.dash.freq.uploadData.*;
+
+// import org.dash.freq.utilities.AppendText;
 
 public class UploadButton {
+
+	// Observable
+	// private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
+	// private UploadTabObserver uploadTabObserver;
 
 	private SelectFileButton selectFileButton;
 	private JTextPane uploadResultsTextPane;
 
+	private FileUploader fileUploader = new FileUploader();
+
 	public UploadButton(SelectFileButton selectFileBtn, JTextPane uploadResultsTP) {
 		this.selectFileButton = selectFileBtn;
 		this.uploadResultsTextPane = uploadResultsTP;
+
+		// uploadTabObserver = new UploadTabObserver(uploadFilesObservable, uploadResultsTextPane);
+
+		// try {
+		// 	uploadFilesObservable.addObserver(uploadTabObserver);
+		// } catch(Exception ex) { System.out.println("UploadButton: error adding observers: " + ex); }
 	}
 
 	public JButton getUploadButton() {
@@ -38,14 +53,22 @@ public class UploadButton {
 			try {	
 
 				File selectedFile = selectFileButton.getTheSelectedFile();
+
+				// reset TextPane
+				// uploadResultsTextPane.setText("");
+
+				if (selectedFile.isFile()) {
+					fileUploader.uploadFile(selectedFile);
+				}
+
 				// System.out.println("UploadButton can find the selected file/folder: " + selectedFile.getAbsolutePath());
 
-				AppendText.appendToPane(uploadResultsTextPane, "Testing: UploadButton posts to uploadResultsTextPane", Color.BLUE);
-				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
-				AppendText.appendToPane(uploadResultsTextPane, "Testing: UploadButton posts to uploadResultsTextPane, check count", Color.BLACK);
-				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
-				AppendText.appendToPane(uploadResultsTextPane, "Testing: UploadButton posts to uploadResultsTextPane, check count again", Color.BLACK);
-				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+				// AppendText.appendToPane(uploadResultsTextPane, "Testing: UploadButton posts to uploadResultsTextPane", Color.BLUE);
+				// AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+				// AppendText.appendToPane(uploadResultsTextPane, "Testing: UploadButton posts to uploadResultsTextPane, check count", Color.BLACK);
+				// AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+				// AppendText.appendToPane(uploadResultsTextPane, "Testing: UploadButton posts to uploadResultsTextPane, check count again", Color.BLACK);
+				// AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
 
 				// // check to make sure there's a file or folder listed in
 				// // file location text area

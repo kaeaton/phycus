@@ -4,7 +4,8 @@ import javax.swing.*;
 
 import org.dash.freq.gui.uploadTab.licensingMenu.*;
 import org.dash.freq.gui.uploadTab.selectFile.*;
-import org.dash.freq.utilities.Prefs;
+import org.dash.freq.publisher.*;
+// import org.dash.freq.utilities.Prefs;
 
 /**
  * Provides a central hub to access the instances of all components
@@ -63,5 +64,4 @@ public class UploadTabClassInstantiations {
 	public IonPanel getIonPanelInstance() {
 		return ionPanelInstance;
 	}
-
 }

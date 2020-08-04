@@ -75,6 +75,6 @@ public class SelectFileButton {
 	};
 
 	public File getTheSelectedFile() {
-		return selectedFile;
+		return new File(Prefs.getUploadPath());
 	}
 }

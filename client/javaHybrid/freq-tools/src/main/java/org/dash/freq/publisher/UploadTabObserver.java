@@ -14,7 +14,6 @@ import javax.swing.JTextPane;
 import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 import org.dash.freq.utilities.AppendText;
 
-
 /**
  *
  * @author katrinaeaton
