@@ -19,7 +19,8 @@ public class FileLocationTextArea {
 		fileLocationTextArea.setOpaque(false);
 		fileLocationTextArea.setFont(StyleGuide.TEXT_AREA_FONT);
 
-		fileLocationTextArea.setText(Prefs.getUploadPath());
+		fileLocationTextArea.setText("Please select a file or folder");
+		// fileLocationTextArea.setText(Prefs.getUploadPath());
 		return fileLocationTextArea;
 	}
 }

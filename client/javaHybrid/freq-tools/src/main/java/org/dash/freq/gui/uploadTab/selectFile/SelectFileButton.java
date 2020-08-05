@@ -17,7 +17,7 @@ public class SelectFileButton {
 	// private Preferences prefs = Preferences.userNodeForPackage(Gui.class);
 	private JFileChooser uploadFileChooser = new UploadFileChooser().getUploadFileChooser();
 	private JTextArea fileUploadTextArea;
-	private File selectedFile;
+	private File selectedFile = null;
 	private String absolutePath, parentFolder, fileName;
 
 	public SelectFileButton(JTextArea fileUpTextArea) {
@@ -75,6 +75,11 @@ public class SelectFileButton {
 	};
 
 	public File getTheSelectedFile() {
-		return new File(Prefs.getUploadPath());
+		try{
+			return selectedFile;
+		} catch(Exception ex) {
+			System.out.println("SelectFileButton: getTheSelectedFile: " + ex);
+		}
+		return null;
 	}
 }

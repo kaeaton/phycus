@@ -48,10 +48,10 @@ public class ReceiptObserver implements Observer{
 		System.out.println("textFileName: " + textFileName);
 		
 		// where are we putting the receipt? Default folder or custom?
-		Boolean defaultFilePath = Prefs.isThereACustomReceiptPath();
+		Boolean customReceiptPath = Prefs.isThereACustomReceiptPath();
 		
 		// create the full file path
-		if(defaultFilePath){
+		if(!customReceiptPath){
 			// use the path to the original file
 			this.filePath = file.getParent() 
 				+ System.getProperty("file.separator")

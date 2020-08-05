@@ -14,7 +14,7 @@ import org.dash.freq.gui.uploadTab.selectFile.*;
 import org.dash.freq.publisher.*;
 import org.dash.freq.uploadData.*;
 
-// import org.dash.freq.utilities.AppendText;
+import org.dash.freq.utilities.AppendText;
 
 public class UploadButton {
 
@@ -26,6 +26,9 @@ public class UploadButton {
 	private JTextPane uploadResultsTextPane;
 
 	private FileUploader fileUploader = new FileUploader();
+
+	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
+	private UploadTabObserver uploadTabObserver;
 
 	public UploadButton(SelectFileButton selectFileBtn, JTextPane uploadResultsTP) {
 		this.selectFileButton = selectFileBtn;
@@ -50,12 +53,19 @@ public class UploadButton {
 	public ActionListener uploadListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
-			try {	
+			// try {	
 
 				File selectedFile = selectFileButton.getTheSelectedFile();
 
 				// reset TextPane
-				// uploadResultsTextPane.setText("");
+				uploadResultsTextPane.setText("");
+
+				if (selectedFile == null) {
+					AppendText.appendToPane(uploadResultsTextPane, "Please select a file or folder", Color.RED);
+					AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+					
+					return;
+				}
 
 				if (selectedFile.isFile()) {
 					fileUploader.uploadFile(selectedFile);
@@ -129,15 +139,11 @@ public class UploadButton {
 				// 	}
 				// }
 				
-				// // make sure there is a file selected to prevent crashes
-				// else 
-				// {
-				// 	outputTextPane.setText("");
-				// 	upTextMgr.setLine("Please select a file or folder", "red", "gui");
-				// }
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				// make sure there is a file selected to prevent crashes
+				
+			// } catch (Exception e) {
+			// 	e.printStackTrace();
+			// }
 		}
 	};
 }
