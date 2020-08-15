@@ -14,7 +14,13 @@ import javax.swing.JTextPane;
 
 import org.dash.freq.gui.ExitButton;
 
-
+/**
+ * The populations tab displays the populations in the database and allows
+ * for the creation of new populations. The listener that initially populates
+ * the results JTextPane is the tab change listener in the Gui class.
+ *
+ * @author katrinaeaton
+ */
 public class PopTab extends JPanel {
 
 	private PopTabClassInstantiations popTabClassInstantiations = PopTabClassInstantiations.getPopTabClassInstantiationsInstance();
@@ -24,7 +30,7 @@ public class PopTab extends JPanel {
 	private JTextPane popNotificationsTextPane = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
 	private UpdatePopulationList updatePopulationList = popTabClassInstantiations.getUpdatePopulationListInstance();
 
-	private JButton popCreateButton =  new PopCreateButton().getPopCreateButton();
+	private JButton popCreateButton = new PopCreateButton().getPopCreateButton();
 
 	private JLabel popLabel = new JLabel("Population name:");
 

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Frame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -34,8 +35,8 @@ public class PopCreateButton {
 	private UpdatePopulationList updatePopulationList = popTabClassInstantiations.getUpdatePopulationListInstance();
 
 	private Population populationClass = popTabClassInstantiations.getPopulationClassInstance();
-	private List<PopulationData> populationsData;
-	private List<PopulationData> filteredPopulationsData;
+	// private List<PopulationData> populationsData = updatePopulationList.getDownloadedPopulationsData();
+	private List<PopulationData> filteredPopulationsData = new ArrayList();
 
 	private JPanel parentPanel;
 	private Frame parentFrame;
@@ -46,6 +47,10 @@ public class PopCreateButton {
 
 		popCreateButton.setPreferredSize(new Dimension(90, 30));
 		popCreateButton.addActionListener(popCreateListener);
+
+		// add the action listener to the Search textfield so pressing enter submits
+		// the text in the textfield as the new Population name
+		popSearchTextField.addActionListener(popCreateListener);
 
 		return popCreateButton;
 	}
@@ -59,15 +64,16 @@ public class PopCreateButton {
 			String popSearchDescription = "";
 			boolean popFlag = true;
 
-			parentPanel = (JPanel)((JButton)evt.getSource()).getParent(); 
-			parentFrame = FindParentFrame.getParentFrame(parentPanel);
+			// find the parent frame so the JOptionPanes have a reference to instantiate on
+			parentFrame = FindParentFrame.getParentFrame(popCreateButton);
 			
-			filteredPopulationsData = updatePopulationList.getFilteredPopulationData();
-			List<String> popNames = populationClass.getPopulationNames(filteredPopulationsData);
+			// filteredPopulationsData = updatePopulationList.filteredPopulationData();
+			List<String> popNames = populationClass.getPopulationNames();
+			// List<String> popNames = populationClass.getPopulationNames(populationsData);
 			System.out.println("pop Name: " + popSearchName);
 			
 			// does this name already exist?		
-			if (popNames.contains(popSearchName)) {
+			if (popNames.contains(popSearchName.toUpperCase())) {
 				popFlag = false;
 				
 				nameAlreadyExists(parentFrame, popSearchName);
@@ -83,13 +89,23 @@ public class PopCreateButton {
 			else {
 
 				// popup for description
-				popSearchDescription = JOptionPane.showInputDialog(this, "Please enter a brief description of your population:");
+				popSearchDescription = JOptionPane.showInputDialog(parentFrame, "Please enter a brief description of your population:");
 				
-				// if description is empty
-				if(popSearchDescription == null || popSearchDescription.equals("")) {
+				try{
+					// if description is empty
+					if(popSearchDescription.equals("")) {
+						popFlag = false;
+						
+						descriptionFieldIsEmpty(parentFrame);
+					}
+				} catch(NullPointerException npe) {
+
+					// most likely means the user clicked cancel on the description popup.
+					// we don't want a second popup for clicking cancel, that'd just be annoying.
+					// this will default to posting an error message to the notification textpane.
 					popFlag = false;
-					
-					descriptionFieldIsEmpty(parentFrame);
+				} catch(Exception ex) { 
+					System.out.println("PopCreateButton: error getting data from the description popup: " + ex);
 				}
 			}
 
@@ -99,14 +115,13 @@ public class PopCreateButton {
 			if (popFlag) {
 				try { 
 					// create new population in db
-					populationClass.createNewPopulation(popSearchName, popSearchDescription);
+					populationClass.createNewPopulation(popSearchName.toUpperCase(), popSearchDescription);
 
 				} catch (Exception ex) {
 
 					System.out.println(ex);
 					popFlag = false;
 					
-					// JOptionPane.showMessageDialog(this,
 					JOptionPane.showMessageDialog(parentFrame,
 						("The population was not created\n" + ex),
 						"Houston, we have a problem",
@@ -117,14 +132,10 @@ public class PopCreateButton {
 				if (popFlag) {
 
 					// notify that new pop has been created
-					AppendText.appendToPane(popNotificationsTextPane, ("Population " + popSearchName + " created."), Color.BLACK);
+					AppendText.appendToPane(popNotificationsTextPane, ("Population " + popSearchName.toUpperCase() + " created."), Color.BLACK);
 					AppendText.appendToPane(popNotificationsTextPane, System.lineSeparator(), Color.BLACK);
 
-					// clear pop textpane
-					// popResultsTextPane.setText("");
-
-					// redownload db in background
-					// new Thread(getPops).start();
+					// redownload the pop list (including new pop)
 					updatePopulationList.downloadAllPopulations();
 
 					// clear search bar
@@ -137,7 +148,8 @@ public class PopCreateButton {
 			}
 
 			// refresh population list
-			updatePopulationList.updatePopulationsDisplayed("");
+			// updatePopulationList.downloadAllPopulations();
+			// updatePopulationList.updatePopulationsDisplayed("");
 		}
 	};
 
@@ -147,7 +159,7 @@ public class PopCreateButton {
 		AppendText.appendToPane(popNotificationsTextPane, System.lineSeparator(), Color.BLACK);
 		
 		JOptionPane.showMessageDialog(parentFrame,
-			("The population " + popSearchName + " already exists"),
+			("The population " + popSearchName.toUpperCase() + " already exists"),
 			"This population already exists",
 			JOptionPane.ERROR_MESSAGE);
 	}

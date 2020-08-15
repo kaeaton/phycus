@@ -44,19 +44,21 @@ public class Population {
 	private List<PopulationData> populations;
 
 	// private PopTabClassInstantiations popTabClassInstantiations = PopTabClassInstantiations.getPopTabClassInstantiationsInstance();
-	private JTextPane popResultsTextPane; // = popTabClassInstantiations.getPopResultsTextPaneInstance();
-	private JTextPane popNotificationsTextPane; // = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
+	// private JTextPane popResultsTextPane; // = popTabClassInstantiations.getPopResultsTextPaneInstance();
+	// private JTextPane popNotificationsTextPane; // = popTabClassInstantiations.getPopNotificationsTextPaneInstance();
 
 //	public List<PopulationData> popList = new ArrayList<>();
 	ApiClient apiClient;
 //	private DefaultApi api;
 //	private PopulationApi popApi;
 	
-	public Population(JTextPane popResultsTP, JTextPane popNotificationsTP) {
-		this.popResultsTextPane = popResultsTP;
-		this.popNotificationsTextPane = popNotificationsTP;
-	}
+	// public Population(JTextPane popResultsTP, JTextPane popNotificationsTP) {
+	// 	this.popResultsTextPane = popResultsTP;
+	// 	this.popNotificationsTextPane = popNotificationsTP;
+	// }
 	
+	public Population() { }
+
 	public List<PopulationData> getPopulationsFromDB() throws DBConnectionException {
 
 		// open connection to the db
@@ -73,8 +75,7 @@ public class Population {
 		// retrieved population storage
 		List<PopulationData> popList = new ArrayList<>();
 
-		try 
-		{
+		try {
 			// get all the populations and populate the list
 			PopulationResponse popResponse = popApi.getAllPopulations(); 
 			System.out.println("opened popResponse");
@@ -92,9 +93,8 @@ public class Population {
 			// 	// AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
 			// 	// throw new NullPointerException("No populations retrieved from the database"); 
 			// }
-		}
-		catch (ApiException ex) 
-		{ 
+		} catch (ApiException ex) { 
+
 			ex.printStackTrace();
 			
 			// notify user that there was a problem connecting to the db
@@ -104,16 +104,15 @@ public class Population {
 		return popList;
 	}
 	
-	public List<String> getPopulationNames(List<PopulationData> populations)
-	{
+	public List<String> getPopulationNames() { //List<PopulationData> populations) {
 		List<String> popNames = new ArrayList<>();
-		
-		for (PopulationData populationName : populations) 
-		{
-			popNames.add(populationName.getName());
+
+		if (populations != null && !populations.isEmpty()) {
+
+			for (PopulationData populationName : populations) {
+				popNames.add(populationName.getName());
+			}
 		}
-		
-		System.out.println("popNames: " + popNames);
 		
 		return popNames;
 	}

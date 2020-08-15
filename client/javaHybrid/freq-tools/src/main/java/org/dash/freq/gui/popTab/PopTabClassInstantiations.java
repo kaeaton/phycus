@@ -25,7 +25,8 @@ public class PopTabClassInstantiations {
 	private JTextPane popResultsTextPane =  new PopResultsTextPane().getPopResultsTextPane();
 	private JTextPane popNotificationsTextPane =  new PopNotificationsTextPane().getPopNotificationsTextPane();
 
-	private Population populationClass = new Population(popResultsTextPane, popNotificationsTextPane);
+	private Population populationClass = new Population();
+	// private Population populationClass = new Population(popResultsTextPane, popNotificationsTextPane);
 	private UpdatePopulationList updatePopulationList = new UpdatePopulationList(popResultsTextPane, populationClass);
 	private JTextField popSearchTextField = new PopSearchTextField(updatePopulationList).getPopSearchTextField();
 	
