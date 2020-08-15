@@ -1,4 +1,4 @@
-// package org.dash.freq.gui.optionsTab.advanced;
+// package org.dash.freq.gui.optionsTab.updateIon;
 
 // import javax.swing.JOptionPane;
 // import javax.swing.JDialog;
@@ -10,10 +10,14 @@
 // import java.awt.event.*;
 
 // import org.dash.freq.gui.optionsTab.OptionsTabClassInstantiations;
+// import org.dash.freq.gui.uploadTab.IonPanel;
+// import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 // import org.dash.freq.utilities.Prefs;
+// import org.dash.freq.validations.IonCheck;
 
-// public class UpdateDatabasePopup extends JDialog implements ActionListener, PropertyChangeListener {
-	
+// public class UpdateDatabasePopup extends JDialog
+// 				   implements ActionListener,
+// 							  PropertyChangeListener {
 // 	private String typedText = null;
 // 	private JTextField textField;
 
@@ -23,10 +27,11 @@
 // 	private JOptionPane optionPane;
 
 // 	private String btnString1 = "Submit";
-// 	private String btnString2 = "Reset";
-// 	private String btnString3 = "Cancel";
+// 	private String btnString2 = "Cancel";
 
 // 	private IonCheck ionCheck = new IonCheck();
+// 	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+// 	private IonPanel uploadTabIonPanel = uploadTabClassInstantiations.getIonPanelInstance();
 // 	private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
 // 	private OptionsIonPanel optionsTabIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
 
@@ -38,7 +43,7 @@
 // 		// parent.setPreferredSize(new Dimension(500, 300));
 // 		// UIManager.put("optionPane.minimumSize",new Dimension(300,500));
 
-// 		setTitle("Enter Database Address");
+// 		setTitle("Enter ION");
 
 // 		textField = new JTextField();
 // 		textField.setColumns(10);
@@ -51,7 +56,7 @@
 
 // 		//Create an array specifying the number of dialog buttons
 // 		//and their text.
-// 		Object[] options = {btnString1, btnString2, btnString3};
+// 		Object[] options = {btnString1, btnString2};
 
 
 // 		//Create the JOptionPane.

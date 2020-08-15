@@ -35,7 +35,13 @@ public class UpdateIonPopup extends JDialog
 	private OptionsTabClassInstantiations optionsTabClassInstantiations = OptionsTabClassInstantiations.getOptionsTabClassInstantiationsInstance();
 	private OptionsIonPanel optionsTabIonPanel = optionsTabClassInstantiations.getOptionsIonPanelInstance();
 
-	/** Creates the reusable dialog. */
+	/**
+	 * Creates the update ION popup allowing the user to set a new ION 
+	 * (assuming their facility has one.)
+	 * @param aFrame The JFrame the popup is attached to. This can be determined with the 
+	 * FindParentFrame class in utilities.
+	 * @param parent The parent JPanel that the popup is called from.
+	 */
 	public UpdateIonPopup(Frame aFrame, JPanel parent) {
 		super(aFrame, true);
 		optionsIonPanel = parent;
