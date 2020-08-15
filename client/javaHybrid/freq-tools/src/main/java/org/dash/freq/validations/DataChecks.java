@@ -19,27 +19,30 @@
 //     > http://www.gnu.org/licenses/lgpl.html
 
 //  */
-// package org.dash.freq.validations;
+package org.dash.freq.validations;
 
-// import io.swagger.client.ApiException;
-// import io.swagger.client.model.HaplotypeFrequencyData;
-// import java.awt.Color;
-// import java.io.BufferedReader;
-// import java.io.IOException;
-// import java.math.BigDecimal;
-// import java.util.HashMap;
-// import java.util.List;
-// import java.util.ArrayList;
-// import org.dash.freq.view.AppendText;
-// import org.dash.freq.view.PhycusGui;
+import java.awt.Color;
 
-// public class DataChecks {
+import java.io.BufferedReader;
+import java.io.IOException;
 
-// 	public BigDecimal freqTotal;
+import java.math.BigDecimal;
 
-// 	public DataChecks() {
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
-// 	}
+import io.swagger.client.ApiException;
+import io.swagger.client.model.HaplotypeFrequencyData;
+
+import org.dash.freq.gui.Gui;
+import org.dash.freq.utilities.AppendText;
+
+public class DataChecks {
+
+	public BigDecimal freqTotal;
+
+	public DataChecks() { }
 	
 // 	// checking the data for consistancy
 // 	// does every entry have the same haploty loci?
@@ -202,4 +205,4 @@
 
 // 		return flag;
 // 	}
-// }
+}

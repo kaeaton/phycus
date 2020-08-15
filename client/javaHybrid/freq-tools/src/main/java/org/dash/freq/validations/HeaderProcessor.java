@@ -1,31 +1,34 @@
 
-// package org.dash.freq.validations;
+package org.dash.freq.validations;
 
-// import org.dash.freq.model.Population;
+import java.awt.Color;
 
-// import io.swagger.client.ApiException;
-// import io.swagger.client.model.PopulationData;
-// import java.awt.Color;
-// import java.io.BufferedReader;
-// import java.io.IOException;
-// import java.util.Arrays;
-// import java.util.ArrayList;
-// import java.util.HashMap;
-// import java.util.HashSet;
-// import java.util.List;
-// import java.util.prefs.Preferences;
-// import java.util.Set;
-// import java.util.TreeMap;
-// import java.util.regex.Matcher;
-// import java.util.regex.Pattern;
-// import org.dash.freq.view.AppendText;
-// import org.dash.freq.view.PhycusGui;
+import java.io.BufferedReader;
+import java.io.IOException;
 
-// /**
-//  *
-//  * @author kaeaton
-//  */
-// public class HeaderProcessor {
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.prefs.Preferences;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import io.swagger.client.ApiException;
+import io.swagger.client.model.PopulationData;
+
+import org.dash.freq.gui.Gui;
+import org.dash.freq.uploadData.Population;
+import org.dash.freq.utilities.AppendText;
+
+/**
+ *
+ * @author kaeaton
+ */
+public class HeaderProcessor {
 
 // 	// license types as designated by the API
 // 	private final String[] licenseTypes = {"CC0", "BY", "BY_SA", "BY_ND", "BY_NC", "BY_NC_SA", "BY_NC_ND"};
@@ -238,4 +241,4 @@
 // 		AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
 
 // 	}
-// }
+}

@@ -1,39 +1,36 @@
-// /*
+/*
 
-//     Copyright (c) 2014-2019 National Marrow Donor Program (NMDP)
+    Copyright (c) 2014-2019 National Marrow Donor Program (NMDP)
 
-//     This library is free software; you can redistribute it and/or modify it
-//     under the terms of the GNU Lesser General Public License as published
-//     by the Free Software Foundation; either version 3 of the License, or (at
-//     your option) any later version.
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
 
-//     This library is distributed in the hope that it will be useful, but WITHOUT
-//     ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
-//     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
-//     License for more details.
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
 
-//     You should have received a copy of the GNU Lesser General Public License
-//     along with this library;  if not, write to the Free Software Foundation,
-//     Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
 
-//     > http://www.gnu.org/licenses/lgpl.html
+    > http://www.gnu.org/licenses/lgpl.html
 
-// */
-// package org.dash.freq.validations;
+*/
+package org.dash.freq.validations;
 
-// import io.swagger.client.model.License;
-// import io.swagger.client.model.License.TypeOfLicenseEnum;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-// import java.util.regex.Matcher;
-// import java.util.regex.Pattern;
+import io.swagger.client.model.License;
+import io.swagger.client.model.License.TypeOfLicenseEnum;
 
-// import org.dash.freq.view.PhycusGui;
+import org.dash.freq.gui.Gui;
 
-// public class LicenseType {
-// 	public LicenseType()
-// 	{
-		
-// 	}
+public class LicenseType {
+	public LicenseType() { }
 	
 // 	// get chosen license from GUI
 // 	private String selectedLicense = parseLicense((String)PhycusGui
@@ -96,4 +93,4 @@
 		
 // 		return parsedLicense;
 // 	}
-// }
+}

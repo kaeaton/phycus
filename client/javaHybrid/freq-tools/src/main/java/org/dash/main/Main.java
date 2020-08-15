@@ -14,8 +14,9 @@ import org.dishevelled.commandline.argument.FileArgument;
 import org.dishevelled.commandline.argument.StringArgument;
 import org.dishevelled.commandline.argument.URLArgument;
 
-import org.dash.freq.*;
+// import org.dash.freq.*;
 import org.dash.freq.gui.Gui;
+import org.dash.freq.uploadData.*;
 
 public class Main {
 
@@ -25,8 +26,7 @@ public class Main {
 	/**
 	 * Main.
 	 *
-	 * @param args
-	 *            command line args
+	 * @param args command line args
 	 * @throws MalformedURLException
 	 */
 
@@ -67,15 +67,15 @@ public class Main {
 				System.exit(0);
 			}
 
-			postPopulationFrequencies = new PostPopulationFrequencies(
-									inputFile.getValue(), gtRegistry.getValue(),
-									estEntity.getValue(), url.getValue());
+			// postPopulationFrequencies = new PostPopulationFrequencies(
+			// 						inputFile.getValue(), gtRegistry.getValue(),
+			// 						estEntity.getValue(), url.getValue());
 		} catch (CommandLineParseException | IllegalArgumentException e) {
 	  		Usage.usage(USAGE, e, commandLine, arguments, System.err);
 			System.exit(-1);
 		}
 		try {
-			System.exit(postPopulationFrequencies.call());
+			// System.exit(postPopulationFrequencies.call());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.exit(1);
