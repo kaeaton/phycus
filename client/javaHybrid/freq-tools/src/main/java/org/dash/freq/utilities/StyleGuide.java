@@ -5,9 +5,12 @@ import java.awt.Font;
 
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+import javax.swing.border.LineBorder; 
 import javax.swing.BorderFactory;
 
+/**
+ * A class for tracking the different styles used throughout the program  
+ */
 public class StyleGuide {
 
 	public static final Font LABEL_FONT = new Font("Sans_serif", Font.PLAIN, 14);

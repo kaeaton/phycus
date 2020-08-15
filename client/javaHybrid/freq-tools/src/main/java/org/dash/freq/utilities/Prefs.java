@@ -2,6 +2,10 @@ package org.dash.freq.utilities;
 
 import java.util.prefs.Preferences;
 
+/**
+ * This class houses all the methods for setting and getting preferences  
+ * for easy management.
+ */
 public class Prefs {
 
 	private static final Preferences preferences = Preferences.userNodeForPackage(Prefs.class);

@@ -1,23 +1,31 @@
 package org.dash.freq.utilities;
 
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Window;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+/**
+ * Finds the parent frame of a component. This is usually used as a reference 
+ * for opening a dialog window.
+ */
 public class FindParentFrame {
 
 	public FindParentFrame() { }
 
-	public static Frame getParentFrame(JPanel childPanel) {
+	/**
+	 * Finds the parent frame of a component. This is usually used as a reference 
+	 * for opening a dialog window.
+	 * 
+	 * @param childComponent the component you need to find the parent frame for.
+	 * @return the parent frame.
+	 */
+	public static Frame getParentFrame(Component childComponent) {
 		// pass 'this' if you are inside the panel
 
-		// if that doesn't work:
-		// Use in ActionListener to get parent panel from Button class
-		// JPanel parentPanel = ((JButton)evt.getComponent()).getParent()); 
-
-		Window parentWindow = SwingUtilities.windowForComponent(childPanel); 
+		Window parentWindow = SwingUtilities.windowForComponent(childComponent); 
 
 		Frame parentFrame = null;
 		if (parentWindow instanceof Frame) {

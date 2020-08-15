@@ -16,10 +16,25 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
+/**
+ * A shortcut for appending text to any JTextPane within the program, 
+ * specifying the text color. 
+ */
 public class AppendText {
+	
 	
 	public AppendText() { }
 	
+	/**
+	 * The method for appending text to any JTextPane within the program. 
+	 * It allows for choice of text color. This function will append directly after 
+	 * the last text in the window, if you would like a new line, you need to pass 
+	 * a system line separator.
+	 * 
+	 * @param tp The JTextPane you want to append to.
+	 * @param msg The text you want to append. This can also be a system line separator.
+	 * @param c The color you want the appended text to be. 
+	 */
 	public static void appendToPane(JTextPane tp, String msg, Color c) {
 
 		StyleContext sc = StyleContext.getDefaultStyleContext();
