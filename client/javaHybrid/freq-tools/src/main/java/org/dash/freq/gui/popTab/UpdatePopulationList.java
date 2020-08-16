@@ -40,7 +40,7 @@ public class UpdatePopulationList {
 		
 		filteredPopulationsData = filterPopulationData(searchTerm, populationsData);
 
-		if(filteredPopulationsData.isEmpty()) { //|| filteredPopulationsData == null) {
+		if(filteredPopulationsData.isEmpty()) { 
 
 			AppendText.appendToPane(popResultsTextPane, "There are no populations", Color.BLACK);
 
@@ -52,6 +52,8 @@ public class UpdatePopulationList {
 				AppendText.appendToPane(popResultsTextPane, pop.getDescription(), Color.BLACK);
 				AppendText.appendToPane(popResultsTextPane, System.lineSeparator(), Color.BLACK);
 			}
+
+			popResultsTextPane.setCaretPosition(0);
 		}
 	}
 
@@ -63,8 +65,10 @@ public class UpdatePopulationList {
 				popResultsTextPane.setText("");
 				popResultsTextPane.setText("Please wait...");
 				
-				try { populationsData = populationClass.getPopulationsFromDB(); 
-				updatePopulationsDisplayed("");
+				try { 
+					populationsData = populationClass.getPopulationsFromDB(); 
+					// popSearchTextField.setText("");
+					updatePopulationsDisplayed("");
 				}
 				catch (Exception ex) {
 					popResultsTextPane.setText("Population.java: problem downloading data: " + ex);
