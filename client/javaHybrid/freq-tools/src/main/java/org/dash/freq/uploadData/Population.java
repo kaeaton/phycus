@@ -104,12 +104,12 @@ public class Population {
 		return popList;
 	}
 	
-	public List<String> getPopulationNames() { //List<PopulationData> populations) {
+	public List<String> getPopulationNames(List<PopulationData> pops) {
 		List<String> popNames = new ArrayList<>();
 
-		if (populations != null && !populations.isEmpty()) {
+		if (!pops.isEmpty()) {
 
-			for (PopulationData populationName : populations) {
+			for (PopulationData populationName : pops) {
 				popNames.add(populationName.getName());
 			}
 		}

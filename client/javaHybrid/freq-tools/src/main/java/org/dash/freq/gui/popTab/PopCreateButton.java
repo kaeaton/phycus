@@ -35,8 +35,8 @@ public class PopCreateButton {
 	private UpdatePopulationList updatePopulationList = popTabClassInstantiations.getUpdatePopulationListInstance();
 
 	private Population populationClass = popTabClassInstantiations.getPopulationClassInstance();
-	// private List<PopulationData> populationsData = updatePopulationList.getDownloadedPopulationsData();
 	private List<PopulationData> filteredPopulationsData = new ArrayList();
+	private List<PopulationData> populationsData = new ArrayList();
 
 	private JPanel parentPanel;
 	private Frame parentFrame;
@@ -64,12 +64,17 @@ public class PopCreateButton {
 			String popSearchDescription = "";
 			boolean popFlag = true;
 
+			// get the current population list
+			populationsData = updatePopulationList.getDownloadedPopulationsData();
+
 			// find the parent frame so the JOptionPanes have a reference to instantiate on
 			parentFrame = FindParentFrame.getParentFrame(popCreateButton);
 			
-			// filteredPopulationsData = updatePopulationList.filteredPopulationData();
-			List<String> popNames = populationClass.getPopulationNames();
-			// List<String> popNames = populationClass.getPopulationNames(populationsData);
+			// get the current population list
+			populationsData = updatePopulationList.getDownloadedPopulationsData();
+
+			// get the names of those populations
+			List<String> popNames = populationClass.getPopulationNames(populationsData);
 			System.out.println("pop Name: " + popSearchName);
 			
 			// does this name already exist?		

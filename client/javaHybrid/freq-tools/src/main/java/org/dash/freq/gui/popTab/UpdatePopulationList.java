@@ -72,9 +72,8 @@ public class UpdatePopulationList {
 					ex.printStackTrace(); 
 				}
 
-
 				// end the thread
-				return;
+				// return;
 			}
 		};
 
