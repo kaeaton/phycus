@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
+import java.util.Set;
 
 import javax.swing.JTextPane;
 
@@ -53,6 +54,7 @@ public class UpdatePopulationList {
 				AppendText.appendToPane(popResultsTextPane, System.lineSeparator(), Color.BLACK);
 			}
 
+			// resets the cursor to the top so the textpane displays properly
 			popResultsTextPane.setCaretPosition(0);
 		}
 	}
@@ -67,21 +69,34 @@ public class UpdatePopulationList {
 				
 				try { 
 					populationsData = populationClass.getPopulationsFromDB(); 
-					// popSearchTextField.setText("");
+
 					updatePopulationsDisplayed("");
+
+					return;
 				}
 				catch (Exception ex) {
 					popResultsTextPane.setText("Population.java: problem downloading data: " + ex);
 					System.out.println("Population.java: problem downloading data: " + ex);
 					ex.printStackTrace(); 
 				}
-
-				// end the thread
-				// return;
 			}
 		};
 
-		new Thread(getPopulations).start();
+		Thread popDownloadThread = new Thread(getPopulations, "DownloadPops");
+		popDownloadThread.start();
+
+		System.out.println("UpdatePopulationList.java: starting thread " + popDownloadThread.getName() + ": "
+							+ popDownloadThread.getId());
+
+		Set<Thread> threads = Thread.getAllStackTraces().keySet();
+ 
+		for (Thread t : threads) {
+			String name = t.getName();
+			Thread.State state = t.getState();
+			int priority = t.getPriority();
+			String type = t.isDaemon() ? "Daemon" : "Normal";
+			System.out.printf("%-20s \t %s \t %d \t %s\n", name, state, priority, type);
+		}
 	}
 
 	private List<PopulationData> filterPopulationData (String searchTerm, List<PopulationData> filteredPopsData) {
@@ -104,6 +119,7 @@ public class UpdatePopulationList {
 				}
 			}
 		}
+		
 		// filteredPopsData = searched populationsData
 		return matchingPopList;
 	}

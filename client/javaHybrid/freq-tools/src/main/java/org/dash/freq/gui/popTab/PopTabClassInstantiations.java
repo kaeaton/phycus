@@ -24,12 +24,12 @@ public class PopTabClassInstantiations {
 
 	private JTextPane popResultsTextPane =  new PopResultsTextPane().getPopResultsTextPane();
 	private JTextPane popNotificationsTextPane =  new PopNotificationsTextPane().getPopNotificationsTextPane();
-
-	private Population populationClass = new Population();
-	// private Population populationClass = new Population(popResultsTextPane, popNotificationsTextPane);
-	private UpdatePopulationList updatePopulationList = new UpdatePopulationList(popResultsTextPane, populationClass);
-	private JTextField popSearchTextField = new PopSearchTextField(updatePopulationList).getPopSearchTextField();
 	
+	private Population populationClass = new Population();
+	private UpdatePopulationList updatePopulationList = new UpdatePopulationList(popResultsTextPane, populationClass);
+	
+	private PopSearchTextField popSearchTextFieldClass = new PopSearchTextField(updatePopulationList);
+	private JTextField popSearchTextField = popSearchTextFieldClass.getPopSearchTextField();
 
 	private PopTabClassInstantiations() { }
 
@@ -39,6 +39,10 @@ public class PopTabClassInstantiations {
 			single_instance = new PopTabClassInstantiations(); 
 
 		return single_instance; 
+	}
+
+	public PopSearchTextField getPopSearchTextFieldClassInstance() {
+		return popSearchTextFieldClass;
 	}
 
 	public JTextField getPopSearchTextFieldInstance() {

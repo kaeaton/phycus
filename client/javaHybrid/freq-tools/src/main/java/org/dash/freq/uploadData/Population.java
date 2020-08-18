@@ -78,11 +78,11 @@ public class Population {
 		try {
 			// get all the populations and populate the list
 			PopulationResponse popResponse = popApi.getAllPopulations(); 
-			System.out.println("opened popResponse");
+			System.out.println("Population class: getPopulationsFromDB(): opened popResponse");
 			popList = popResponse.getPopulationList();
-			System.out.println("retrieved populations");
+			System.out.println("Population class: getPopulationsFromDB(): retrieved populations");
 
-			System.out.println("popList: " + popList);
+			// System.out.println("popList: " + popList);
 			
 			
 			// if (popList == null || popList.isEmpty())
@@ -144,7 +144,7 @@ public class Population {
 
 		// access to the Population API
 		PopulationApi popApi = new PopulationApi(apiClient);
-		System.out.println("popApi set");
+		System.out.println("Population class: createNewPopulation(): popApi set");
 		
 		// create the request
 		PopulationRequest populationRequest = new PopulationRequest();
@@ -152,7 +152,7 @@ public class Population {
 		populationRequest.setName(popName);
 		populationRequest.setDescription(popDesc);
 
-		System.out.println("Creating population: " + populationRequest.getName());
+		System.out.println("Population class: createNewPopulation(): Creating population: " + populationRequest.getName());
 
 		// try to upload the new population
 		try { popApi.createPopulation(populationRequest); }
