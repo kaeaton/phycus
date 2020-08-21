@@ -14,7 +14,7 @@ import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 import org.dash.freq.utilities.Prefs;
 
 public class SelectFileButton {
-	// private Preferences prefs = Preferences.userNodeForPackage(Gui.class);
+
 	private JFileChooser uploadFileChooser = new UploadFileChooser().getUploadFileChooser();
 	private JTextArea fileUploadTextArea;
 	private File selectedFile = null;
