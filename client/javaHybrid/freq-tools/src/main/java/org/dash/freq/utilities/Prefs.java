@@ -3,8 +3,7 @@ package org.dash.freq.utilities;
 import java.util.prefs.Preferences;
 
 /**
- * This class houses all the methods for setting and getting preferences  
- * for easy management.
+ * This class houses all the methods for setting and getting preferences.
  */
 public class Prefs {
 
@@ -19,6 +18,13 @@ public class Prefs {
 	public Prefs() { }
 
 	/* for which tab is open in the GUI */
+
+	/**
+	 * Gets the id of what tab was last open. Used in Gui to determine which tab 
+	 * should be open on start.
+	 *
+	 * @return The integer associated with the current tab.
+	 */
 	public static int getCurrentTab() {
 		System.out.println("Get current tab: which tab are we storing? " 
 							+ preferences.getInt("PHY_SELECTED_TAB", 0));
@@ -26,6 +32,11 @@ public class Prefs {
 		
 	}
 
+	/**
+	 * Sets the preference for what tab is currently selected. Used in Gui's ChangeListener.
+	 *
+	 * @param currentTab The integer associated with the currently open tab.
+	 */
 	public static void setCurrentTab(int currentTab) {
 		preferences.putInt("PHY_SELECTED_TAB", currentTab);
 		System.out.println("Set current tab: which tab is selected? " 
@@ -34,21 +45,53 @@ public class Prefs {
 
 	/* for custom save paths */
 	// most recent upload folder
+
+	/**
+	 * Returns the string of the path last used for uploading data. 
+	 * Defaults to the user's Documents folder. Used to determine where 
+	 * in the file system the UploadFileChooser should point at to upon opening.
+	 *
+	 * @return The string of the upload path.
+	 */
 	public static String getUploadPath() {
 		String uploadPath = preferences.get("PHY_INPUT_DIR", DEFAULT_DOCS_PATH);
 		return uploadPath;
 	}
 
+	/**
+	 * Stores the string of the path last used for uploading data. 
+	 * Defaults to the user's Documents folder. Used to determine where 
+	 * in the file system should be stored by the SelectFileButton.
+	 *
+	 * @param newDocsPath The string of the upload path.
+	 */
 	public static void setUploadPath(String newDocsPath) {
 		preferences.put("PHY_INPUT_DIR", newDocsPath);
 	}
 
 	// custom receipt folder
+
+	/**
+	 * Returns the string of the custom path used to store receipts for uploaded data. 
+	 * This is only used if there is a custom location for receipts chosen, otherwise 
+	 * the receipts are saved in the folder the data was uploaded from. Used in ReceiptPathTextArea 
+	 * to display the custom path chosen, in SelectReceiptPathButton to set the currently open 
+	 * folder in the custom receipt path file chooser, and when creating a receipt if 
+	 * Prefs.isThereACustomReceiptPath() evaluates to true.
+	 *
+	 * @return The string of the custom receipt path.
+	 */
 	public static String getCustomReceiptPath() {
 		String receiptPath = preferences.get("PHY_RECEIPT_CUSTOM_FOLDER", DEFAULT_DOCS_PATH);
 		return receiptPath;
 	}
 
+	/**
+	 * Stores the string of the path used if the user chooses to use a custom receipt location. 
+	 * Used in SelectReceiptPathButton. 
+	 *
+	 * @param newReceiptsPath The string of the custom receipts path.
+	 */
 	public static void setCustomReceiptPath(String newReceiptsPath) {
 		preferences.put("PHY_RECEIPT_CUSTOM_FOLDER", newReceiptsPath);
 		preferences.putBoolean("PHY_RECEIPT_CUSTOM", true);
@@ -57,6 +100,11 @@ public class Prefs {
 							+ preferences.getBoolean("PHY_RECEIPT_CUSTOM", false));
 	}
 
+	/**
+	 * Resets the custom receipt location by removing the custom receipt node. 
+	 * Also updates Prefs.isThereACustomReceiptPath() to False. 
+	 * Used in ResetReceiptPathButton.
+	 */
 	public static void resetCustomReceiptPath() {
 		try {
 			preferences.remove("PHY_RECEIPT_CUSTOM_FOLDER");
@@ -69,6 +117,15 @@ public class Prefs {
 	}
 
 	// sanity check so program knows which path to use
+
+	/**
+	 * A sanity check so program knows which path to use for saving receipts. 
+	 * Defaults to false so the program uses the folder the data was uploaded from. 
+	 * Used by ReceiptPathTextArea to display where the receipts are stored.
+	 * Also used to determine where to store receipts during the upload process.
+	 *
+	 * @return A boolean indicating if there is a custom receipt path.
+	 */
 	public static Boolean isThereACustomReceiptPath() {
 		Boolean customReceipt = preferences.getBoolean("PHY_RECEIPT_CUSTOM", false);
 
