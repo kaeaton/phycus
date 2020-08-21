@@ -64,12 +64,14 @@ public class UpdatePopulationList {
 		Runnable getPopulations = new Runnable() {
 			public void run() {
 
-				popResultsTextPane.setText("");
+				// popResultsTextPane.setText("");
 				popResultsTextPane.setText("Please wait...");
 				
 				try { 
+					System.out.println("UpdatePopulationList: Download all populations runnable: downloading the populations from the database");
 					populationsData = populationClass.getPopulationsFromDB(); 
 
+					System.out.println("UpdatePopulationList: Download all populations runnable: updating the results textPane after downloading pops");
 					updatePopulationsDisplayed("");
 
 					return;

@@ -2,6 +2,7 @@ package org.dash.freq.gui.popTab;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -20,7 +21,13 @@ public class PopSearchTextField { //implements KeyListener {
 		popSearchTextField.setFocusable(true);
 		popSearchTextField.setColumns(30);
 		// popSearchTextField.addActionListener(popSearchTextFieldListener);
-		popSearchTextField.addKeyListener(popSearchTextFieldKeyListener());
+		// popSearchTextField.addKeyListener(popSearchTextFieldKeyListener());
+
+		popSearchTextField.addKeyListener(new KeyAdapter() {
+		    public void keyReleased(KeyEvent evt) {
+		        popSearchTextFieldKeyReleased(evt);
+		    }
+		});
 
 		return popSearchTextField;
 	}
@@ -50,11 +57,17 @@ public class PopSearchTextField { //implements KeyListener {
 	// 	}
 	// };
 
-	private void popSearchTextFieldKeyListener(ActionEvent evt) {                                                   
-		String popSearchName = popSearchTextField.getText();
+	// private void popSearchTextFieldKeyListener(ActionEvent evt) {                                                   
+	// 	String popSearchName = popSearchTextField.getText();
+	// 	updatePopulationList.updatePopulationsDisplayed(popSearchName);	
+	// 	System.out.println("Key released: " + popSearchName);
+	// }
+
+	private void popSearchTextFieldKeyReleased(KeyEvent evt) {                                               
+        String popSearchName = popSearchTextField.getText();
 		updatePopulationList.updatePopulationsDisplayed(popSearchName);	
 		System.out.println("Key released: " + popSearchName);
-	}
+    }
 
 	public void clearTextField() {
 		// popSearchTextField.removeActionListener(popSearchTextFieldListener);
