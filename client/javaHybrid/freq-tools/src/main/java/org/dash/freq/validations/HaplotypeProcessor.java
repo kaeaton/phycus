@@ -3,22 +3,22 @@
 //  * To change this template file, choose Tools | Templates
 //  * and open the template in the editor.
 //  */
-// package org.dash.freq.validations;
+package org.dash.freq.validations;
 
-// import java.awt.Color;
-// import java.util.ArrayList;
-// import java.util.Collections;
-// import java.util.List;
-// import java.util.prefs.Preferences;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.prefs.Preferences;
 // import org.apache.commons.lang3.StringUtils;
-// import org.dash.freq.view.AppendText;
-// import org.dash.freq.view.PhycusGui;
+import org.dash.freq.utilities.AppendText;
+import org.dash.freq.gui.Gui;
 
 // /**
 //  *
 //  * @author kaeaton
 //  */
-// public class HaplotypeProcessor {
+public class HaplotypeProcessor {
 	
 // 	private List<String> haplotypeTemplate = new ArrayList();
 // 	private List<String> currentHaplotype = new ArrayList();
@@ -26,8 +26,7 @@
 // 	// access to prefs
 // 	public Preferences prefs = Preferences.userNodeForPackage(PhycusGui.class);
 	
-// 	public HaplotypeProcessor (String firstHaplotypeLine)
-// 	{
+	public HaplotypeProcessor (String firstHaplotypeLine) {
 // 		// break haplotypes down to individual loci
 // 		String[] firstHaplotypes = firstHaplotypeLine.split("~");
 // //		System.out.println(firstHaplotypes);
@@ -42,12 +41,11 @@
 		
 // 		// sort loci alphabetically
 // 		Collections.sort(haplotypeTemplate);
-// 	}
+	}
 	
 // 	// make sure all same loci are present in each haplotype
-// 	public boolean checkLoci (String currentLoci)
-// 	{
-// 		boolean sameLociFlag = false;
+	public boolean checkLoci (String currentLoci) {
+		boolean sameLociFlag = false;
 // 		currentHaplotype.clear();
 		
 // 		// break haplotypes down to individual loci
@@ -70,13 +68,12 @@
 // 			sameLociFlag = true;
 // 		}
 
-// 		return sameLociFlag;
-// 	}
+		return sameLociFlag;
+	}
 	
 // 	// checking for things like this: A*01:01gA*01:01g
-// 	public boolean asteriksAndTildas (String currentLoci)
-// 	{
-// 		boolean astTilFlag = false;
+	public boolean asteriksAndTildas (String currentLoci) {
+		boolean astTilFlag = false;
 		
 // 		int asteriks = StringUtils.countMatches(currentLoci, '*');
 // 		System.out.println(asteriks);
@@ -90,11 +87,10 @@
 // 			astTilFlag = true;
 // 		}
 		
-// 		return astTilFlag;
-// 	}
+		return astTilFlag;
+	}
 	
-// 	public void printOutErrors (ArrayList<String> errorLineNumbers)
-// 	{	
+	public void printOutErrors (ArrayList<String> errorLineNumbers) {	
 // 		// how many errors to list for non-verbose reporting
 // 		int errorCounter = 3;
 		
@@ -127,7 +123,7 @@
 // 			AppendText.appendToPane(PhycusGui.outputTextPane, ("  - Plus " + remainingErrors + " more"), Color.RED);
 // 			AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
 // 		}
-// 	}
+	}
 	
 // 	public void haplotypeErrorParser(String errorLine)
 // 	{
@@ -137,5 +133,5 @@
 // 		AppendText.appendToPane(PhycusGui.outputTextPane, ("  - Line " + parsedError[0] + ErrorCodes.haplotypeErrorList().get(Integer.parseInt(parsedError[1])) + parsedError[0]), Color.RED);
 // 		AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
 // 	}
-// }
+}
 
