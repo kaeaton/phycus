@@ -55,15 +55,7 @@ public class SelectFileButton {
 
 				// JTextArea fileUploadTextArea = uploadTabClassInstantiations.getUploadFilesTextAreaInstance();
 				fileUploadTextArea.setText(absolutePath);
-				// save parent folder location for receipt if individual file selected
-				// if (selectedFile.isFile()) {
-				//	 prefs.put("PHY_DEFAULT_RECEIPT_FOLDER", parentFolder);
-				// }
-				// // save absolute path for receipt if folder selected
-				// else {
-				//	 prefs.put("PHY_DEFAULT_RECEIPT_FOLDER", absolutePath);
-				// }
-
+				
 				// if saving receipts to default location, update the textarea
 				// listing where the receipts are being saved
 				// if (defaultUploadReceiptCheckBox.isSelected())
@@ -77,9 +69,8 @@ public class SelectFileButton {
 	public File getTheSelectedFile() {
 		try{
 			return selectedFile;
-		} catch(Exception ex) {
-			System.out.println("SelectFileButton: getTheSelectedFile: " + ex);
-		}
+		} catch(Exception ex) { System.out.println("SelectFileButton: getTheSelectedFile: " + ex); }
+
 		return null;
 	}
 }
