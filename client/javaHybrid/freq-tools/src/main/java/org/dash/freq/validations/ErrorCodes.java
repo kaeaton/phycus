@@ -20,15 +20,15 @@
 */
 package org.dash.freq.validations;
 
-import java.util.TreeMap;
+import java.util.HashMap;
 
 public class ErrorCodes {
 	public ErrorCodes() { }
 
-// 	// error and warning printing in DataChecks.java
+	// error and warning printing is in DataChecks.java
 	
-	static public TreeMap<Integer, String> errorList() {
-		TreeMap<Integer, String> errorCodes = new TreeMap<Integer, String>();
+	static public HashMap<Integer, String> errorList() {
+		HashMap<Integer, String> errorCodes = new HashMap<Integer, String>();
 
 		errorCodes.put(2, "Haplotype frequency is greater than 1.01");
 		errorCodes.put(3, "The population must already exist in the database. See the help tab for more information.");
@@ -43,8 +43,8 @@ public class ErrorCodes {
 		return errorCodes;
 	}
 	
-	static public TreeMap<Integer, String> warningList() {
-		TreeMap<Integer, String> warningCodes = new TreeMap<Integer, String>();
+	static public HashMap<Integer, String> warningList() {
+		HashMap<Integer, String> warningCodes = new HashMap<Integer, String>();
 
 		warningCodes.put(2, "Haplotype frequencies do not total 1.00");
 		warningCodes.put(3, "");
@@ -53,8 +53,8 @@ public class ErrorCodes {
 		return warningCodes;
 	}
 	
-	static public TreeMap<Integer, String> haplotypeErrorList() {
-		TreeMap<Integer, String> haplotypeErrorCodes = new TreeMap<Integer, String>();
+	static public HashMap<Integer, String> haplotypeErrorList() {
+		HashMap<Integer, String> haplotypeErrorCodes = new HashMap<Integer, String>();
 
 		haplotypeErrorCodes.put(1, ": the loci in line 2 are different than the loci on line ");
 		haplotypeErrorCodes.put(2, ": there is an error in the haplotype on line ");
