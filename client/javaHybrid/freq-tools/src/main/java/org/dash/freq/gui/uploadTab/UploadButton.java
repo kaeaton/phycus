@@ -33,12 +33,6 @@ public class UploadButton {
 	public UploadButton(SelectFileButton selectFileBtn, JTextPane uploadResultsTP) {
 		this.selectFileButton = selectFileBtn;
 		this.uploadResultsTextPane = uploadResultsTP;
-
-		// uploadTabObserver = new UploadTabObserver(uploadFilesObservable, uploadResultsTextPane);
-
-		// try {
-		// 	uploadFilesObservable.addObserver(uploadTabObserver);
-		// } catch(Exception ex) { System.out.println("UploadButton: error adding observers: " + ex); }
 	}
 
 	public JButton getUploadButton() {
@@ -53,23 +47,20 @@ public class UploadButton {
 	public ActionListener uploadListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
-			// try {	
 
-				File selectedFile = selectFileButton.getTheSelectedFile();
+			File selectedFile = selectFileButton.getTheSelectedFile();
 
-				// reset TextPane
-				uploadResultsTextPane.setText("");
+			if (selectedFile == null) {
+				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+				AppendText.appendToPane(uploadResultsTextPane, "Please select a file or folder", Color.RED);
+				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+				
+				return;
+			}
 
-				if (selectedFile == null) {
-					AppendText.appendToPane(uploadResultsTextPane, "Please select a file or folder", Color.RED);
-					AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
-					
-					return;
-				}
-
-				if (selectedFile.isFile()) {
-					fileUploader.uploadFile(selectedFile);
-				}
+			if (selectedFile.isFile()) {
+				fileUploader.uploadFile(selectedFile);
+			}
 
 				// System.out.println("UploadButton can find the selected file/folder: " + selectedFile.getAbsolutePath());
 
