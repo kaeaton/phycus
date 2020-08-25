@@ -11,6 +11,9 @@ import javax.swing.JTextArea;
 import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 import org.dash.freq.utilities.Prefs;
 
+/**
+ * Generates the assembled Upload Files JPanel.
+ */
 public class UploadFilesPanel {
 
 	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
@@ -23,6 +26,11 @@ public class UploadFilesPanel {
 
 	public UploadFilesPanel() { }
 
+	/**
+	 * Generates the panel with all select file components (except the file chooser.) 
+	 *
+	 * @return A JPanel that contains the select file components.
+	 */
 	public JPanel getUploadFilesPanel() {
 
 		uploadFilesScrollPane.setPreferredSize(new Dimension(400, 90));
@@ -34,12 +42,4 @@ public class UploadFilesPanel {
 
 		return uploadFilesPanel;
 	}
-
-	// public static JTextArea getUploadFilesTextAreaInstance() {
-	// 	return fileLocationTextArea;
-	// }
-
-	// public static SelectFileButton getUploadFileButtonInstance() {
-	// 	return selectFileUpload;
-	// }
 }
