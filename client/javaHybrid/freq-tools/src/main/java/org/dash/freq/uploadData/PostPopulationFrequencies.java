@@ -39,6 +39,8 @@ import java.util.TreeMap;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import javax.swing.JTextPane;
+
 import io.swagger.client.api.CohortApi;
 import io.swagger.client.ApiClient;
 import io.swagger.client.ApiException;
@@ -58,12 +60,13 @@ import io.swagger.client.model.License;
 import io.swagger.client.model.PopulationData;
 import io.swagger.client.model.PopulationRequest;
 
+import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 import org.dash.freq.validations.DataChecks;
 import org.dash.freq.validations.HeaderProcessor;
 import org.dash.freq.validations.LicenseType;
 import org.dash.freq.utilities.AppendText;
 import org.dash.freq.utilities.Prefs;
-import org.dash.freq.gui.Gui;
+// import org.dash.freq.gui.Gui;
 
 /**
  * PostPopulationFrequencies
@@ -78,6 +81,10 @@ public class PostPopulationFrequencies implements Callable<Integer>
 	private final URL url;
 	// private final Population population = new Population();
 	private List<PopulationData> populations;
+
+	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
+
 	
 	// access to prefs
 	// public Preferences prefs = Preferences.userNodeForPackage(PhycusGui.class);
@@ -110,17 +117,17 @@ public class PostPopulationFrequencies implements Callable<Integer>
 	@Override
 	public Integer call() throws Exception {
 		
-		// // flags
+		// flags
 		// boolean headerFlag = false;
-		// boolean dataFlag = false;
+		boolean dataFlag = false;
 		
 		// // data receptacles
 		// TreeMap<String, String> headers = new TreeMap<>();
-		// List<Integer> errorCodeList = new ArrayList<>();
-		// List<Integer> warningCodeList = new ArrayList<>();
+		List<Integer> errorCodeList = new ArrayList<>();
+		List<Integer> warningCodeList = new ArrayList<>();
 		
-		// try 
-		// {
+		try 
+		{
 		// 	// process the header
 		// 	HeaderProcessor hp = new HeaderProcessor();
 		// 	System.out.println("new Header Processor created");
@@ -128,11 +135,11 @@ public class PostPopulationFrequencies implements Callable<Integer>
 		// 	headerFlag = Boolean.valueOf(headers.get("flag"));
 		// 	System.out.println("Header flag: " + headerFlag);
 			
-		// 	// check the data for consistancy
-		// 	DataChecks dataChecks = new DataChecks();
-		// 	dataFlag = dataChecks.populationDataCheck(reader(inputFile), errorCodeList, warningCodeList);
-		// 	System.out.println("Data flag: " + dataFlag);
-		// 	System.out.println("ErrorCodeList: " + errorCodeList);
+			// check the data for consistancy
+			DataChecks dataChecks = new DataChecks();
+			dataFlag = dataChecks.populationDataCheck(inputFile, reader(inputFile), errorCodeList, warningCodeList);
+			System.out.println("Data flag: " + dataFlag);
+			System.out.println("ErrorCodeList: " + errorCodeList);
 			
 		// 	// if the header and data both check out, post the data
 		// 	if (headerFlag && dataFlag)
@@ -141,11 +148,11 @@ public class PostPopulationFrequencies implements Callable<Integer>
 		// 		return 1;
 		// 	} 
 			
-		// } catch (Exception ex) {
-		// 	System.out.println(ex);
-		// 	AppendText.appendToPane(PhycusGui.outputTextPane, ex.toString(), Color.RED);
-		// 	AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-		// }
+		} catch (Exception ex) {
+			System.out.println(ex);
+			AppendText.appendToPane(uploadResultsTextPane, ex.toString(), Color.RED);
+			AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+		}
 
 		return 0;
 	}

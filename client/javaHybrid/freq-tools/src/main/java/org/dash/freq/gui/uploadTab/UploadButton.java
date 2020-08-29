@@ -73,11 +73,11 @@ public class UploadButton {
 
 				// // check to make sure there's a file or folder listed in
 				// // file location text area
-				// if (!fileLocationTextArea.getText().isEmpty())
-				// {
+				// if (!fileLocationTextArea.getText().isEmpty()) {
+
 				// 	// for a single file
-				// 	if (selectedFile.isFile())
-				// 	{
+				// 	if (selectedFile.isFile()) {
+
 				// 		// set up a new Receipt Observer
 				// 		ReceiptObserver ro = new ReceiptObserver(upTextMgr, selectedFile);
 				// 		try { upTextMgr.addObserver(ro); }
@@ -86,7 +86,8 @@ public class UploadButton {
 				// 			ex.printStackTrace(); 
 				// 		}
 						
-				// 		// reset TextPane
+						// create blank line in TextPane (instead of reseting the whole log)
+						AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
 				// 		outputTextPane.setText("");
 						
 				// 		// list file name

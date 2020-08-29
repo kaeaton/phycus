@@ -24,6 +24,7 @@ package org.dash.freq.validations;
 import java.awt.Color;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 
 import java.math.BigDecimal;
@@ -32,26 +33,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
+import javax.swing.JTextPane;
+
 import io.swagger.client.ApiException;
 import io.swagger.client.model.HaplotypeFrequencyData;
 
-import org.dash.freq.gui.Gui;
-import org.dash.freq.utilities.AppendText;
+import org.dash.freq.publisher.*;
+// import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
+// import org.dash.freq.utilities.AppendText;
 
 public class DataChecks {
 
-	public BigDecimal freqTotal;
+	private BigDecimal freqTotal;
+	// private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	// private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
+
+	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
+	private UploadTabObserver uploadTabObserver;
+	private ReceiptObserver receiptObserver;
 
 	public DataChecks() { }
 	
 	// checking the data for consistancy
 	// does every entry have the same haplotype & loci?
 	// does the total frequency fall within acceptable range?
-	public boolean populationDataCheck(BufferedReader reader, 
+	public boolean populationDataCheck( File selectedFile,
+										BufferedReader reader, 
 										List<Integer> errorCodeList,
 										List<Integer> warningCodeList
-										) throws IOException, ApiException 
-	{
+										) throws IOException, ApiException {
 		// while loop variables
 		String row;
 		String[] columns;
@@ -82,8 +92,7 @@ public class DataChecks {
 		System.out.println(columns[0]);
 		
 		// check for missing tildas in first haplotype
-		if (!haplotypeProcessor.asteriksAndTildas(columns[0]))
-		{
+		if (!haplotypeProcessor.asteriksAndTildas(columns[0])) {
 			flag = false;
 			
 			// because there can be multiple errors for each line, neither the 
@@ -100,25 +109,23 @@ public class DataChecks {
 		// resolution of the total frequencies & target frequency
 		BigDecimal targetFrequency = new BigDecimal(1.0);
 		BigDecimal maxFrequency = new BigDecimal(1.01);
+		BigDecimal minFrequency = new BigDecimal(0.95);
 		
 		// read through the file, consolodate the data for checking
-		while ((row = reader.readLine()) != null) 
-		{
+		while ((row = reader.readLine()) != null) {
 			// break the row down into useable pieces
 			columns = row.split(",");
 			String haplotype = columns[0];			
 			BigDecimal frequency = new BigDecimal(columns[1]);
 			
 			// compare current line's loci to first haplotype
-			if (!haplotypeProcessor.checkLoci(haplotype))
-			{
+			if (!haplotypeProcessor.checkLoci(haplotype)) {
 				flag = false;
 				haplotypeLineErrorsMismatch.add(i + ":" + 1);
 			}
 
 			// checking for missing tildas: A*01:01gA*01:01g
-			if (!haplotypeProcessor.asteriksAndTildas(haplotype))
-			{
+			if (!haplotypeProcessor.asteriksAndTildas(haplotype)) {
 				flag = false;
 				haplotypeLineErrorsMismatch.add(i + ":" + 2);
 			}
@@ -136,70 +143,92 @@ public class DataChecks {
 		// does the frequency fall withing the target range?
 		// if frequencies total to 0 report total
 		if (freqTotal.compareTo(targetFrequency) == 0) {
-			// AppendText.appendToPane(PhycusGui.outputTextPane, ("Frequency total: " + freqTotal), Color.BLACK);
-			// AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
+			uploadFilesObservable.setLine(("Frequency total: " + freqTotal), "black", "both");
 		}
+		
 		// if frequency over 1.0, but under 1.01, give warning
-		// if frequencies less than 0, give warning
-		else if (freqTotal.compareTo(targetFrequency) < 0 || freqTotal.compareTo(maxFrequency) < 0)
-		{
-//			flag = false;
+		else if (freqTotal.compareTo(targetFrequency) > 0 && freqTotal.compareTo(maxFrequency) < 0) {
 			warningCodeList.add(2);
 		}
+		
+		// if frequency over 0.95, but less than 1.0, give warning
+		else if (freqTotal.compareTo(targetFrequency) < 0 && freqTotal.compareTo(minFrequency) > 0) {
+			warningCodeList.add(3);
+		}
+		
 		// if frequencies greater than 1.01, give error
-		else
-		{
+		else if (freqTotal.compareTo(maxFrequency) > 0) {
 			flag = false;
 			errorCodeList.add(2);
 		}
 		
+		// if frequencies less than 0.95, give error
+		else if (freqTotal.compareTo(minFrequency) < 0) {
+			flag = false;
+			errorCodeList.add(11);
+		}
+		
+		// set up new Observers
+		receiptObserver = new ReceiptObserver(uploadFilesObservable, selectedFile);
+		uploadTabObserver = new UploadTabObserver(uploadFilesObservable);
+
+		try { 
+			uploadFilesObservable.addObserver(receiptObserver); 
+			uploadFilesObservable.addObserver(uploadTabObserver); 
+		} catch (Exception ex) { System.out.println("FileUploader: Error adding observer"); ex.printStackTrace(); }
+
 		// if there are warnings, print out the warnings to the gui
-		if (!warningCodeList.isEmpty()) 
-		{
-			for (int x:warningCodeList)
-			{
-				// System.out.println("* " + ErrorCodes.warningList().get(x));
-				// AppendText.appendToPane(PhycusGui.outputTextPane, "Warnings: ", Color.BLACK);
-				// AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-				// AppendText.appendToPane(PhycusGui.outputTextPane, "* " + ErrorCodes.warningList().get(x), Color.BLACK);
-				// AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-				// if (x == 2) {
-				// 	AppendText.appendToPane(PhycusGui.outputTextPane, ("  - Frequency total: " + freqTotal), Color.BLACK);
-				// 	AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-				// 	AppendText.appendToPane(PhycusGui.outputTextPane, ("  - Frequency sum will be normalized by the server to 1.0."), Color.BLACK);
-				// 	AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-				// }
+		if (!warningCodeList.isEmpty()) {
+			uploadFilesObservable.setLine("", "black", "both");
+			uploadFilesObservable.setLine("Warnings:", "black", "both");
+
+			for (int x:warningCodeList) {
+				System.out.println("* " + ErrorCodes.warningList().get(x));
+				uploadFilesObservable.setLine(("* " + ErrorCodes.warningList().get(x)), "black", "both");
+
+				if (x == 2) {
+					uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
+					uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
+				}
+				
+				if (x == 3) {
+					uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
+					uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
+				}
 			}
 		}
 		
 		// if there are errors, print out the errors to the gui
-		if (!errorCodeList.isEmpty()) 
-		{
-			// AppendText.appendToPane(PhycusGui.outputTextPane, "Errors: ", Color.RED);
-			// AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
+		if (!errorCodeList.isEmpty()) {
+			uploadFilesObservable.setLine("", "black", "both");
+			uploadFilesObservable.setLine("Errors:", "red", "both");
 				
-			for (int x:errorCodeList)
-			{
+			for (int x:errorCodeList) {
 				System.out.println("* " + ErrorCodes.errorList().get(x));
-
-				// AppendText.appendToPane(PhycusGui.outputTextPane, "* " + ErrorCodes.errorList().get(x), Color.RED);
-				// AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
+				uploadFilesObservable.setLine(("* " + ErrorCodes.errorList().get(x)), "red", "both");
 				
-				// frequency total error
-				if (x == 2)
-				{
-					// AppendText.appendToPane(PhycusGui.outputTextPane, ("  - Frequency totals: " + freqTotal), Color.RED);
-					// AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-
+				// frequency total error: greater than
+				if (x == 2) {
+					uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
+				}
+				
+				// frequency total error: less than
+				if (x == 11) {
+					uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
 				}
 				
 				// haplotype consistency error
-				if (x == 9)
-				{
+				if (x == 9) {
 					haplotypeProcessor.printOutErrors(haplotypeLineErrorsMismatch);
 				}
 			}
+			uploadFilesObservable.setLine("", "red", "both");
+			uploadFilesObservable.setLine("Data submission unsuccessful", "red", "both");
+			uploadFilesObservable.setLine("Please fix the errors and try again", "red", "both");
 		}
+
+		uploadFilesObservable.deleteObserver(receiptObserver);
+		uploadFilesObservable.deleteObserver(uploadTabObserver);
 
 		return flag;
 	}

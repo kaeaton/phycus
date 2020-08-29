@@ -10,7 +10,7 @@ import org.dash.freq.publisher.*;
 public class FileUploader {
 
 	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
-	private UploadTabObserver uploadTabObserver; //= new UploadTabObserver(uploadFilesObservable);
+	private UploadTabObserver uploadTabObserver;
 	private ReceiptObserver receiptObserver;
 
 	public FileUploader() { }
@@ -36,11 +36,12 @@ public class FileUploader {
 			public void run() {
 				try {
 
-					// PostPopulationFrequencies ppf = new PostPopulationFrequencies(
-					// 	gtRegistry, 
-					// 	prefs.get("PHY_EST_ENTITY", null));
-					// ppf.setFile(selectedFile);
-					// ppf.call();
+					PostPopulationFrequencies ppf = new PostPopulationFrequencies(
+						"gtRegistry", 
+						"test");
+						// prefs.get("PHY_EST_ENTITY", null));
+					ppf.setFile(selectedFile);
+					ppf.call();
 
 					System.out.println("Number of observers: " + uploadFilesObservable.countObservers());
 					uploadFilesObservable.setLine("", "black", "receipt");
