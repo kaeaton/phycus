@@ -7,6 +7,12 @@ import javax.swing.JTextPane;
 import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 import org.dash.freq.publisher.*;
 
+/**
+ * This class triggers the file upload process to PostPopulationFrequencies, 
+ * first setting the file, then calling the "call()" function which starts the validations. 
+ *
+ * @author katrinaeaton
+ */
 public class FileUploader {
 
 	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
@@ -15,6 +21,11 @@ public class FileUploader {
 
 	public FileUploader() { }
 
+	/**
+	 * Begins the upload process, writing to both the GUI and the receipt.
+	 *
+	 * @param selectedFile The Phycus file to be uploaded.
+	 */
 	public void uploadFile(File selectedFile) {
 
 		// set up new Observers
@@ -31,8 +42,7 @@ public class FileUploader {
 		uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
 		
 		// run as background thread so TextPane updates
-		Runnable fileUpload = new Runnable() 
-		{
+		Runnable fileUpload = new Runnable() {
 			public void run() {
 				try {
 
