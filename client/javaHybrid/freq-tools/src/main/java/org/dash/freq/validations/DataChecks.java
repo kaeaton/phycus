@@ -52,6 +52,11 @@ public class DataChecks {
 	private UploadTabObserver uploadTabObserver;
 	private ReceiptObserver receiptObserver;
 
+	// resolution of the total frequencies & target frequency
+	private final BigDecimal TARGET_FREQUENCY = new BigDecimal(1.0);
+	private final BigDecimal MAX_FREQUENCY = new BigDecimal(1.01);
+	private final BigDecimal MIN_FREQUENCY = new BigDecimal(0.95);
+
 	public DataChecks() { }
 	
 	// checking the data for consistancy
@@ -107,9 +112,9 @@ public class DataChecks {
 		freqTotal = new BigDecimal(columns[1]);
 		
 		// resolution of the total frequencies & target frequency
-		BigDecimal targetFrequency = new BigDecimal(1.0);
-		BigDecimal maxFrequency = new BigDecimal(1.01);
-		BigDecimal minFrequency = new BigDecimal(0.95);
+		// BigDecimal TARGET_FREQUENCY = new BigDecimal(1.0);
+		// BigDecimal MAX_FREQUENCY = new BigDecimal(1.01);
+		// BigDecimal MIN_FREQUENCY = new BigDecimal(0.95);
 		
 		// read through the file, consolodate the data for checking
 		while ((row = reader.readLine()) != null) {
@@ -142,40 +147,40 @@ public class DataChecks {
 		
 		// does the frequency fall withing the target range?
 		// if frequencies total to 0 report total
-		if (freqTotal.compareTo(targetFrequency) == 0) {
+		if (freqTotal.compareTo(TARGET_FREQUENCY) == 0) {
 			uploadFilesObservable.setLine(("Frequency total: " + freqTotal), "black", "both");
 		}
 		
 		// if frequency over 1.0, but under 1.01, give warning
-		else if (freqTotal.compareTo(targetFrequency) > 0 && freqTotal.compareTo(maxFrequency) < 0) {
+		else if (freqTotal.compareTo(TARGET_FREQUENCY) > 0 && freqTotal.compareTo(MAX_FREQUENCY) < 0) {
 			warningCodeList.add(2);
 		}
 		
 		// if frequency over 0.95, but less than 1.0, give warning
-		else if (freqTotal.compareTo(targetFrequency) < 0 && freqTotal.compareTo(minFrequency) > 0) {
+		else if (freqTotal.compareTo(TARGET_FREQUENCY) < 0 && freqTotal.compareTo(MIN_FREQUENCY) > 0) {
 			warningCodeList.add(3);
 		}
 		
 		// if frequencies greater than 1.01, give error
-		else if (freqTotal.compareTo(maxFrequency) > 0) {
+		else if (freqTotal.compareTo(MAX_FREQUENCY) > 0) {
 			flag = false;
 			errorCodeList.add(2);
 		}
 		
 		// if frequencies less than 0.95, give error
-		else if (freqTotal.compareTo(minFrequency) < 0) {
+		else if (freqTotal.compareTo(MIN_FREQUENCY) < 0) {
 			flag = false;
 			errorCodeList.add(11);
 		}
 		
 		// set up new Observers
-		receiptObserver = new ReceiptObserver(uploadFilesObservable, selectedFile);
-		uploadTabObserver = new UploadTabObserver(uploadFilesObservable);
+		// receiptObserver = new ReceiptObserver(uploadFilesObservable, selectedFile);
+		// uploadTabObserver = new UploadTabObserver(uploadFilesObservable);
 
-		try { 
-			uploadFilesObservable.addObserver(receiptObserver); 
-			uploadFilesObservable.addObserver(uploadTabObserver); 
-		} catch (Exception ex) { System.out.println("FileUploader: Error adding observer"); ex.printStackTrace(); }
+		// try { 
+		// 	uploadFilesObservable.addObserver(receiptObserver); 
+		// 	uploadFilesObservable.addObserver(uploadTabObserver); 
+		// } catch (Exception ex) { System.out.println("DataChecks: Error adding observer"); ex.printStackTrace(); }
 
 		// if there are warnings, print out the warnings to the gui
 		if (!warningCodeList.isEmpty()) {
@@ -186,15 +191,15 @@ public class DataChecks {
 				System.out.println("* " + ErrorCodes.warningList().get(x));
 				uploadFilesObservable.setLine(("* " + ErrorCodes.warningList().get(x)), "black", "both");
 
-				if (x == 2) {
+				if (x == 2 || x == 3) {
 					uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
 					uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
 				}
 				
-				if (x == 3) {
-					uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
-					uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
-				}
+				// if (x == 3) {
+				// 	uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
+				// 	uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
+				// }
 			}
 		}
 		
@@ -208,14 +213,14 @@ public class DataChecks {
 				uploadFilesObservable.setLine(("* " + ErrorCodes.errorList().get(x)), "red", "both");
 				
 				// frequency total error: greater than
-				if (x == 2) {
+				if (x == 2 || x == 11) {
 					uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
 				}
 				
 				// frequency total error: less than
-				if (x == 11) {
-					uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
-				}
+				// if (x == 11) {
+				// 	uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
+				// }
 				
 				// haplotype consistency error
 				if (x == 9) {

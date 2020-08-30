@@ -37,14 +37,17 @@ public class FileUploader {
 			uploadFilesObservable.addObserver(uploadTabObserver); 
 		} catch (Exception ex) { System.out.println("FileUploader: Error adding observer"); ex.printStackTrace(); }
 		
-		// list file name
-		uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
-		uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
+		// // list file name
+		// uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
+		// uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
 		
 		// run as background thread so TextPane updates
 		Runnable fileUpload = new Runnable() {
 			public void run() {
 				try {
+					// list file name
+		uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
+		uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
 
 					PostPopulationFrequencies ppf = new PostPopulationFrequencies(
 						"gtRegistry", 
