@@ -1,6 +1,8 @@
 package org.dash.freq.gui.uploadTab.selectFile;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
+
 
 import org.dash.freq.utilities.Prefs;
 
@@ -20,6 +22,8 @@ public class UploadFileChooser {
 	 */
 	public JFileChooser getUploadFileChooser() {		
 		uploadFileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Phycus file", "phycus");
+		uploadFileChooser.setFileFilter(filter);
 
 		return uploadFileChooser;
 	}
