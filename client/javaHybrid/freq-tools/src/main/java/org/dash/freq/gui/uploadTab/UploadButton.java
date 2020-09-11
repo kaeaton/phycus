@@ -26,6 +26,7 @@ public class UploadButton {
 	private JTextPane uploadResultsTextPane;
 
 	private FileUploader fileUploader = new FileUploader();
+	private BulkUploader bulkUploader = new BulkUploader();
 
 	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
 	private UploadTabObserver uploadTabObserver;
@@ -60,6 +61,12 @@ public class UploadButton {
 
 			if (selectedFile.isFile()) {
 				fileUploader.uploadFile(selectedFile);
+				return;
+			}
+
+			if (selectedFile.isDirectory()) {
+				bulkUploader.uploadFiles(selectedFile);
+				return;
 			}
 
 				// System.out.println("UploadButton can find the selected file/folder: " + selectedFile.getAbsolutePath());
@@ -87,7 +94,7 @@ public class UploadButton {
 				// 		}
 						
 						// create blank line in TextPane (instead of reseting the whole log)
-						AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+						// AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
 				// 		outputTextPane.setText("");
 						
 				// 		// list file name

@@ -9,7 +9,8 @@ import org.dash.freq.publisher.*;
 
 /**
  * This class triggers the file upload process to PostPopulationFrequencies, 
- * first setting the file, then calling the "call()" function which starts the validations. 
+ * first setting the file, then calling the "call()" function which starts the validations 
+ * before uploading the data. 
  *
  * @author katrinaeaton
  */
@@ -19,6 +20,8 @@ public class FileUploader {
 	private UploadTabObserver uploadTabObserver;
 	private ReceiptObserver receiptObserver;
 
+	private int uploadResults;
+
 	public FileUploader() { }
 
 	/**
@@ -26,7 +29,7 @@ public class FileUploader {
 	 *
 	 * @param selectedFile The Phycus file to be uploaded.
 	 */
-	public void uploadFile(File selectedFile) {
+	public int uploadFile(File selectedFile) {
 
 		// set up new Observers
 		receiptObserver = new ReceiptObserver(uploadFilesObservable, selectedFile);
@@ -37,17 +40,13 @@ public class FileUploader {
 			uploadFilesObservable.addObserver(uploadTabObserver); 
 		} catch (Exception ex) { System.out.println("FileUploader: Error adding observer"); ex.printStackTrace(); }
 		
-		// // list file name
-		// uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
-		// uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
-		
 		// run as background thread so TextPane updates
 		Runnable fileUpload = new Runnable() {
 			public void run() {
 				try {
 					// list file name
-		uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
-		uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
+					uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
+					uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
 
 					PostPopulationFrequencies ppf = new PostPopulationFrequencies(
 						"gtRegistry", 
@@ -55,6 +54,7 @@ public class FileUploader {
 						// prefs.get("PHY_EST_ENTITY", null));
 					ppf.setFile(selectedFile);
 					ppf.call();
+					// uploadResults = ppf.call();
 
 					System.out.println("Number of observers: " + uploadFilesObservable.countObservers());
 					uploadFilesObservable.setLine("", "black", "receipt");
@@ -62,10 +62,13 @@ public class FileUploader {
 					uploadFilesObservable.deleteObserver(receiptObserver);
 					uploadFilesObservable.deleteObserver(uploadTabObserver);
 
+					// return fileUploaded;
 				} catch (Exception ex) { ex.printStackTrace(); }
 			}
 		};
-		new Thread(fileUpload).start();
+		// int uploadResults = new Thread(fileUpload).start();
+
+		return uploadResults;
 	}
 
 }

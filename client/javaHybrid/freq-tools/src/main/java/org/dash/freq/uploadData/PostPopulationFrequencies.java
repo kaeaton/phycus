@@ -145,7 +145,7 @@ public class PostPopulationFrequencies implements Callable<Integer>
 		// 	if (headerFlag && dataFlag)
 		// 	{
 		// 		postPopulationFrequencies(reader(inputFile), headers);
-		// 		return 1;
+				return 1;
 		// 	} 
 			
 		} catch (Exception ex) {
