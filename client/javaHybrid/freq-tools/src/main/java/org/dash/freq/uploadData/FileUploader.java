@@ -20,6 +20,8 @@ public class FileUploader {
 	private UploadTabObserver uploadTabObserver;
 	private ReceiptObserver receiptObserver;
 
+	// private PostPopulationFrequencies postPopFreq = createNewPostPopulationFrequencies();
+
 	private int uploadResults;
 
 	public FileUploader() { }
@@ -40,35 +42,44 @@ public class FileUploader {
 			uploadFilesObservable.addObserver(uploadTabObserver); 
 		} catch (Exception ex) { System.out.println("FileUploader: Error adding observer"); ex.printStackTrace(); }
 		
-		// run as background thread so TextPane updates
-		Runnable fileUpload = new Runnable() {
-			public void run() {
-				try {
-					// list file name
-					uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
-					uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
+		
+		try {
+			// list file name
+			uploadFilesObservable.setLine((selectedFile.getName() + ":"), "blue", "gui");
+			uploadFilesObservable.setLine(("File name: " + selectedFile.getName() + ":"), "black", "receipt");
 
-					PostPopulationFrequencies ppf = new PostPopulationFrequencies(
-						"gtRegistry", 
-						"test");
-						// prefs.get("PHY_EST_ENTITY", null));
-					ppf.setFile(selectedFile);
-					ppf.call();
-					// uploadResults = ppf.call();
+			PostPopulationFrequencies ppf = new PostPopulationFrequencies(
+				"gtRegistry", 
+				"test");
+				// prefs.get("PHY_EST_ENTITY", null));
+			ppf.setFile(selectedFile);
+			// ppf.call();
+			uploadResults = ppf.call();
 
-					System.out.println("Number of observers: " + uploadFilesObservable.countObservers());
-					uploadFilesObservable.setLine("", "black", "receipt");
-					uploadFilesObservable.setLine("End of receipt", "black", "receipt");
-					uploadFilesObservable.deleteObserver(receiptObserver);
-					uploadFilesObservable.deleteObserver(uploadTabObserver);
+			System.out.println("Number of observers: " + uploadFilesObservable.countObservers());
+			uploadFilesObservable.setLine("", "black", "receipt");
+			uploadFilesObservable.setLine("End of receipt", "black", "receipt");
+			uploadFilesObservable.deleteObserver(receiptObserver);
+			uploadFilesObservable.deleteObserver(uploadTabObserver);
 
-					// return fileUploaded;
-				} catch (Exception ex) { ex.printStackTrace(); }
-			}
-		};
-		// int uploadResults = new Thread(fileUpload).start();
-
+			// return fileUploaded;
+		} catch (Exception ex) { ex.printStackTrace(); }
+		
 		return uploadResults;
 	}
+
+	// private PostPopulationFrequencies createNewPostPopulationFrequencies() {
+
+	// 	try {
+	// 		PostPopulationFrequencies ppf = new PostPopulationFrequencies("gtRegistry", "test");
+
+	// 		return ppf;
+
+	// 	} catch (Exception ex) { 
+	// 		System.out.println("Error creating new PostPopulationFrequencies.");
+	// 		ex.printStackTrace();
+	// 	}
+	// 	return null;
+	// }
 
 }

@@ -60,12 +60,27 @@ public class UploadButton {
 			}
 
 			if (selectedFile.isFile()) {
-				fileUploader.uploadFile(selectedFile);
+				Runnable fileUpload = new Runnable() {
+					public void run() {
+						fileUploader.uploadFile(selectedFile);
+					}
+				};
+				
+				new Thread (fileUpload).start();
+
 				return;
 			}
 
 			if (selectedFile.isDirectory()) {
-				bulkUploader.uploadFiles(selectedFile);
+
+				Runnable bulkUpload = new Runnable () {
+					public void run () {
+						bulkUploader.uploadFiles(selectedFile);
+					}
+				};
+				
+				new Thread (bulkUpload).start();
+				
 				return;
 			}
 
