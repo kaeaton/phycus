@@ -48,9 +48,8 @@ public class DataChecks {
 	// private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
 	// private JTextPane uploadResultsTextPane = uploadTabClassInstantiations.getUploadResultsTextPaneInstance();
 
+	// uses the listeners set up in FileUploader
 	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
-	private UploadTabObserver uploadTabObserver;
-	private ReceiptObserver receiptObserver;
 
 	// resolution of the total frequencies & target frequency
 	private final BigDecimal TARGET_FREQUENCY = new BigDecimal(1.0);
@@ -111,13 +110,9 @@ public class DataChecks {
 		// first line for frequency total
 		freqTotal = new BigDecimal(columns[1]);
 		
-		// resolution of the total frequencies & target frequency
-		// BigDecimal TARGET_FREQUENCY = new BigDecimal(1.0);
-		// BigDecimal MAX_FREQUENCY = new BigDecimal(1.01);
-		// BigDecimal MIN_FREQUENCY = new BigDecimal(0.95);
-		
-		// read through the file, consolodate the data for checking
+		// read through the file, consolidate the data for checking
 		while ((row = reader.readLine()) != null) {
+
 			// break the row down into useable pieces
 			columns = row.split(",");
 			String haplotype = columns[0];			
@@ -173,15 +168,6 @@ public class DataChecks {
 			errorCodeList.add(11);
 		}
 		
-		// set up new Observers
-		// receiptObserver = new ReceiptObserver(uploadFilesObservable, selectedFile);
-		// uploadTabObserver = new UploadTabObserver(uploadFilesObservable);
-
-		// try { 
-		// 	uploadFilesObservable.addObserver(receiptObserver); 
-		// 	uploadFilesObservable.addObserver(uploadTabObserver); 
-		// } catch (Exception ex) { System.out.println("DataChecks: Error adding observer"); ex.printStackTrace(); }
-
 		// if there are warnings, print out the warnings to the gui
 		if (!warningCodeList.isEmpty()) {
 			uploadFilesObservable.setLine("", "black", "both");
@@ -195,11 +181,6 @@ public class DataChecks {
 					uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
 					uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
 				}
-				
-				// if (x == 3) {
-				// 	uploadFilesObservable.setLine(("  - Frequency total: " + freqTotal), "black", "both");
-				// 	uploadFilesObservable.setLine("  - Frequency sum will be normalized by the server to 1.0.", "black", "both");
-				// }
 			}
 		}
 		
@@ -212,15 +193,10 @@ public class DataChecks {
 				System.out.println("* " + ErrorCodes.errorList().get(x));
 				uploadFilesObservable.setLine(("* " + ErrorCodes.errorList().get(x)), "red", "both");
 				
-				// frequency total error: greater than
+				// frequency total error:
 				if (x == 2 || x == 11) {
 					uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
 				}
-				
-				// frequency total error: less than
-				// if (x == 11) {
-				// 	uploadFilesObservable.setLine(("  - Frequency totals: " + freqTotal), "red", "both");
-				// }
 				
 				// haplotype consistency error
 				if (x == 9) {
@@ -231,9 +207,6 @@ public class DataChecks {
 			uploadFilesObservable.setLine("Data submission unsuccessful", "red", "both");
 			uploadFilesObservable.setLine("Please fix the errors and try again", "red", "both");
 		}
-
-		uploadFilesObservable.deleteObserver(receiptObserver);
-		uploadFilesObservable.deleteObserver(uploadTabObserver);
 
 		return flag;
 	}
