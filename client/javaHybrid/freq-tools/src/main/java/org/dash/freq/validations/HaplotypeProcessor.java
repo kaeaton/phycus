@@ -11,10 +11,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dash.freq.gui.Gui;
 import org.dash.freq.publisher.UploadFilesObservable;
 import org.dash.freq.utilities.AppendText;
 import org.dash.freq.utilities.Prefs;
-import org.dash.freq.gui.Gui;
 
 
 // /**
