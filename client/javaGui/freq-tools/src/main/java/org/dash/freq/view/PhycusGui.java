@@ -24,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 import org.dash.freq.controller.BatchUploader;
+import org.dash.freq.controller.IonCheck;
 import org.dash.freq.controller.ReceiptObserver;
 import org.dash.freq.controller.UploadTextObservable;
 import org.dash.freq.model.Population;
@@ -36,10 +37,8 @@ import org.dash.freq.model.PostPopulationFrequencies;
 public class PhycusGui extends javax.swing.JFrame {
 	
 	private File selectedFile;
-	private String gtRegistry;
 	public Preferences prefs = Preferences.userNodeForPackage(this.getClass());
 	public static final String defaultDatabaseURL = "http://localhost:8080";
-	private boolean folder = false;
 	private final PopulationList popList = new PopulationList();
 	private final Population population = new Population();
 	public static final String userDocumentsPath = 
@@ -85,17 +84,15 @@ public class PhycusGui extends javax.swing.JFrame {
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         fileChooserUpload = new javax.swing.JFileChooser(prefs.get("PHY_INPUT_DIR", userDocumentsPath));
         fileOrFolder = new javax.swing.ButtonGroup();
-        estEntityPopupFrame = new javax.swing.JFrame();
-        estEntityTextField = new javax.swing.JTextField();
-        estEntityEnterButton = new javax.swing.JButton();
-        estEntityCloseButton = new javax.swing.JButton();
-        estEntityInstructions1 = new javax.swing.JLabel();
-        estEntityInstructions2 = new javax.swing.JLabel();
-        estEntityInstructions3 = new javax.swing.JLabel();
+        ionPopupFrame = new javax.swing.JFrame();
+        ionTextField = new javax.swing.JTextField();
+        ionEnterButton = new javax.swing.JButton();
+        ionCloseButton = new javax.swing.JButton();
+        ionInstructions1 = new javax.swing.JLabel();
+        ionInstructions2 = new javax.swing.JLabel();
         receiptDirectoryChooser = new javax.swing.JFileChooser(prefs.get("PHY_RECEIPT_CUSTOM_FOLDER", userDocumentsPath));
         advancedOptionsPopupFrame = new javax.swing.JFrame();
         databaseUrlTextField = new javax.swing.JTextField();
@@ -110,9 +107,6 @@ public class PhycusGui extends javax.swing.JFrame {
         mainUploadButton = new javax.swing.JButton();
         CsvNotificationLabel = new javax.swing.JLabel();
         SelectFilePanel = new javax.swing.JPanel();
-        fileOpenButton = new javax.swing.JButton();
-        jRBFile = new javax.swing.JRadioButton();
-        jRBFolder = new javax.swing.JRadioButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         mainCancelButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -121,8 +115,13 @@ public class PhycusGui extends javax.swing.JFrame {
         licenseLabel = new javax.swing.JLabel();
         licenseHelpIcon = new javax.swing.JLabel();
         warningLabel = new javax.swing.JLabel();
-        EstEntityLabel1 = new javax.swing.JLabel();
-        EstEntityLabelCode = new javax.swing.JLabel();
+        ionLabel = new javax.swing.JLabel();
+        ionLabelCode = new javax.swing.JLabel();
+        fileOpenButton = new javax.swing.JButton();
+        CsvNotificationLabel2 = new javax.swing.JLabel();
+        CsvNotificationLabel3 = new javax.swing.JLabel();
+        ionLabel2 = new javax.swing.JLabel();
+        ionLabelFacility = new javax.swing.JLabel();
         populationPanel = new javax.swing.JPanel();
         popSearchTextField = new javax.swing.JTextField();
         popResultsScrollPane = new javax.swing.JScrollPane();
@@ -150,83 +149,80 @@ public class PhycusGui extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         helpEditorPane = new javax.swing.JEditorPane();
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Comma Separated Values file", "csv");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Phycus file", "phycus");
         fileChooserUpload.setFileFilter(filter);
+        fileChooserUpload.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
 
-        estEntityPopupFrame.setVisible(false);
-        estEntityPopupFrame.setTitle("Haplotyping Registry");
-        estEntityPopupFrame.setAlwaysOnTop(true);
-        estEntityPopupFrame.setLocationByPlatform(true);
-        estEntityPopupFrame.setMinimumSize(new java.awt.Dimension(300, 250));
-        estEntityPopupFrame.setName("EstEntityFrame"); // NOI18N
+        ionPopupFrame.setVisible(false);
+        ionPopupFrame.setTitle("Haplotyping Registry");
+        ionPopupFrame.setAlwaysOnTop(true);
+        ionPopupFrame.setLocationByPlatform(true);
+        ionPopupFrame.setMinimumSize(new java.awt.Dimension(300, 250));
+        ionPopupFrame.setName("EstEntityFrame"); // NOI18N
 
-        estEntityEnterButton.setText("Enter");
-        estEntityEnterButton.addActionListener(new java.awt.event.ActionListener() {
+        ionEnterButton.setText("Enter");
+        ionEnterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estEntityEnterButtonActionPerformed(evt);
+                ionEnterButtonActionPerformed(evt);
             }
         });
 
-        estEntityCloseButton.setText("Close");
-        estEntityCloseButton.addActionListener(new java.awt.event.ActionListener() {
+        ionCloseButton.setText("Close");
+        ionCloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estEntityCloseButtonActionPerformed(evt);
+                ionCloseButtonActionPerformed(evt);
             }
         });
 
-        estEntityInstructions1.setText("Please enter the ION or other facility identification ");
+        ionInstructions1.setText("If your facility has an ION number, please enter it");
 
-        estEntityInstructions2.setText("of the group performing the haplotyping:");
+        ionInstructions2.setText("here (This can be changed in the options tab): ");
 
-        estEntityInstructions3.setText("(This can be changed in the options tab)");
-
-        javax.swing.GroupLayout estEntityPopupFrameLayout = new javax.swing.GroupLayout(estEntityPopupFrame.getContentPane());
-        estEntityPopupFrame.getContentPane().setLayout(estEntityPopupFrameLayout);
-        estEntityPopupFrameLayout.setHorizontalGroup(
-            estEntityPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(estEntityPopupFrameLayout.createSequentialGroup()
-                .addGroup(estEntityPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(estEntityPopupFrameLayout.createSequentialGroup()
+        javax.swing.GroupLayout ionPopupFrameLayout = new javax.swing.GroupLayout(ionPopupFrame.getContentPane());
+        ionPopupFrame.getContentPane().setLayout(ionPopupFrameLayout);
+        ionPopupFrameLayout.setHorizontalGroup(
+            ionPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ionPopupFrameLayout.createSequentialGroup()
+                .addGroup(ionPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ionPopupFrameLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(estEntityPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(estEntityInstructions1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(estEntityInstructions2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(estEntityInstructions3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(estEntityPopupFrameLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addGroup(estEntityPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(estEntityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, estEntityPopupFrameLayout.createSequentialGroup()
-                                .addComponent(estEntityEnterButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(estEntityCloseButton)
-                                .addGap(17, 17, 17)))))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        estEntityPopupFrameLayout.setVerticalGroup(
-            estEntityPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, estEntityPopupFrameLayout.createSequentialGroup()
+                        .addComponent(ionInstructions2))
+                    .addGroup(ionPopupFrameLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(ionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ionPopupFrameLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(ionEnterButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ionCloseButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ionPopupFrameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(estEntityInstructions1)
+                .addComponent(ionInstructions1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        ionPopupFrameLayout.setVerticalGroup(
+            ionPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ionPopupFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ionInstructions1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(estEntityInstructions2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(estEntityInstructions3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(estEntityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(estEntityPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(estEntityEnterButton)
-                    .addComponent(estEntityCloseButton))
-                .addGap(12, 12, 12))
+                .addComponent(ionInstructions2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(ionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(ionPopupFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ionEnterButton)
+                    .addComponent(ionCloseButton))
+                .addContainerGap())
         );
 
-        estEntityPopupFrame.getAccessibleContext().setAccessibleName("");
-        // estEntityPopupFrame.setVisible(false);
+        ionPopupFrame.getAccessibleContext().setAccessibleName("");
+        // ionPopupFrame.setVisible(false);
 
         receiptDirectoryChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
-        estEntityPopupFrame.setVisible(false);
+        ionPopupFrame.setVisible(false);
         advancedOptionsPopupFrame.setTitle("Advanced Options");
         advancedOptionsPopupFrame.setAlwaysOnTop(true);
         advancedOptionsPopupFrame.setLocationByPlatform(true);
@@ -296,7 +292,7 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        // estEntityPopupFrame.setVisible(false);
+        // ionPopupFrame.setVisible(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Phycus Upload Interface");
@@ -330,66 +326,9 @@ public class PhycusGui extends javax.swing.JFrame {
             }
         });
 
-        CsvNotificationLabel.setText("CSV files only.");
+        CsvNotificationLabel.setText("You may select individual .phycus files (See help for more information about the suffix.)");
 
         SelectFilePanel.setLayout(new java.awt.GridBagLayout());
-
-        fileOpenButton.setText("Select File");
-        fileOpenButton.setMaximumSize(new java.awt.Dimension(100, 23));
-        fileOpenButton.setMinimumSize(new java.awt.Dimension(100, 23));
-        fileOpenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fileOpenButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 0);
-        SelectFilePanel.add(fileOpenButton, gridBagConstraints);
-
-        fileOrFolder.add(jRBFile);
-        jRBFile.setText("File");
-        jRBFile.setName("file"); // NOI18N
-        if (prefs.getBoolean("PHY_FILE_OR_FOLDER", true)){
-            setFile();
-            jRBFile.setSelected(true);
-        } else {
-            setFolder();
-            jRBFolder.setSelected(true);
-        }
-        jRBFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBFileActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 23, 0, 0);
-        SelectFilePanel.add(jRBFile, gridBagConstraints);
-
-        fileOrFolder.add(jRBFolder);
-        if (!prefs.getBoolean("FILE_OR_FOLDER", true)){
-            jRBFolder.isSelected();
-        }
-        jRBFolder.setText("Folder");
-        jRBFolder.setName("folder"); // NOI18N
-        jRBFolder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRBFolderActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 23, 0, 0);
-        SelectFilePanel.add(jRBFolder, gridBagConstraints);
         SelectFilePanel.add(filler1, new java.awt.GridBagConstraints());
 
         mainCancelButton.setText("Cancel");
@@ -412,7 +351,7 @@ public class PhycusGui extends javax.swing.JFrame {
 
         licenseLabel.setText("Licensing type:");
 
-        licenseHelpIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/37171Small.png"))); // NOI18N
+        licenseHelpIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallQuestionMark.png"))); // NOI18N
         licenseHelpIcon.setLabelFor(licenseLabel);
         licenseHelpIcon.setToolTipText("A link to a description of the different licensing types");
         licenseHelpIcon.setAlignmentY(0.1F);
@@ -424,15 +363,32 @@ public class PhycusGui extends javax.swing.JFrame {
 
         warningLabel.setText("Warnings will not prevent a file from being uploaded. Errors will.");
 
-        EstEntityLabel1.setText("Haplotyping Group: ");
+        ionLabel.setText("Issuing Organization Number (ION):");
 
-        try {if(prefs.nodeExists("/org/dash/freq/view/PHY_EST_ENTITY")){
-            System.out.println(prefs.get("PHY_EST_ENTITY", "PHY_EST_ENTITY not found"));
-            EstEntityLabelCode.setText(prefs.get("PHY_EST_ENTITY", "No code set"));
-            if(EstEntityLabelCode.getText().equals("No code set")){estEntityPopupFrame.setVisible(true);}
-        } else {
-            estEntityPopupFrame.setVisible(true);
-        }} catch (Exception ex){ System.out.println(ex);}
+        if(!prefs.get("PHY_ION", "").equals("")){
+            ionLabelCode.setText(prefs.get("PHY_ION", ""));
+            ionLabelCode.setVisible(true);
+        } else { ionLabelCode.setVisible(false); }
+
+        fileOpenButton.setText("Select File(s)");
+        fileOpenButton.setMaximumSize(new java.awt.Dimension(100, 23));
+        fileOpenButton.setMinimumSize(new java.awt.Dimension(100, 23));
+        fileOpenButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileOpenButtonActionPerformed(evt);
+            }
+        });
+
+        CsvNotificationLabel2.setText("You may also select folders of .phycus files.");
+
+        CsvNotificationLabel3.setText("Non-phycus files will be ignored as will subdirectories.");
+
+        ionLabel2.setText("ION Facility:");
+
+        if(!prefs.get("PHY_ION_FACILITY", "").equals("")){
+            ionLabelFacility.setText(prefs.get("PHY_ION_FACILITY", ""));
+            ionLabelFacility.setVisible(true);
+        } else { ionLabelFacility.setVisible(false); }
 
         javax.swing.GroupLayout uploadFilesPanelLayout = new javax.swing.GroupLayout(uploadFilesPanel);
         uploadFilesPanel.setLayout(uploadFilesPanelLayout);
@@ -442,37 +398,53 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(uploadFilesPanelLayout.createSequentialGroup()
-                        .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(uploadFilesPanelLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(EstEntityLabel1)
-                                .addGap(4, 4, 4)
-                                .addComponent(EstEntityLabelCode, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(licenseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(CsvNotificationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(40, 40, 40))
                     .addGroup(uploadFilesPanelLayout.createSequentialGroup()
                         .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
                             .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                                .addComponent(fileOpenButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(SelectFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1))
-                            .addComponent(warningLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
+                            .addComponent(warningLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+            .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(CsvNotificationLabel2))
+                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(licenseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(uploadFilesPanelLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CsvNotificationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                                        .addComponent(ionLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ionLabelCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(uploadFilesPanelLayout.createSequentialGroup()
                                         .addComponent(licenseLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(licenseHelpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(445, 445, 445)))))
-                        .addContainerGap())))
-            .addGroup(uploadFilesPanelLayout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(mainUploadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mainCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                                        .addComponent(ionLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ionLabelFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(mainUploadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mainCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(uploadFilesPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(CsvNotificationLabel3)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         uploadFilesPanelLayout.setVerticalGroup(
@@ -482,20 +454,32 @@ public class PhycusGui extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, uploadFilesPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(SelectFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SelectFilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uploadFilesPanelLayout.createSequentialGroup()
+                                .addComponent(fileOpenButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CsvNotificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(CsvNotificationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(CsvNotificationLabel2)
+                .addGap(4, 4, 4)
+                .addComponent(CsvNotificationLabel3)
+                .addGap(34, 34, 34)
                 .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(licenseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(licenseHelpIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(licenseHelpIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(licenseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EstEntityLabel1)
-                    .addComponent(EstEntityLabelCode, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                    .addComponent(ionLabelCode, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ionLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(uploadFilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ionLabel2)
+                    .addComponent(ionLabelFacility, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(warningLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -506,6 +490,13 @@ public class PhycusGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        if(!prefs.get("PHY_ION", "").equals("")){
+            ionLabel.setVisible(true);
+        } else { ionLabel.setVisible(false); }
+        if(!prefs.get("PHY_ION", "").equals("")){
+            ionLabel2.setVisible(true);
+        } else { ionLabel2.setVisible(false); }
+
         jTabbedPane1.addTab("Upload Files", uploadFilesPanel);
 
         popSearchTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -514,8 +505,8 @@ public class PhycusGui extends javax.swing.JFrame {
             }
         });
         popSearchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                popSearchTextFieldKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                popSearchTextFieldKeyReleased(evt);
             }
         });
 
@@ -551,11 +542,11 @@ public class PhycusGui extends javax.swing.JFrame {
                     .addGroup(populationPanelLayout.createSequentialGroup()
                         .addComponent(popSearchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(popSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                        .addComponent(popSearchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
                     .addComponent(popNotificationsScrollPane))
                 .addContainerGap())
             .addGroup(populationPanelLayout.createSequentialGroup()
-                .addGap(213, 213, 213)
+                .addGap(194, 194, 194)
                 .addComponent(popCreateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(popCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -581,7 +572,7 @@ public class PhycusGui extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Populations", populationPanel);
 
-        haplotypeEntityLabel.setText("Reset Haplotyping Group ID:");
+        haplotypeEntityLabel.setText("Reset Issuing Organization Number (ION):");
 
         haplotypeEntityButton.setText("Reset");
         haplotypeEntityButton.addActionListener(new java.awt.event.ActionListener() {
@@ -668,7 +659,7 @@ public class PhycusGui extends javax.swing.JFrame {
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addComponent(advancedOptionsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(470, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(settingsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -680,7 +671,7 @@ public class PhycusGui extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)
                                 .addComponent(uploadReceiptLabel)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(uploadReceiptScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                        .addComponent(uploadReceiptScrollPane)
                         .addGap(14, 14, 14))
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addComponent(verboseCheckBox)
@@ -751,7 +742,7 @@ public class PhycusGui extends javax.swing.JFrame {
         helpPanel.setLayout(helpPanelLayout);
         helpPanelLayout.setHorizontalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
         );
         helpPanelLayout.setVerticalGroup(
             helpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -766,9 +757,11 @@ public class PhycusGui extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 565, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -797,11 +790,12 @@ public class PhycusGui extends javax.swing.JFrame {
 			System.out.println(parentFolder);
 			
 			// save parent folder location for receipt if individual file selected
-			if (prefs.getBoolean("PHY_FILE_OR_FOLDER", true) == true)
+			if (selectedFile.isFile())
+
 			{
 				prefs.put("PHY_DEFAULT_RECEIPT_FOLDER", parentFolder);
 			}
-			// save absolute path for receipt of folder selected
+			// save absolute path for receipt if folder selected
 			else
 			{
 				prefs.put("PHY_DEFAULT_RECEIPT_FOLDER", absolutePath);
@@ -820,15 +814,20 @@ public class PhycusGui extends javax.swing.JFrame {
     private void mainUploadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainUploadButtonActionPerformed
         try
         {	
+			// check to make sure there's a file or folder listed in
+			// file location text area
 			if (!fileLocationTextArea.getText().isEmpty())
 			{
 				// for a single file
-				if (folder == false)
+				if (selectedFile.isFile())
 				{
 					// set up a new Receipt Observer
 					ReceiptObserver ro = new ReceiptObserver(upTextMgr, selectedFile);
 					try { upTextMgr.addObserver(ro); }
-					catch (Exception ex) { System.out.println("Error adding observer"); ex.printStackTrace(); }
+					catch (Exception ex) { 
+						System.out.println("Error adding observer"); 
+						ex.printStackTrace(); 
+					}
 					
 					// reset TextPane
 					outputTextPane.setText("");
@@ -842,9 +841,7 @@ public class PhycusGui extends javax.swing.JFrame {
 					{
 						public void run() {
 							try {
-								PostPopulationFrequencies ppf = new PostPopulationFrequencies(
-									gtRegistry, 
-									prefs.get("PHY_EST_ENTITY", null));
+								PostPopulationFrequencies ppf = new PostPopulationFrequencies();
 								ppf.setFile(selectedFile);
 								ppf.call();
 								System.out.println("Number of observers: " + upTextMgr.countObservers());
@@ -858,7 +855,7 @@ public class PhycusGui extends javax.swing.JFrame {
 					new Thread(fileUpload).start();
 				}
 				// for multiple files
-				else if (folder == true)
+				else if (!selectedFile.isFile())
 				{
 					// reset TextPane
 					outputTextPane.setText("");
@@ -892,14 +889,6 @@ public class PhycusGui extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_mainCancelButtonActionPerformed
 
-    private void jRBFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBFileActionPerformed
-		setFile();   // see below
-    }//GEN-LAST:event_jRBFileActionPerformed
-
-    private void jRBFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBFolderActionPerformed
-		setFolder(); // see below
-    }//GEN-LAST:event_jRBFolderActionPerformed
-
     private void licenseHelpIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_licenseHelpIconMouseClicked
 		try {
 			URI licenseTypes = new URI("https://creativecommons.org/share-your-work/licensing-types-examples/");
@@ -915,34 +904,59 @@ public class PhycusGui extends javax.swing.JFrame {
 		prefs.putInt("PHY_LICENSE", licenseComboBox.getSelectedIndex());
     }//GEN-LAST:event_licenseComboBoxActionPerformed
 
-    private void estEntityCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estEntityCloseButtonActionPerformed
-        estEntityPopupFrame.setVisible(false);
-    }//GEN-LAST:event_estEntityCloseButtonActionPerformed
+    private void ionCloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ionCloseButtonActionPerformed
+        ionPopupFrame.setVisible(false);
+    }//GEN-LAST:event_ionCloseButtonActionPerformed
 
-    private void estEntityEnterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estEntityEnterButtonActionPerformed
+    private void ionEnterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ionEnterButtonActionPerformed
+
+		// if the field isn't blank, is the entered number actually an ion?
+		if (!ionTextField.getText().equals("")) {
+			IonCheck ionCheck = new IonCheck();
+			String[] results = ionCheck.checkIon(ionTextField.getText());
 		
-		// if no Est Entity is listed
-		if(estEntityTextField.getText().isEmpty())
-		{
-			// show error
-			javax.swing.JOptionPane.showMessageDialog(this,
-				("Please list an institution indentifier"),
-				"Houston, we have a problem",
-				javax.swing.JOptionPane.ERROR_MESSAGE);
-		} 
-		else 
-		{
-			// save the Estimation entity in the preferences
-			prefs.put("PHY_EST_ENTITY", estEntityTextField.getText());
-			System.out.println(prefs.get("PHY_EST_ENTITY", "blank"));
+			// does results have any data?
+			if(results[0] == "") {
+				javax.swing.JOptionPane.showMessageDialog(this,
+					("Please enter a valid Issuing Organization Number (ION), "
+						+ "\n or blank if your facility doesn't have one."),
+					"This is an invalid ION",
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			} else {
+				// save the Estimation entity in the preferences
+				prefs.put("PHY_ION", results[0]);
+				prefs.put("PHY_ION_FACILITY", results[1]);
+			}
 			
-			// set the label on the GUI
-			EstEntityLabelCode.setText(prefs.get("PHY_EST_ENTITY", "blank"));
-			
-			// hide the window
-			estEntityPopupFrame.setVisible(false);
+		// if the field is blank
+		} else {
+			prefs.put("PHY_ION", "");
+			prefs.put("PHY_ION_FACILITY", "");
 		}
-    }//GEN-LAST:event_estEntityEnterButtonActionPerformed
+		
+		// set the label on the GUI
+		ionLabelCode.setText(prefs.get("PHY_ION", ""));
+		ionLabelFacility.setText(prefs.get("PHY_ION_FACILITY", ""));
+
+		// if the ION is blank, hide the labels
+		if(prefs.get("PHY_ION", "").equals("")) {
+			ionLabelCode.setVisible(false);
+			ionLabel.setVisible(false);
+			ionLabelFacility.setVisible(false);
+			ionLabel2.setVisible(false);
+			
+		// otherwise show the labels
+		} else {
+			ionLabelCode.setVisible(true);
+			ionLabel.setVisible(true);
+			ionLabelFacility.setVisible(true);
+			ionLabel2.setVisible(true);
+		}
+
+		// hide the window
+		ionPopupFrame.setVisible(false);
+		
+    }//GEN-LAST:event_ionEnterButtonActionPerformed
 
     private void haplotypeEntityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_haplotypeEntityButtonActionPerformed
         
@@ -952,7 +966,7 @@ public class PhycusGui extends javax.swing.JFrame {
 		catch (Exception ex){System.out.println(ex);}
 		
 		// show Est entity popup
-		estEntityPopupFrame.setVisible(true);
+		ionPopupFrame.setVisible(true);
 		
 		// debugging info
 		System.out.println(prefs.get("PHY_EST_ENTITY", "blank"));
@@ -985,17 +999,12 @@ public class PhycusGui extends javax.swing.JFrame {
     }//GEN-LAST:event_helpEditorPaneHyperlinkUpdate
 
     private void popSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popSearchTextFieldActionPerformed
-        // TODO add your handling code here:
+//        String popSearchName = popSearchTextField.getText();
+//		popList.updatePopulation(popSearchName, populations);
     }//GEN-LAST:event_popSearchTextFieldActionPerformed
 
-    private void popSearchTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_popSearchTextFieldKeyTyped
-        // TODO add your handling code here:
-//		List<PopulationData> searchedList = popList.searchList();
-		
-    }//GEN-LAST:event_popSearchTextFieldKeyTyped
-
     private void popCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popCreateButtonActionPerformed
-		String popSearchName = popSearchTextField.getText();
+		String popSearchName = popSearchTextField.getText().toUpperCase();
 		String popSearchDescription = "";
 		List<String> popNames = population.getPopulationNames(populations);
 		
@@ -1023,6 +1032,18 @@ public class PhycusGui extends javax.swing.JFrame {
 				 javax.swing.JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
+		// the name cannot be over 20 characters long
+		if (popSearchName.length() > 20) {
+			AppendText.appendToPane(popNotificationsTextPane, "The population name cannot be more than 20 characters long", Color.RED);
+			AppendText.appendToPane(popNotificationsTextPane, System.lineSeparator(), Color.BLACK);
+
+			javax.swing.JOptionPane.showMessageDialog(this,
+				("The population name cannot be more than 20 characters long"),
+				 "Houston, we have a problem",
+				 javax.swing.JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
 		// if name does not exist ask for a description
 		else {
@@ -1037,6 +1058,18 @@ public class PhycusGui extends javax.swing.JFrame {
 
 				javax.swing.JOptionPane.showMessageDialog(this,
 					("The population description cannot be blank"),
+					 "Houston, we have a problem",
+					 javax.swing.JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			// if description is over 254 characters long
+			else if (popSearchDescription.length() >= 255) {
+				AppendText.appendToPane(popNotificationsTextPane, "The population description cannot be more than 254 characters long", Color.RED);
+				AppendText.appendToPane(popNotificationsTextPane, System.lineSeparator(), Color.BLACK);
+
+				javax.swing.JOptionPane.showMessageDialog(this,
+					("The population description cannot be more than 254 characters long"),
 					 "Houston, we have a problem",
 					 javax.swing.JOptionPane.ERROR_MESSAGE);
 				return;
@@ -1183,6 +1216,11 @@ public class PhycusGui extends javax.swing.JFrame {
         advancedOptionsPopupFrame.setVisible(true);
     }//GEN-LAST:event_advancedOptionsButtonActionPerformed
 
+    private void popSearchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_popSearchTextFieldKeyReleased
+        String popSearchName = popSearchTextField.getText();
+		popList.updatePopulation(popSearchName, populations);
+    }//GEN-LAST:event_popSearchTextFieldKeyReleased
+
 	// open links to external browser
 	public static void openWebpage(URI uri) {
 		Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -1193,38 +1231,6 @@ public class PhycusGui extends javax.swing.JFrame {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	// settings for uploading a file, used in custom code for jRBFile
-	public void setFile() {
-		// set file selection
-		fileChooserUpload.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		
-		// visual cues
-		fileOpenButton.setText("Select File");
-		CsvNotificationLabel.setText("CSV files only.");
-		
-		// save choice to preferences
-		prefs.putBoolean("PHY_FILE_OR_FOLDER", true);
-		
-		// so uploader function knows whether it's a file or folder
-		folder = false;
-	}
-	
-	// settings for uploading a folder, used in custom code for jRBFile
-	public void setFolder() {
-		// set folder selection
-		fileChooserUpload.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		
-		// visual cues
-		fileOpenButton.setText("Select Folder");
-		CsvNotificationLabel.setText("Only CSV files will be processed, other files and subfolders will be ignored.");
-		
-		// save choice to preferences
-		prefs.putBoolean("PHY_FILE_OR_FOLDER", false);
-		
-		// so uploader function knows whether it's a file or folder
-		folder = true;
 	}
 	
 	/**
@@ -1264,9 +1270,9 @@ public class PhycusGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CsvNotificationLabel;
+    private javax.swing.JLabel CsvNotificationLabel2;
+    private javax.swing.JLabel CsvNotificationLabel3;
     private javax.swing.JButton CustomReceiptFolderButton;
-    private javax.swing.JLabel EstEntityLabel1;
-    private javax.swing.JLabel EstEntityLabelCode;
     private javax.swing.JPanel SelectFilePanel;
     private javax.swing.JButton advancedOptionsButton;
     private javax.swing.JButton advancedOptionsCloseButton;
@@ -1276,13 +1282,6 @@ public class PhycusGui extends javax.swing.JFrame {
     private javax.swing.JLabel databaseUrlLabel;
     private javax.swing.JTextField databaseUrlTextField;
     private javax.swing.JCheckBox defaultUploadReceiptCheckBox;
-    private javax.swing.JButton estEntityCloseButton;
-    private javax.swing.JButton estEntityEnterButton;
-    private javax.swing.JLabel estEntityInstructions1;
-    private javax.swing.JLabel estEntityInstructions2;
-    private javax.swing.JLabel estEntityInstructions3;
-    private javax.swing.JFrame estEntityPopupFrame;
-    private javax.swing.JTextField estEntityTextField;
     private javax.swing.JFileChooser fileChooserUpload;
     private javax.swing.JTextArea fileLocationTextArea;
     private javax.swing.JButton fileOpenButton;
@@ -1292,8 +1291,16 @@ public class PhycusGui extends javax.swing.JFrame {
     private javax.swing.JLabel haplotypeEntityLabel;
     private javax.swing.JEditorPane helpEditorPane;
     private javax.swing.JPanel helpPanel;
-    private javax.swing.JRadioButton jRBFile;
-    private javax.swing.JRadioButton jRBFolder;
+    private javax.swing.JButton ionCloseButton;
+    private javax.swing.JButton ionEnterButton;
+    private javax.swing.JLabel ionInstructions1;
+    private javax.swing.JLabel ionInstructions2;
+    private javax.swing.JLabel ionLabel;
+    private javax.swing.JLabel ionLabel2;
+    private javax.swing.JLabel ionLabelCode;
+    private javax.swing.JLabel ionLabelFacility;
+    private javax.swing.JFrame ionPopupFrame;
+    private javax.swing.JTextField ionTextField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
