@@ -118,22 +118,22 @@ public class PostPopulationFrequencies implements Callable<Integer>
 	public Integer call() throws Exception {
 		
 		// flags
-		// boolean headerFlag = false;
+		boolean headerFlag = false;
 		boolean dataFlag = false;
 		
 		// // data receptacles
-		// TreeMap<String, String> headers = new TreeMap<>();
+		TreeMap<String, String> headers = new TreeMap<>();
 		List<Integer> errorCodeList = new ArrayList<>();
 		List<Integer> warningCodeList = new ArrayList<>();
 		
 		try 
 		{
-		// 	// process the header
-		// 	HeaderProcessor hp = new HeaderProcessor();
-		// 	System.out.println("new Header Processor created");
-		// 	headers = hp.readHeader(reader(inputFile), errorCodeList);
-		// 	headerFlag = Boolean.valueOf(headers.get("flag"));
-		// 	System.out.println("Header flag: " + headerFlag);
+			// process the header
+			HeaderProcessor hp = new HeaderProcessor();
+			System.out.println("new Header Processor created");
+			headers = hp.readHeader(reader(inputFile), errorCodeList);
+			headerFlag = Boolean.valueOf(headers.get("flag"));
+			System.out.println("Header flag: " + headerFlag);
 			
 			// check the data for consistancy
 			DataChecks dataChecks = new DataChecks();

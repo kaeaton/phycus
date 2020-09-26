@@ -45,11 +45,8 @@ public class HeaderProcessor {
 	// printing titles
 	HashMap<String, String> fullHeaderTitles = new  HashMap();
 	
-	// access to prefs
-	public Preferences prefs = Preferences.userNodeForPackage(PhycusGui.class);
-
 	// Observable
-	UploadTextObservable upTextMgr = UploadTextObservable.getInstance();
+	private UploadFilesObservable uploadFilesObservable = UploadFilesObservable.getInstance();
 	
 	public HeaderProcessor() {
 		
@@ -89,8 +86,8 @@ public class HeaderProcessor {
 		boolean headerPresent = true;
 		
 		// identifier for receipt
-		upTextMgr.setLine("", "black", "receipt");
-		upTextMgr.setLine("Headers:", "black", "both");
+		uploadFilesObservable.setLine("", "black", "receipt");
+		uploadFilesObservable.setLine("Headers:", "black", "both");
 		
 		// read first line
 		// first line sample: pop=US_CAU,license=CC0,resolution=G,cohort="Proto test"
@@ -119,7 +116,7 @@ public class HeaderProcessor {
 //				headerContent.put("headerPresent", String.valueOf(headerPresent));
 				
 				// notify user about the problem
-				upTextMgr.setLine("There's a problem with the header line. Please check your file.", "red", "both");
+				uploadFilesObservable.setLine("There's a problem with the header line. Please check your file.", "red", "both");
 				
 				// prevent duplicate error reporting
 				break;
@@ -162,8 +159,8 @@ public class HeaderProcessor {
 		if(headerContent.containsKey("ion")) {
 			flags.add(checkIon(headerContent.get("ion")
 				.toString(), errorCodeList));
-		} else if(!prefs.get("PHY_ION", "").equals("") && headerPresent) {  
-			printHeader("ion", (prefs.get("PHY_ION", "") + " - " + prefs.get("PHY_ION_FACILITY", "")), true);
+		} else if(!Prefs.getIonNumber().equals("") && headerPresent) {  
+			printHeader("ion", (Prefs.getIonNumber() + " - " + Prefs.getIonFacility()), true);
 		}
 		
 		// check for doi if present
@@ -255,7 +252,7 @@ public class HeaderProcessor {
 	private String checkIon(String providedIon, List<Integer> errorCodeList) {
 		boolean flag = false;
 		
-		upTextMgr.setLine(("     * " + "Confirming ION, please hold"), "black", "gui");
+		uploadFilesObservable.setLine(("     * " + "Confirming ION, please hold"), "black", "gui");
 		
 		IonCheck ic = new IonCheck();
 		
@@ -278,9 +275,9 @@ public class HeaderProcessor {
 	private void printHeader(String header, String headerValue, boolean valid)
 	{
 		if (valid) {
-			upTextMgr.setLine((" +  " + fullHeaderTitles.get(header) + headerValue), "black", "both");
+			uploadFilesObservable.setLine((" +  " + fullHeaderTitles.get(header) + headerValue), "black", "both");
 		} else {
-			upTextMgr.setLine((" - Error: " + fullHeaderTitles.get(header) + headerValue), "red", "both");
+			uploadFilesObservable.setLine((" - Error: " + fullHeaderTitles.get(header) + headerValue), "red", "both");
 		}
 	}
 }
