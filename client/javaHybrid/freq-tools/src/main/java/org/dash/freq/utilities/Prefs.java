@@ -133,17 +133,22 @@ public class Prefs {
 		return customReceipt;
 	}
 
-	/* for which licensing option is selected */
+	/** for which licensing option is selected */
 	public static int getLicensingSelected() {
 		int uploadPath = preferences.getInt("PHY_LICENSE", 0);
 		return uploadPath;
 	}
 
+	/**
+	 * Stores the integer indicating which licensing option was selected. 
+	 *
+	 * @param selectedItemLocation The int indicating the selected option.
+	 */
 	public static void setLicensingSelected(int selectedItemLocation) {
 		preferences.putInt("PHY_LICENSE", selectedItemLocation);
 	}
 
-	/* for what, if any, ION assigned to the facility */
+	/** for what, if any, ION assigned to the facility */
 	// ION facility number
 	public static String getIonNumber() {
 		String ionNumber = preferences.get("PHY_ION_NUMBER", "");
