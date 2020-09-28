@@ -56,7 +56,7 @@ import io.swagger.client.model.HaplotypeFrequencyData;
 import io.swagger.client.model.Label;
 import io.swagger.client.model.LabelData;
 import io.swagger.client.model.License;
-//import io.swagger.client.model.License.TypeOfLicenseEnum;
+import io.swagger.client.model.License.TypeOfLicenseEnum;
 import io.swagger.client.model.PopulationData;
 import io.swagger.client.model.PopulationRequest;
 
@@ -79,7 +79,7 @@ public class PostPopulationFrequencies implements Callable<Integer>
 	private final String gtRegistry;
 	private final String estEntity;
 	private final URL url;
-	// private final Population population = new Population();
+	private final Population population = new Population();
 	private List<PopulationData> populations;
 
 	private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
@@ -106,8 +106,8 @@ public class PostPopulationFrequencies implements Callable<Integer>
 		this.gtRegistry = gtRegistry;
 		this.estEntity = estEntity;
 
-		// try { this.populations = population.getPopulationsFromDB();}
-		// catch (Exception ex) { System.out.println(ex); }
+		try { this.populations = population.getPopulationsFromDB();}
+		catch (Exception ex) { System.out.println(ex); }
 	}
 
 	public void setFile(File incomingFile) {
@@ -141,12 +141,12 @@ public class PostPopulationFrequencies implements Callable<Integer>
 			System.out.println("Data flag: " + dataFlag);
 			System.out.println("ErrorCodeList: " + errorCodeList);
 			
-		// 	// if the header and data both check out, post the data
-		// 	if (headerFlag && dataFlag)
-		// 	{
-		// 		postPopulationFrequencies(reader(inputFile), headers);
+			// if the header and data both check out, post the data
+			if (headerFlag && dataFlag)
+			{
+				postPopulationFrequencies(reader(inputFile), headers);
 				return 1;
-		// 	} 
+			} 
 			
 		} catch (Exception ex) {
 			System.out.println(ex);
@@ -157,143 +157,133 @@ public class PostPopulationFrequencies implements Callable<Integer>
 		return 0;
 	}
 
-	// public void postPopulationFrequencies(BufferedReader reader,
-	// 									TreeMap<String, String> headers) 
-	// 		throws IOException, ApiException {
-	// 	String row;
-	// 	String[] columns;
+	public void postPopulationFrequencies(BufferedReader reader,
+										  TreeMap<String, String> headers) 
+										  throws IOException, ApiException {
+		String row;
+		String[] columns;
 
-	// 	HashMap<String, HaplotypeFrequencyData> populationMap = new HashMap<String, HaplotypeFrequencyData>();
-	// 	HaplotypeFrequencyData haplotypeFrequencyData;
+		HashMap<String, HaplotypeFrequencyData> populationMap = new HashMap<String, HaplotypeFrequencyData>();
+		HaplotypeFrequencyData haplotypeFrequencyData;
 
-	// 	row = reader.readLine();
-	// 	String race = headers.get("pop");
+		row = reader.readLine();
+		String race = headers.get("pop");
 		
-	// 	// license
-	// 	License license = new License();
-	// 	LicenseType lType = new LicenseType();
-	// 	if (headers.containsKey("license")){
-	// 		String headerLicense = headers.get("license").toString();
-	// 		license = lType.typeOfLicense(headerLicense);
-	// 	}
-	// 	else
-	// 	{
-	// 		license = lType.typeOfLicense();
-	// 	}
-	// 	System.out.println("Uploading license of type " + license);
+		// license
+		License license = new License();
+		TypeOfLicenseEnum licenseType;
+		if (headers.containsKey("license")) {
+			String headerLicense = headers.get("license").toString();
+			licenseType = License.fromValue(headerLicense);
+			// license = .fromValue(headerLicense);
+		} else {
+			license = lType.typeOfLicense();
+		}
+		System.out.println("Uploading license of type " + license);
 		
-	// 	// read the file and break down each row
-	// 	while ((row = reader.readLine()) != null) {
-	// 		columns = row.split(",");
+		// read the file and break down each row
+		while ((row = reader.readLine()) != null) {
+			columns = row.split(",");
 			
-	// 		String haplotype = columns[0];
-	// 		Double frequency = new Double(columns[1]);
+			String haplotype = columns[0];
+			Double frequency = new Double(columns[1]);
 
-	// 		if (populationMap.containsKey(race)) 
-	// 		{
-	// 			haplotypeFrequencyData = populationMap.get(race);
-	// 		} 
-	// 		else 
-	// 		{
-	// 			haplotypeFrequencyData = new HaplotypeFrequencyData();
-	// 			haplotypeFrequencyData.setLicense(license);
-	// 		}
+			if (populationMap.containsKey(race)) {
+				haplotypeFrequencyData = populationMap.get(race);
+			} else {
+				haplotypeFrequencyData = new HaplotypeFrequencyData();
+				haplotypeFrequencyData.setLicense(license);
+			}
 			
-	// 		HaplotypeFrequency hapFrequency = new HaplotypeFrequency();
-	// 		hapFrequency.setFrequency(new Double(frequency));
-	// 		hapFrequency.setHaplotypeString(haplotype);
-	// 		haplotypeFrequencyData.addHaplotypeFrequencyListItem(hapFrequency);
+			HaplotypeFrequency hapFrequency = new HaplotypeFrequency();
+			hapFrequency.setFrequency(new Double(frequency));
+			hapFrequency.setHaplotypeString(haplotype);
+			haplotypeFrequencyData.addHaplotypeFrequencyListItem(hapFrequency);
 
-	// 		populationMap.put(race, haplotypeFrequencyData);
-	// 	}
+			populationMap.put(race, haplotypeFrequencyData);
+		}
 
-	// 	reader.close();
+		reader.close();
 		
-	// 	// connect to the db
-	// 	ApiClient apiClient = new ApiClient();
-	// 	apiClient.setConnectTimeout(60000);
-	// 	apiClient.setReadTimeout(60000);
-	// 	apiClient.setWriteTimeout(60000);
-	// 	apiClient.setBasePath(url.toString());
-	// 	DefaultApi api = new DefaultApi(apiClient);
-	// 	PopulationApi popApi = new PopulationApi(apiClient);
-	// 	CohortApi cohortApi = new CohortApi(apiClient);
+		// connect to the db
+		ApiClient apiClient = new ApiClient();
+		apiClient.setConnectTimeout(60000);
+		apiClient.setReadTimeout(60000);
+		apiClient.setWriteTimeout(60000);
+		apiClient.setBasePath(url.toString());
+		DefaultApi api = new DefaultApi(apiClient);
+		PopulationApi popApi = new PopulationApi(apiClient);
+		CohortApi cohortApi = new CohortApi(apiClient);
 		
-	// 	// create cohort
-	// 	CohortRequest cohortRequest = new CohortRequest();
+		// create cohort
+		CohortRequest cohortRequest = new CohortRequest();
 		
-	// 	CohortData cohortData = new CohortData();
-	// 	cohortData.setName(headers.get("cohort"));
-	// 	cohortData.setGenotypeList(new GenotypeList());
+		CohortData cohortData = new CohortData();
+		cohortData.setName(headers.get("cohort"));
+		cohortData.setGenotypeList(new GenotypeList());
 		
-	// 	cohortRequest.setCohortData(cohortData);
+		cohortRequest.setCohortData(cohortData);
 		
-	// 	System.out.println("Creating cohort: " + cohortData.getName());
-	// 	AppendText.appendToPane(PhycusGui.outputTextPane, "Creating cohort: " + cohortData.getName(), Color.BLACK);
-	// 	AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-	// 	cohortData = cohortApi.createCohort(cohortRequest);
+		System.out.println("Creating cohort: " + cohortData.getName());
+		AppendText.appendToPane(uploadResultsTextPane, "Creating cohort: " + cohortData.getName(), Color.BLACK);
+		AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+		cohortData = cohortApi.createCohort(cohortRequest);
 		
-	// 	// Labels
-	// 	LabelData labelData = new LabelData();
+		// Labels
+		LabelData labelData = new LabelData();
 		
-	// 	// genotyping entity
-	// 	Label registryLabel = new Label();
-	// 	registryLabel.setTypeOfLabel("GT_REGISTRY");
-	// 	if (headers.containsKey("haplotype"))
-	// 	{
-	// 		String headerGenotype = headers.get("genotype").toString();
-	// 		registryLabel.setValue(headerGenotype);
-	// 	}
-	// 	else
-	// 	{
-	// 		registryLabel.setValue(gtRegistry);
-	// 	}
+		// genotyping entity
+		Label registryLabel = new Label();
+		registryLabel.setTypeOfLabel("GT_REGISTRY");
+		if (headers.containsKey("haplotype")) {
+			String headerGenotype = headers.get("genotype").toString();
+			registryLabel.setValue(headerGenotype);
+		} else {
+			registryLabel.setValue(gtRegistry);
+		}
 		
-	// 	labelData.addLabelListItem(registryLabel);
+		labelData.addLabelListItem(registryLabel);
 		
-	// 	// haplotyping entity
-	// 	Label estimatorLabel = new Label();
-	// 	estimatorLabel.setTypeOfLabel("HT_ESTIMATION_ENT");
-	// 	if (headers.containsKey("haplotype"))
-	// 	{
-	// 		String headerHaplotype = headers.get("haplotype").toString();
-	// 		estimatorLabel.setValue(headerHaplotype);
-	// 	}
-	// 	else
-	// 	{
-	// 		estimatorLabel.setValue(estEntity);
-	// 	}
-	// 	labelData.addLabelListItem(estimatorLabel);
+		// haplotyping entity
+		Label estimatorLabel = new Label();
+		estimatorLabel.setTypeOfLabel("HT_ESTIMATION_ENT");
+		if (headers.containsKey("haplotype")) {
+			String headerHaplotype = headers.get("haplotype").toString();
+			estimatorLabel.setValue(headerHaplotype);
+		} else {
+			estimatorLabel.setValue(estEntity);
+		}
+
+		labelData.addLabelListItem(estimatorLabel);
 		
-	// 	for (String populationName : populationMap.keySet()) {
-	// 		HFCurationRequest hfCurationRequest = new HFCurationRequest();
+		for (String populationName : populationMap.keySet()) {
+			HFCurationRequest hfCurationRequest = new HFCurationRequest();
 			
-	// 		// find the population in the db and get its ID for uploading data
-	// 		PopulationData selectedPopulation = population.getPopulation(populations, race);
-	// 		hfCurationRequest.setPopulationID(selectedPopulation.getId());
-	// 		hfCurationRequest.setCohortID(cohortData.getId());
-	// 		hfCurationRequest.setHaplotypeFrequencyData(populationMap.get(populationName));
+			// find the population in the db and get its ID for uploading data
+			PopulationData selectedPopulation = population.getPopulation(populations, race);
+			hfCurationRequest.setPopulationID(selectedPopulation.getId());
+			hfCurationRequest.setCohortID(cohortData.getId());
+			hfCurationRequest.setHaplotypeFrequencyData(populationMap.get(populationName));
 
-	// 		hfCurationRequest.setLabelData(labelData);
+			hfCurationRequest.setLabelData(labelData);
 
-	// 		System.out.println("Submitting frequencies for population: " + selectedPopulation.getName());
-	// 		AppendText.appendToPane(PhycusGui.outputTextPane, "Submitting frequencies for population: " + selectedPopulation.getName(), Color.BLACK);
-	// 		AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-	// 		AppendText.appendToPane(PhycusGui.outputTextPane, "(For large data sets this may take a little while.)", Color.BLACK);
-	// 		AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
+			System.out.println("Submitting frequencies for population: " + selectedPopulation.getName());
+			AppendText.appendToPane(uploadResultsTextPane, "Submitting frequencies for population: " + selectedPopulation.getName(), Color.BLACK);
+			AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+			AppendText.appendToPane(uploadResultsTextPane, "(For large data sets this may take a little while.)", Color.BLACK);
+			AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
 			
-	// 		// db response - did we get one?
-	// 		HFCurationResponse response = api.hfcPost(hfCurationRequest);
-	// 		System.out.println(response);
+			// db response - did we get one?
+			HFCurationResponse response = api.hfcPost(hfCurationRequest);
+			System.out.println(response);
 			
-	// 		// if yes, let user know the data was successfully uploaded
-	// 		if (response != null)
-	// 		{
-	// 			AppendText.appendToPane(PhycusGui.outputTextPane, "Data submitted!", Color.BLUE);
-	// 			AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-	// 			AppendText.appendToPane(PhycusGui.outputTextPane, ("Submission ID: " + response.getSubmissionID().toString()), Color.BLACK);
-	// 			AppendText.appendToPane(PhycusGui.outputTextPane, System.lineSeparator(), Color.BLACK);
-	// 		}
-	// 	}		
-	// }
+			// if yes, let user know the data was successfully uploaded
+			if (response != null) {
+				AppendText.appendToPane(uploadResultsTextPane, "Data submitted!", Color.BLUE);
+				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+				AppendText.appendToPane(uploadResultsTextPane, ("Submission ID: " + response.getSubmissionID().toString()), Color.BLACK);
+				AppendText.appendToPane(uploadResultsTextPane, System.lineSeparator(), Color.BLACK);
+			}
+		}		
+	}
 }
