@@ -17,7 +17,7 @@ import org.dash.freq.gui.uploadTab.selectFile.*;
  
 class UploadPanelTest{
 
-	UploadTab mockedUploadTab = mock(UploadTab.class);
+	// UploadTab mockedUploadTab = mock(UploadTab.class);
 
 	// private final UploadFilesPanel uploadFilesPanel = new UploadFilesPanel();
 	// UploadFilesPanel uploadFilesPanel = mock(UploadFilesPanel.class);
