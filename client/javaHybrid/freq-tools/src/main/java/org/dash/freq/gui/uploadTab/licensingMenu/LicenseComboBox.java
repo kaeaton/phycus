@@ -2,33 +2,41 @@ package org.dash.freq.gui.uploadTab.licensingMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.swing.JComboBox;
 
-import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
+// import org.dash.freq.gui.uploadTab.UploadTabClassInstantiations;
 import org.dash.freq.utilities.Prefs;
 
 
 public class LicenseComboBox {
 
-	private final String[] licenseOptions = { 
+	private final String[] LICENSE_OPTIONS = { 
 							"CC0 - No rights reserved",
 							"BY - Attribution",
-							"BY_SA - Attribution - ShareAlike",
-							"BY_ND - Attribution - NoDerivatives",
-							"BY_NC - Attribution - NonCommercial",
-							"BY_NC_SA - Attribution - NonCommercial - ShareAlike",
-							"BY_NC_ND - Attribution - NonCommercial - NoDerivatives" };
+							"BY-SA - Attribution - ShareAlike",
+							"BY-ND - Attribution - NoDerivatives",
+							"BY-NC - Attribution - NonCommercial",
+							"BY-NC-SA - Attribution - NonCommercial - ShareAlike",
+							"BY-NC-ND - Attribution - NonCommercial - NoDerivatives" };
 
-	private JComboBox licenseComboBox = new JComboBox(licenseOptions);
+	private final Map<Integer, String> LICENSE_STRING_CORRESPONDANCES = 
+			Map.of(0, "CC0",
+				   1, "by",
+				   2, "by-sa",
+				   3, "by-nd",
+				   4, "by-nc",
+				   5, "by-nc-sa",
+				   6, "by-nc-nd");
 
-	// private UploadTabClassInstantiations uploadTabClassInstantiations = UploadTabClassInstantiations.getUploadTabClassInstantiationsInstance();
+	private JComboBox licenseComboBox = new JComboBox(LICENSE_OPTIONS);
 
 	public LicenseComboBox() { }
 
 	public JComboBox getLicenseComboBox() {
 
-		licenseComboBox.setSelectedIndex(Prefs.getLicensingSelected());
+		licenseComboBox.setSelectedIndex(Prefs.getLicensingSelectedIndex());
 		licenseComboBox.addActionListener(licenseComboBoxListener);
 
 		return licenseComboBox;
@@ -38,7 +46,8 @@ public class LicenseComboBox {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			int licenseComboBoxSelection = licenseComboBox.getSelectedIndex();
-			Prefs.setLicensingSelected(licenseComboBoxSelection);
+			Prefs.setLicensingSelectedIndex(licenseComboBoxSelection);
+			Prefs.setLicensingSelected(LICENSE_STRING_CORRESPONDANCES.get(licenseComboBoxSelection));
 		}
 	};
 

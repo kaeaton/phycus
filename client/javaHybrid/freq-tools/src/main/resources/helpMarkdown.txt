@@ -82,11 +82,11 @@ The license is an optional header. If it is not provided, the license selected o
 
 - CC0: Creative Commons no rights reserved.
 - BY: Give Attribution.
-- BY_SA: Give Attribution and Share Alike.
-- BY_ND: Give Attribution and No Derivatives.
-- BY_NC: Give Attribution and Non-Commercial.
-- BY_NC_SA: Give Attribution and Non-Commercial and Share Alike.
-- BY_NC_ND: Give Attribution and Non-Commercial and No Derivatives.
+- BY-SA: Give Attribution and Share Alike.
+- BY-ND: Give Attribution and No Derivatives.
+- BY-NC: Give Attribution and Non-Commercial.
+- BY-NC-SA: Give Attribution and Non-Commercial and Share Alike.
+- BY-NC-ND: Give Attribution and Non-Commercial and No Derivatives.
 
 For more information, see [here](https://creativecommons.org/share-your-work/licensing-types-examples/).
 

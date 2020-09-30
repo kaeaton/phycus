@@ -171,14 +171,27 @@ public class PostPopulationFrequencies implements Callable<Integer>
 		
 		// license
 		License license = new License();
-		TypeOfLicenseEnum licenseType;
-		if (headers.containsKey("license")) {
-			String headerLicense = headers.get("license").toString();
-			licenseType = License.fromValue(headerLicense);
-			// license = .fromValue(headerLicense);
+		LicenseType lType = new LicenseType();
+
+		// if there's a license listed in the header
+		if (headers.containsKey("license")){
+			String headerLicense = headers.get("license").toString().toLowerCase();
+
+			// CC0 is capitalized in its enumeration value, the others are not
+			if (headerLicense.equals("cc0")) {
+				license.setTypeOfLicense(TypeOfLicenseEnum.CC0);
+			} else {
+				license.setTypeOfLicense(TypeOfLicenseEnum.fromValue(headerLicense));
+			}
+
+		// if there is no license listed in the header
 		} else {
-			license = lType.typeOfLicense();
+			String selectedGuiLicense = Prefs.getLicensingSelected();
+			System.out.println("PPF: selectedGuiLicense: " + selectedGuiLicense);
+
+			license.setTypeOfLicense(TypeOfLicenseEnum.fromValue(selectedGuiLicense));
 		}
+
 		System.out.println("Uploading license of type " + license);
 		
 		// read the file and break down each row

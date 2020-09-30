@@ -50,8 +50,6 @@ public class Prefs {
 	 * Returns the string of the path last used for uploading data. 
 	 * Defaults to the user's Documents folder. Used to determine where 
 	 * in the file system the UploadFileChooser should point at to upon opening.
-	 *
-	 * @return The string of the upload path.
 	 */
 	public static String getUploadPath() {
 		String uploadPath = preferences.get("PHY_INPUT_DIR", DEFAULT_DOCS_PATH);
@@ -78,8 +76,6 @@ public class Prefs {
 	 * to display the custom path chosen, in SelectReceiptPathButton to set the currently open 
 	 * folder in the custom receipt path file chooser, and when creating a receipt if 
 	 * Prefs.isThereACustomReceiptPath() evaluates to true.
-	 *
-	 * @return The string of the custom receipt path.
 	 */
 	public static String getCustomReceiptPath() {
 		String receiptPath = preferences.get("PHY_RECEIPT_CUSTOM_FOLDER", DEFAULT_DOCS_PATH);
@@ -133,10 +129,10 @@ public class Prefs {
 		return customReceipt;
 	}
 
-	/** for which licensing option is selected */
-	public static int getLicensingSelected() {
-		int uploadPath = preferences.getInt("PHY_LICENSE", 0);
-		return uploadPath;
+	/** for which licensing option index is selected */
+	public static int getLicensingSelectedIndex() {
+		int selectedLicensingIndex = preferences.getInt("PHY_LICENSE_INDEX", 0);
+		return selectedLicensingIndex;
 	}
 
 	/**
@@ -144,8 +140,23 @@ public class Prefs {
 	 *
 	 * @param selectedItemLocation The int indicating the selected option.
 	 */
-	public static void setLicensingSelected(int selectedItemLocation) {
-		preferences.putInt("PHY_LICENSE", selectedItemLocation);
+	public static void setLicensingSelectedIndex(int selectedItemLocation) {
+		preferences.putInt("PHY_LICENSE_INDEX", selectedItemLocation);
+	}
+
+	/** for which licensing option string is selected */
+	public static String getLicensingSelected() {
+		String selectedLicense = preferences.get("PHY_LICENSE", "CC0");
+		return selectedLicense;
+	}
+	
+	/**
+	 * Stores the string indicating which licensing option was selected. 
+	 *
+	 * @param selectedLicense The string of the selected option.
+	 */
+	public static void setLicensingSelected(String selectedLicense) {
+		preferences.put("PHY_LICENSE", selectedLicense);
 	}
 
 	/** for what, if any, ION assigned to the facility */

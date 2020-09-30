@@ -32,7 +32,7 @@ import org.dash.freq.utilities.Prefs;
 public class HeaderProcessor {
 
 // license types as designated by the API
-	private final String[] licenseTypes = {"CC0", "BY", "BY_SA", "BY_ND", "BY_NC", "BY_NC_SA", "BY_NC_ND"};
+	private final String[] licenseTypes = {"CC0", "BY", "BY-SA", "BY-ND", "BY-NC", "BY-NC-SA", "BY-NC-ND"};
 	private final Set<String> licenses;
 	
 	// resolution types as designated by the API
